@@ -1,0 +1,254 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Sehatlings maroon */
+  --primary: #5b0203;
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.13 0.028 261.692);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.13 0.028 261.692);
+  --primary-foreground: #ffffff;
+  --secondary: #f2e0e1; /* light maroon tint */
+  --secondary-foreground: #5b0203;
+  --muted: #f2f2f2;
+  --muted-foreground: #555555;
+  --accent: #f2e0e1;
+  --accent-foreground: #5b0203;
+  --destructive: #dc2626;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #e5e7eb;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: #ffffff;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #5b0203;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f2e0e1;
+  --sidebar-accent-foreground: #5b0203;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #e5e7eb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --font-sans: var(--font-syne);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #111111;
+  --card-foreground: #ededed;
+  --popover: #111111;
+  --popover-foreground: #ededed;
+  --primary: #5b0203;
+  --primary-foreground: #ffffff;
+  --secondary: #1f1f1f;
+  --secondary-foreground: #ededed;
+  --muted: #1f1f1f;
+  --muted-foreground: #a3a3a3;
+  --accent: #1f1f1f;
+  --accent-foreground: #ededed;
+  --destructive: #7f1d1d;
+  --border: #262626;
+  --input: #262626;
+  --ring: #3f3f46;
+  --sidebar: #111111;
+  --sidebar-foreground: #ededed;
+  --sidebar-primary: #5b0203;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1f1f1f;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: #262626;
+  --sidebar-ring: #3f3f46;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground;
+    background-color: #ffffff;
+  }
+}
+
+/* Marquee animation and desktop hover pause */
+@keyframes marquee-x {
+  0% { transform: translateX(0%); }
+  /* Move by half the duplicated content width for seamless looping */
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation-play-state: running;
+  width: max-content; /* ensure track is exactly the width of its content */
+}
+
+@media (min-width: 768px) {
+  .group:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Professional scroll animations - single trigger only */
+.scroll-fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+  will-change: opacity;
+}
+
+.scroll-fade-in.animate {
+  opacity: 1;
+  will-change: auto;
+}
+
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-fade-up.animate {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+.scroll-fade-left {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-fade-left.animate {
+  opacity: 1;
+  transform: translateX(0);
+  will-change: auto;
+}
+
+.scroll-fade-right {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-fade-right.animate {
+  opacity: 1;
+  transform: translateX(0);
+  will-change: auto;
+}
+
+.scroll-scale {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-scale.animate {
+  opacity: 1;
+  transform: scale(1);
+  will-change: auto;
+}
+
+/* Stagger animations for lists - single trigger only */
+.scroll-stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-stagger.animate > *:nth-child(1) { transition-delay: 0ms; }
+.scroll-stagger.animate > *:nth-child(2) { transition-delay: 100ms; }
+.scroll-stagger.animate > *:nth-child(3) { transition-delay: 200ms; }
+.scroll-stagger.animate > *:nth-child(4) { transition-delay: 300ms; }
+.scroll-stagger.animate > *:nth-child(5) { transition-delay: 400ms; }
+.scroll-stagger.animate > *:nth-child(6) { transition-delay: 500ms; }
+
+.scroll-stagger.animate > * {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade-in,
+  .scroll-fade-up,
+  .scroll-fade-left,
+  .scroll-fade-right,
+  .scroll-scale,
+  .scroll-stagger > * {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Modal animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+.animate-modalPop {
+  animation: modalPop 0.2s ease-out forwards;
+}
