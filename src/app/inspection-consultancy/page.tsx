@@ -1,13 +1,11 @@
 "use client";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Link from "next/link";
-import { Check, ShieldCheck, Wrench, Shield, Users, FileText, X, CheckCircle, Mail, User, Building2, Package } from "lucide-react";
+import { Check, FileText, X, CheckCircle, Mail, Building2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -60,12 +58,19 @@ const consultationSchema = z.object({
     .min(1, 'Please select a package')
     .refine(val => ['Essential Compliance Check', 'Comprehensive Compliance Solution'].includes(val), 'Please select a valid package'),
   additional: z.string()
-    .max(500, 'Additional information must be less than 500 characters')
     .optional()
+    .refine((val) => !val || val.length <= 500, 'Additional information must be less than 500 characters')
     .transform(val => val?.trim()),
 });
 
-type ConsultationData = z.infer<typeof consultationSchema>;
+type ConsultationData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  organization: string;
+  package: string;
+  additional?: string;
+};
 
 export default function InspectionConsultancyPage() {
   useScrollAnimation();
@@ -108,10 +113,6 @@ Additional Information: ${data.additional || 'None provided'}`;
     }
   };
 
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsConsultationModalOpen(true);
-  };
 
   return (
     <main key="inspection-consultancy">
@@ -232,7 +233,7 @@ Additional Information: ${data.additional || 'None provided'}`;
         <div className="text-center max-w-4xl mx-auto">
           <h2 data-animate className="scroll-fade-up text-3xl md:text-4xl font-bold text-gray-900 mb-6">Service Models</h2>
           <p data-animate className="scroll-fade-up text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed" style={{transitionDelay: '0.2s'}}>
-            Choose the service model that best fits your organization's needs and current compliance status.
+            Choose the service model that best fits your organization&apos;s needs and current compliance status.
           </p>
         </div>
         <div data-animate className="scroll-stagger mt-12 space-y-8">

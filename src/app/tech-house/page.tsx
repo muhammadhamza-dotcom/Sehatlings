@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Eye, Building2, Users, Shield, Clock, Code, Brain, Cloud, Smartphone, BarChart3, Plus, Star, Quote, Layers, Triangle, FileCode, Zap, Palette, Server, Code2, Coffee, Network, Zap as ApiIcon, Boxes, Cpu, MessageSquare, CloudRain, CloudSnow, Package, GitBranch, Settings, Globe, X, Mail, Phone, User, CheckCircle } from "lucide-react";
+import { ArrowRight, Eye, Building2, Users, Code, Brain, Smartphone, BarChart3, Plus, Star, Quote, Layers, Triangle, FileCode, Zap, Palette, Server, Code2, Coffee, Network, Zap as ApiIcon, Boxes, Cpu, MessageSquare, Globe, X, Mail, Phone, User, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -139,7 +139,6 @@ type ProjectInquiryData = z.infer<typeof projectInquirySchema>;
 export default function TechHousePage() {
   useScrollAnimation();
   const [marqueeDuration, setMarqueeDuration] = useState(8);
-  const [isMarqueePaused, setIsMarqueePaused] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [projectSubmitStatus, setProjectSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -595,7 +594,7 @@ export default function TechHousePage() {
               Trusted by Healthcare Leaders
             </h2>
             <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We've partnered with innovative healthcare organizations to deliver transformative 
+              We&apos;ve partnered with innovative healthcare organizations to deliver transformative 
               technology solutions that improve patient outcomes and operational efficiency.
             </p>
           </div>
@@ -671,7 +670,7 @@ export default function TechHousePage() {
                             </div>
                             <div className="mb-6">
                               <Quote className="w-8 h-8 text-primary/20 mb-3" />
-                              <p className="text-gray-700 leading-relaxed italic">"{testimonial.quote}"</p>
+                              <p className="text-gray-700 leading-relaxed italic">&quot;{testimonial.quote}&quot;</p>
                             </div>
                           </div>
                         ))}
@@ -732,7 +731,7 @@ export default function TechHousePage() {
                   { name: "TypeScript", icon: FileCode },
                   { name: "Next.js", icon: Zap },
                   { name: "Tailwind CSS", icon: Palette }
-                ].map((tech, index) => (
+                ].map((tech) => (
                   <div
                     key={tech.name}
                     className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3 hover:bg-white/15 hover:scale-105 transition-all duration-300"
@@ -758,7 +757,7 @@ export default function TechHousePage() {
                   { name: "GraphQL", icon: Network },
                   { name: "REST APIs", icon: ApiIcon },
                   { name: "Microservices", icon: Boxes }
-                ].map((tech, index) => (
+                ].map((tech) => (
                   <div
                     key={tech.name}
                     className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3 hover:bg-white/15 hover:scale-105 transition-all duration-300"
@@ -783,7 +782,7 @@ export default function TechHousePage() {
                   { name: "scikit-learn", icon: BarChart3 },
                   { name: "OpenCV", icon: Eye },
                   { name: "Natural Language Processing", icon: MessageSquare }
-                ].map((tech, index) => (
+                ].map((tech) => (
                   <div
                     key={tech.name}
                     className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3 hover:bg-white/15 hover:scale-105 transition-all duration-300"
@@ -817,7 +816,7 @@ export default function TechHousePage() {
             className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed"
             data-animate
           >
-            Let's discuss how our technology solutions can help your organization achieve 
+            Let&apos;s discuss how our technology solutions can help your organization achieve 
             better patient outcomes and operational excellence.
           </p>
 
@@ -852,7 +851,7 @@ export default function TechHousePage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Start Your Project</h2>
-                  <p className="text-gray-600 mt-1">Tell us about your project and we'll get back to you within 24 hours.</p>
+                  <p className="text-gray-600 mt-1">Tell us about your project and we&apos;ll get back to you within 24 hours.</p>
                 </div>
                 <button
                   onClick={() => setIsProjectModalOpen(false)}
@@ -870,7 +869,7 @@ export default function TechHousePage() {
                   <CheckCircle className="w-5 h-5" />
                   <span className="font-medium">Project inquiry sent!</span>
                 </div>
-                <p className="text-sm text-green-700 mt-1">We'll get back to you within 24 hours to discuss your project.</p>
+                <p className="text-sm text-green-700 mt-1">We&apos;ll get back to you within 24 hours to discuss your project.</p>
               </div>
             )}
             

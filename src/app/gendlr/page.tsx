@@ -117,7 +117,7 @@ export default function GendlrPage() {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid, isSubmitting },
+    formState: { errors, isValid },
     reset,
   } = useForm<LabRegistrationData>({
     resolver: zodResolver(labRegistrationSchema),
@@ -141,7 +141,6 @@ export default function GendlrPage() {
     watch: watchEA,
     formState: { errors: errorsEA, isValid: isValidEA },
     reset: resetEA,
-    setValue: setValueEA,
   } = useForm<EarlyAccessData>({
     resolver: zodResolver(earlyAccessSchema),
     mode: "onChange",
@@ -257,7 +256,7 @@ export default function GendlrPage() {
           <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto mb-12 leading-relaxed" >
             Get ready for a new era of patient care. GENDLR is an AI-powered platform designed to 
             optimize every step of the patient journey, from initial diagnosis to post-treatment follow-up. 
-            It's not just a tool; it's the future of intelligent healthcare management.
+            It&apos;s not just a tool; it&apos;s the future of intelligent healthcare management.
           </p>
 
           {/* Action Button */}
@@ -488,7 +487,7 @@ export default function GendlrPage() {
                   <CheckCircle className="w-5 h-5" />
                   <span className="font-medium">Registration successful!</span>
                 </div>
-                <p className="text-sm text-green-700 mt-1">We'll contact you within 24 hours to get started.</p>
+                <p className="text-sm text-green-700 mt-1">We&apos;ll contact you within 24 hours to get started.</p>
               </div>
             )}
             
@@ -640,7 +639,7 @@ export default function GendlrPage() {
                   <CheckCircle className="w-5 h-5" />
                   <span className="font-medium">Registration successful!</span>
                 </div>
-                <p className="text-sm text-green-700 mt-1">Thank you for your interest. We'll be in touch soon!</p>
+                <p className="text-sm text-green-700 mt-1">Thank you for your interest. We&apos;ll be in touch soon!</p>
               </div>
             )}
             

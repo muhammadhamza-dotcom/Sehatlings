@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { Linkedin, Mail, Check, Calendar, Lightbulb, Heart, Users, Briefcase, MapPin, TrendingUp } from "lucide-react";
+import { Linkedin, Mail, Check, Lightbulb, Heart, Users, Briefcase, MapPin, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import Image from "next/image";

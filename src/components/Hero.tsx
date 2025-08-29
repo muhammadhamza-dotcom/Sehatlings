@@ -133,7 +133,7 @@ export default function Hero() {
               className="mt-6 text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
               style={{ willChange: 'transform, opacity' }}
             >
-              <span className="text-black">Shaping Tomorrow's </span>
+              <span className="text-black">Shaping Tomorrow&apos;s </span>
               <span className="text-primary">Healthcare Today</span>
             </motion.h1>
 
@@ -145,7 +145,7 @@ export default function Hero() {
               className="mt-4 text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed"
               style={{ willChange: 'transform, opacity' }}
             >
-              Empowering healthcare's future through integrated education and innovative technological products
+              Empowering healthcare&apos;s future through integrated education and innovative technological products
             </motion.p>
 
             {/* Action Buttons */}

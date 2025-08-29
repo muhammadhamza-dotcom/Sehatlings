@@ -1,15 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState } from "react";
 import { 
   Check,
-  Activity, 
-  Brain, 
-  Database, 
-  Users, 
-  TrendingUp, 
-  Shield,
   ArrowRight,
   Zap,
   Clock,
@@ -20,12 +13,13 @@ import {
   Scan,
   MessageCircle,
   UserCheck,
-  Phone
+  Phone,
+  Brain
 } from "lucide-react";
 
 export default function GendlrSpotlight() {
   useScrollAnimation();
-  const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
+  // Removed unused hover state for now
   
   const features = [
     {
@@ -76,7 +70,7 @@ export default function GendlrSpotlight() {
 
             {/* Description */}
             <p data-animate className="scroll-fade-up text-base text-white/70 mb-6 leading-relaxed" style={{transitionDelay: '0.5s'}}>
-              GENDLR is a solution specializing in patient management and engagement. We have developed MVP of a robust AI-powered platform tailored for B2B clients like labs and hospitals, and we're excited to soon release a user-facing application for everyone.
+              GENDLR is a solution specializing in patient management and engagement. We have developed MVP of a robust AI-powered platform tailored for B2B clients like labs and hospitals, and we&apos;re excited to soon release a user-facing application for everyone.
             </p>
             
             {/* Features Header */}

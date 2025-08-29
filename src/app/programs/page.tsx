@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Brain, Crown, Rocket, Clock, Users, Target, X, User, Mail, Phone, Building, Lightbulb, Star } from "lucide-react";
+import { ArrowRight, Brain, Crown, Rocket, Clock, X, User, Mail, Phone, Building, Lightbulb, Star } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 
 
@@ -91,7 +92,7 @@ Professional Information:
                 onClick={() => setIsModalOpen(true)}
                 className="inline-flex items-center justify-center bg-white text-primary border border-primary/20 font-semibold px-6 py-3 rounded-xl hover:bg-primary/10 hover:border-primary/30 transition-colors"
               >
-                Let's Design a Program
+                Let&apos;s Design a Program
               </button>
             </div>
           </div>
@@ -254,7 +255,7 @@ Professional Information:
       {/* Professional Development Program Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4">
-          <div
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -265,7 +266,7 @@ Professional Information:
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900">Professional Development Program</h2>
-                  <p className="text-gray-600 mt-1">Register to enhance your skills and advance your career accordingly today's demand.</p>
+                  <p className="text-gray-600 mt-1">Register to enhance your skills and advance your career accordingly today&apos;s demand.</p>
                 </div>
                 <button
                   onClick={() => setIsModalOpen(false)}
@@ -416,7 +417,7 @@ Professional Information:
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       )}
     </main>
