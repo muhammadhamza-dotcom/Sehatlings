@@ -103,7 +103,7 @@ export default function TeamPage() {
               transition={{ duration: 0.05, ease: "easeOut" }}
             >
               <div className="h-80 w-full rounded-2xl overflow-hidden bg-muted/40">
-                <Image src="/Hamza1.webp" alt="Rao Muhammad Hamza" width={640} height={240} className="w-full h-full object-cover" />
+                <Image src="/Hamza3.webp" alt="Rao Muhammad Hamza" width={640} height={240} className="w-full h-full object-cover" />
               </div>
               <div className="mt-4 flex items-start justify-between">
                 <div>
