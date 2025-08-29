@@ -67,7 +67,7 @@ Professional Information:
           aria-hidden
         />
         <div className="absolute inset-0 bg-white/70" aria-hidden />
-        <div className="relative z-10 h-full flex items-start justify-center px-6 pt-20 md:pt-32">
+        <div className="relative z-10 h-full flex items-start justify-center px-6 pt-14 md:pt-32">
           <div data-animate className="scroll-fade-up max-w-4xl text-center">
             <span data-animate className="scroll-fade-up inline-block px-4 py-2 rounded-full text-sm font-bold tracking-wide mb-4 bg-primary/10 text-primary border border-primary/20 shadow-sm" style={{transitionDelay: '0.2s'}}>
               Professional Development
@@ -209,8 +209,8 @@ Professional Information:
               
               <div className="flex items-center justify-center mb-4">
                 <Image 
-                  src="/akuh.webp" 
-                  alt="AKuH Hospital" 
+                  src="/gvon.webp" 
+                  alt="GVON" 
                   className="h-16 w-auto"
                   width={120}
                   height={64}
@@ -224,7 +224,7 @@ Professional Information:
             {/* Description */}
             <div className="text-center">
               <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
-                Sehatlings successfully facilitated <span className="font-semibold text-primary">7 workshops</span> on the essential skills that a doctor possesses to develop leadership skills.
+                Sehatlings successfully facilitated <span className="font-semibold text-primary">7 workshops</span> on the essential skills that a doctor possesses to develop leadership skills, hosted at the Aga Khan University Hospital.
               </p>
             </div>
           </div>
