@@ -209,9 +209,9 @@ Professional Information:
               
               <div className="flex items-center justify-center mb-4">
                 <Image 
-                  src="/gvon.webp" 
+                  src="/gvon1.webp" 
                   alt="GVON" 
-                  className="h-16 w-auto"
+                  className="h-18 w-auto"
                   width={120}
                   height={64}
                 />
