@@ -9,7 +9,6 @@ import {
   FileText,
   Target,
   Sparkles,
-  ChevronDown,
   Scan,
   MessageCircle,
   UserCheck,
@@ -45,10 +44,10 @@ export default function GendlrSpotlight() {
   ];
 
   return (
-    <section id="gendlr" className="bg-primary py-20 lg:py-32 relative overflow-hidden">
+    <section id="gendlr" className="bg-primary py-16 md:py-24 lg:py-32 relative overflow-hidden">
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
           <div data-animate className="scroll-fade-left">
             {/* Badge */}
@@ -58,18 +57,18 @@ export default function GendlrSpotlight() {
 
             {/* Main Heading */}
             <div data-animate className="scroll-fade-up" style={{transitionDelay: '0.3s'}}>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
                 Introducing GENDLR
               </h1>
             </div>
 
             {/* Subtitle */}
-            <p data-animate className="scroll-fade-up text-lg lg:text-xl text-white/80 mb-6 font-medium" style={{transitionDelay: '0.4s'}}>
+            <p data-animate className="scroll-fade-up text-base md:text-lg lg:text-xl text-white/80 mb-4 md:mb-6 font-medium" style={{transitionDelay: '0.4s'}}>
               AI Powered Pathologist Assistant to Patient Journey Optimizer
             </p>
 
             {/* Description */}
-            <p data-animate className="scroll-fade-up text-base text-white/70 mb-6 leading-relaxed" style={{transitionDelay: '0.5s'}}>
+            <p data-animate className="scroll-fade-up text-sm md:text-base text-white/70 mb-4 md:mb-6 leading-relaxed" style={{transitionDelay: '0.5s'}}>
               GENDLR is a solution specializing in patient management and engagement. We have developed MVP of a robust AI-powered platform tailored for B2B clients like labs and hospitals, and we&apos;re excited to soon release a user-facing application for everyone.
             </p>
             
@@ -117,7 +116,7 @@ export default function GendlrSpotlight() {
           {/* Right Column - Interactive Visual */}
           <div data-animate className="scroll-fade-right relative">
             {/* Glassmorphism Container */}
-            <div className="relative bg-white/5 backdrop-blur-lg rounded-3xl border border-white/20 p-6 sm:p-8 lg:p-12 overflow-hidden ml-0 lg:ml-12">
+            <div className="relative bg-white/5 backdrop-blur-lg rounded-3xl border border-white/20 p-6 md:p-8 lg:p-10 overflow-hidden">
               {/* Background Gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5"></div>
               
@@ -130,12 +129,12 @@ export default function GendlrSpotlight() {
                 </div>
 
                 {/* Split Comparison */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 rounded-2xl overflow-hidden">
+                <div className="grid grid-cols-2 rounded-2xl overflow-hidden">
                   {/* Traditional Healthcare */}
-                  <div className="bg-white/5 p-6">
-                    <div className="text-center mb-6">
-                      <h4 className="text-white font-medium text-sm mb-1">Traditional</h4>
-                      <h5 className="text-white font-semibold text-base">Healthcare</h5>
+                  <div className="bg-white/5 p-4 md:p-6">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h4 className="text-white font-medium text-xs md:text-sm mb-1">Traditional</h4>
+                      <h5 className="text-white font-semibold text-sm md:text-base">Healthcare</h5>
                     </div>
                     
                     <div className="space-y-4">
@@ -156,10 +155,10 @@ export default function GendlrSpotlight() {
                   </div>
 
                   {/* With GENDLR */}
-                  <div className="bg-white p-6 relative">
-                    <div className="text-center mb-6">
-                      <h4 className="text-primary font-medium text-sm mb-1">With</h4>
-                      <h5 className="text-primary font-semibold text-base">GENDLR</h5>
+                  <div className="bg-white p-4 md:p-6 relative">
+                    <div className="text-center mb-4 md:mb-6">
+                      <h4 className="text-primary font-medium text-xs md:text-sm mb-1">With</h4>
+                      <h5 className="text-primary font-semibold text-sm md:text-base">GENDLR</h5>
                     </div>
                     
                     <div className="space-y-4">
@@ -192,23 +191,7 @@ export default function GendlrSpotlight() {
           </div>
         </div>
 
-        {/* Scroll Down Arrow */}
-        <div data-animate className="scroll-fade-up hidden sm:flex justify-center mt-8">
-          <button
-            className="p-3 rounded-full hover:bg-white/10 transition-colors duration-300 group animate-bounce hover:scale-110"
-            onClick={() => {
-              const nextSection = document.getElementById('healthcare-solutions');
-              if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
-          >
-            <ChevronDown 
-              className="w-6 h-6 text-white/60 group-hover:text-white transition-colors duration-300" 
-              strokeWidth={2}
-            />
-          </button>
-        </div>
+ 
       </div>
     </section>
   );

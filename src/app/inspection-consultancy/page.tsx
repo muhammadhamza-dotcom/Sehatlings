@@ -89,27 +89,32 @@ export default function InspectionConsultancyPage() {
   const onSubmitConsultation = async (data: ConsultationData) => {
     setConsultationSubmitStatus('loading');
     try {
-      const subject = 'Lab Inspection Consultation Request';
-      const body = `First Name: ${data.firstName}
-Last Name: ${data.lastName}
-Email: ${data.email}
-Organization: ${data.organization}
-Package: ${data.package || 'Not specified'}
-Additional Information: ${data.additional || 'None provided'}`;
+      const response = await fetch('/api/consultation-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-      const mailtoUrl = `mailto:sehatlings@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      
-      window.open(mailtoUrl, '_blank');
-      
-      setConsultationSubmitStatus('success');
-      consultationForm.reset();
-      setTimeout(() => {
-        setIsConsultationModalOpen(false);
-        setConsultationSubmitStatus('idle');
-      }, 2000);
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setConsultationSubmitStatus('success');
+        consultationForm.reset();
+        setTimeout(() => {
+          setIsConsultationModalOpen(false);
+          setConsultationSubmitStatus('idle');
+        }, 2000);
+      } else {
+        console.error('Consultation request error:', result);
+        setConsultationSubmitStatus('error');
+        setTimeout(() => setConsultationSubmitStatus('idle'), 5000);
+      }
     } catch (error) {
       console.error('Error sending consultation request:', error);
       setConsultationSubmitStatus('error');
+      setTimeout(() => setConsultationSubmitStatus('idle'), 5000);
     }
   };
 
@@ -289,8 +294,8 @@ Additional Information: ${data.additional || 'None provided'}`;
               Fill out the form below and our team will contact you within 24 hours.
             </p>
 
-            <form onSubmit={consultationForm.handleSubmit(onSubmitConsultation)} className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+            <form onSubmit={consultationForm.handleSubmit(onSubmitConsultation)} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="consultation-firstName">
                     First Name <span className="text-red-500">*</span>

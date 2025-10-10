@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Eye, Building2, Users, Code, Brain, Smartphone, BarChart3, Plus, Star, Quote, Layers, Triangle, FileCode, Zap, Palette, Server, Code2, Coffee, Network, Zap as ApiIcon, Boxes, Cpu, MessageSquare, Globe, X, Mail, Phone, User, CheckCircle } from "lucide-react";
+import { ArrowRight, Eye, Building2, Users, Code, Brain, Smartphone, BarChart3, Plus, Star, Quote, Layers, Triangle, FileCode, Zap, Palette, Server, Code2, Coffee, Network, Zap as ApiIcon, Boxes, Cpu, MessageSquare, Globe, X, Mail, Phone, User } from "lucide-react";
 import Link from "next/link";
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -202,26 +202,31 @@ export default function TechHousePage() {
 
   const onProjectSubmit = async (data: ProjectInquiryData) => {
     setProjectSubmitStatus('loading');
-    
+
     try {
-      const subject = encodeURIComponent('Project Inquiry - ' + data.name);
-      const body = encodeURIComponent(
-        `Project Inquiry Details:\n\n` +
-        `Name: ${data.name}\n` +
-        `Email: ${data.email}\n` +
-        `Phone: ${data.phone}\n` +
-        `Project Details: ${data.projectDetails}\n\n` +
-        `This inquiry was submitted through the Tech House Start Your Project form.`
-      );
-      
-      window.location.href = `mailto:sehatlings@gmail.com?subject=${subject}&body=${body}`;
-      setProjectSubmitStatus('success');
-      resetPI();
-      
-      setTimeout(() => {
-        setIsProjectModalOpen(false);
-        setProjectSubmitStatus('idle');
-      }, 2000);
+      const response = await fetch('/api/project-inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setProjectSubmitStatus('success');
+        resetPI();
+
+        setTimeout(() => {
+          setIsProjectModalOpen(false);
+          setProjectSubmitStatus('idle');
+        }, 2000);
+      } else {
+        console.error('Project inquiry error:', result);
+        setProjectSubmitStatus('error');
+        setTimeout(() => setProjectSubmitStatus('idle'), 5000);
+      }
     } catch (error) {
       console.error('Project inquiry submission error:', error);
       setProjectSubmitStatus('error');
@@ -862,29 +867,8 @@ export default function TechHousePage() {
               </div>
             </div>
 
-            {/* Status Messages */}
-            {projectSubmitStatus === 'success' && (
-              <div className="mx-6 mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <div className="flex items-center gap-2 text-green-800">
-                  <CheckCircle className="w-5 h-5" />
-                  <span className="font-medium">Project inquiry sent!</span>
-                </div>
-                <p className="text-sm text-green-700 mt-1">We&apos;ll get back to you within 24 hours to discuss your project.</p>
-              </div>
-            )}
-            
-            {projectSubmitStatus === 'error' && (
-              <div className="mx-6 mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <div className="flex items-center gap-2 text-red-800">
-                  <X className="w-5 h-5" />
-                  <span className="font-medium">Failed to send inquiry</span>
-                </div>
-                <p className="text-sm text-red-700 mt-1">Please try again or contact us directly.</p>
-              </div>
-            )}
-
             {/* Modal Body */}
-            <form onSubmit={handleSubmitPI(onProjectSubmit)} className="px-6 py-8 space-y-4">
+            <form onSubmit={handleSubmitPI(onProjectSubmit)} className="px-6 py-8 space-y-6">
               <div>
                 <Label htmlFor="pi-name" className="mb-2 block">Full Name *</Label>
                 <div className="relative">

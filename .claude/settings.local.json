@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tail:*)"
+      "Bash(tail:*)",
+      "Read(//c/Users/Hamza/Downloads/**)",
+      "WebSearch",
+      "mcp__sequential-thinking__sequentialthinking"
     ],
     "deny": [],
     "ask": []

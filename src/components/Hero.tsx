@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { ChevronDown } from "lucide-react";
+ 
 import Link from "next/link";
 import CircuitHero from "./CircuitHero";
 
@@ -15,9 +15,9 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <section id="home" className="relative h-auto sm:h-screen overflow-visible sm:overflow-hidden bg-white pt-24 sm:pt-0">
+    <section id="home" className="relative min-h-screen overflow-visible sm:overflow-hidden bg-white pt-24 pb-12 sm:pt-28 sm:pb-16 md:py-8 lg:py-12 xl:py-0 flex items-center">
       {/* Animated Background Shapes */}
-      <div className="absolute inset-0 hidden lg:block">
+      <div className="absolute inset-0 hidden 2xl:block">
         {/* Top Left Area (pushed down) */}
         <motion.div
           className="absolute top-32 left-16 w-20 h-20 bg-primary/10 rounded-2xl rotate-12"
@@ -108,10 +108,10 @@ export default function Hero() {
         
       </div>
 
-      <div className="relative h-full mx-auto max-w-7xl grid lg:grid-cols-2 items-center gap-x-8 px-4 sm:px-6 lg:px-12 z-10">
-        {/* Left Column - Hero Text */}
-        <div className="z-10 pr-0 sm:pr-2 text-center sm:text-left">
-          <div className="max-w-2xl mx-auto sm:mx-0">
+      <div className="relative w-full mx-auto max-w-7xl grid lg:grid-cols-2 items-center gap-8 lg:gap-12 px-4 sm:px-6 lg:px-12 z-10">
+        {/* Left Column - Hero Text and Buttons */}
+        <div className="z-10 text-center lg:text-left">
+          <div className="max-w-2xl mx-auto lg:mx-0">
             {/* Healthcare Innovation Leader Badge */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -126,11 +126,11 @@ export default function Hero() {
             </motion.div>
 
             {/* Main Headline with Line Breaks */}
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-              className="mt-6 text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
+              className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
               style={{ willChange: 'transform, opacity' }}
             >
               <span className="text-black">Shaping Tomorrow&apos;s </span>
@@ -138,7 +138,7 @@ export default function Hero() {
             </motion.h1>
 
             {/* Subtext */}
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
@@ -149,7 +149,7 @@ export default function Hero() {
             </motion.p>
 
             {/* Action Buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65, ease: "easeOut" }}
@@ -188,32 +188,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Down Arrow */}
-      <div className="hidden sm:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.button
-            className="p-3 rounded-full hover:bg-gray-100 transition-colors duration-300 group"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={{ scale: 1.1 }}
-            onClick={() => {
-              const nextSection = document.getElementById('gendlr') || document.querySelector('section:nth-child(2)');
-              if (nextSection) {
-                nextSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            <ChevronDown 
-              className="w-6 h-6 text-gray-400 group-hover:text-primary transition-colors duration-300" 
-              strokeWidth={2}
-            />
-          </motion.button>
-        </motion.div>
-      </div>
+ 
     </section>
   );
 }

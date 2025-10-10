@@ -2,14 +2,13 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Phone, Mail, MapPin, ArrowUpRight, Loader2, CheckCircle, X } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowUpRight, Loader2, CheckCircle } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,12 +31,9 @@ export default function Footer() {
       if (response.ok) {
         setSubscribeStatus('success');
         setEmail('');
-        setShowSuccessPopup(true);
-        // Auto-dismiss popup after 5 seconds
         setTimeout(() => {
-          setShowSuccessPopup(false);
           setSubscribeStatus('idle');
-        }, 5000);
+        }, 3000);
       } else {
         setSubscribeStatus('error');
         setTimeout(() => setSubscribeStatus('idle'), 3000);
@@ -49,59 +45,8 @@ export default function Footer() {
     }
   };
 
-  const closeSuccessPopup = () => {
-    setShowSuccessPopup(false);
-    setSubscribeStatus('idle');
-  };
-
   return (
-    <>
-      {/* Success Popup Modal */}
-      {showSuccessPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div 
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={closeSuccessPopup}
-          />
-          
-          {/* Modal */}
-          <div className="relative bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl animate-modalPop transform-gpu">
-            {/* Close button */}
-            <button
-              onClick={closeSuccessPopup}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            
-            {/* Success content */}
-            <div className="text-center">
-              <div className="mb-4 mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-8 h-8 text-green-600" />
-              </div>
-              
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                🎉 Welcome to our community!
-              </h3>
-              
-              <p className="text-gray-600 leading-relaxed">
-                You&apos;re now subscribed to our newsletter and will receive the latest healthcare 
-                innovations and insights directly to your inbox.
-              </p>
-              
-              <Button 
-                onClick={closeSuccessPopup}
-                className="mt-6 bg-primary hover:bg-primary/90 text-white px-6 py-2"
-              >
-                Got it!
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <footer className="bg-neutral-900 border-t border-white/10 overflow-hidden">
+    <footer className="bg-neutral-900 border-t border-white/10 overflow-hidden">
 
       {/* Main Footer Content */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
@@ -140,7 +85,7 @@ export default function Footer() {
                 className="bg-white text-gray-900 placeholder:text-gray-500 border-0 rounded-xl h-10 w-full sm:w-56"
                 required
               />
-              <Button 
+              <Button
                 type="submit"
                 disabled={subscribeStatus === 'loading' || !email}
                 className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-2 flex-shrink-0 disabled:opacity-50 w-full sm:w-auto"
@@ -149,6 +94,11 @@ export default function Footer() {
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     <span>Subscribing...</span>
+                  </>
+                ) : subscribeStatus === 'success' ? (
+                  <>
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    <span>Subscribed!</span>
                   </>
                 ) : (
                   <div className="inline-flex items-center gap-2">
@@ -206,6 +156,5 @@ export default function Footer() {
 
       </div>
     </footer>
-    </>
   );
 }

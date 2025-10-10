@@ -28,33 +28,40 @@ export default function ProgramsPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    
-    // Create email content
-    const emailContent = `
-Professional Development Program Application
 
-Personal Information:
-- Full Name: ${formData.get('fullName')}
-- Email: ${formData.get('email')}
-- Contact Number: ${formData.get('contactNumber')}
+    // Create data object
+    const data = {
+      fullName: formData.get('fullName') as string,
+      email: formData.get('email') as string,
+      contactNumber: formData.get('contactNumber') as string,
+      currentRole: formData.get('currentRole') as string,
+      currentOrganization: formData.get('currentOrganization') as string,
+      programInterest: formData.get('programInterest') as string,
+      plannedKPIs: formData.get('plannedKPIs') as string,
+    };
 
-Professional Information:
-- Current Role/Title: ${formData.get('currentRole')}
-- Current Organization: ${formData.get('currentOrganization')}
-- Program Interest: ${formData.get('programInterest')}
-- Planned KPIs: ${formData.get('plannedKPIs')}
-    `;
+    try {
+      const response = await fetch('/api/program-design', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-    // Create mailto link
-    const subject = encodeURIComponent('Professional Development Program Application');
-    const body = encodeURIComponent(emailContent);
-    const mailtoLink = `mailto:sehatlings@gmail.com?subject=${subject}&body=${body}`;
-    
-    // Open email client
-    window.location.href = mailtoLink;
-    
-    // Close modal
-    setIsModalOpen(false);
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Close modal on success
+        setIsModalOpen(false);
+      } else {
+        console.error('Program design application error:', result);
+        alert('Failed to submit application. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting program design application:', error);
+      alert('Failed to submit application. Please try again.');
+    }
   };
 
   return (

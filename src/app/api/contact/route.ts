@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
     `;
 
     const result = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
+      from: 'Contact Form <noreply@sehatlings.com>',
       to: [process.env.CONTACT_EMAIL || 'contact@sehatlings.com'],
       subject: `New Contact: ${validatedData.fullName} - ${validatedData.reason}`,
       html: emailHtml,

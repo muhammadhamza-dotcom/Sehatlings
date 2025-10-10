@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     `;
 
     const result = await resend.emails.send({
-      from: 'Newsletter <onboarding@resend.dev>',
+      from: 'Newsletter <newsletter@sehatlings.com>',
       to: [process.env.NEWSLETTER_EMAIL || 'connect@sehatlings.com'],
       subject: `New Newsletter Subscription: ${validatedData.emailAddress}`,
       html: emailHtml,

@@ -39,11 +39,11 @@ export default function TeamPage() {
               transition={{ duration: 0.05, ease: "easeOut" }}
             >
               <div className="h-80 w-full rounded-2xl overflow-hidden bg-muted/40 group-hover:shadow-lg transition-all duration-300">
-                <Image src="/agha.webp" alt="Agha Muhammad Hassaan Khan" width={640} height={240} className="w-full h-full object-cover" />
+                <Image src="/agha.webp" alt="Agha Hassaan Khan" width={640} height={240} className="w-full h-full object-cover" />
               </div>
               <div className="mt-4 flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">Agha Muhammad Hassaan Khan</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Agha Hassaan Khan</h3>
                   <p className="text-sm text-gray-600">Chief Executive Officer</p>
                 </div>
                 <div className="flex gap-2">
@@ -103,7 +103,7 @@ export default function TeamPage() {
               transition={{ duration: 0.05, ease: "easeOut" }}
             >
               <div className="h-80 w-full rounded-2xl overflow-hidden bg-muted/40">
-                <Image src="/hamza7.webp" alt="Rao Muhammad Hamza" width={640} height={240} className="w-full h-full object-cover" />
+                <Image src="/hamza2.webp" alt="Rao Muhammad Hamza" width={640} height={240} className="w-full h-full object-cover" />
               </div>
               <div className="mt-4 flex items-start justify-between">
                 <div>

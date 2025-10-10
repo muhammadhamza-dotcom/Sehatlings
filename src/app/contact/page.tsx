@@ -1,5 +1,5 @@
 "use client";
-import { Phone, Mail, MapPin, Loader2, CheckCircle, AlertCircle, User } from "lucide-react";
+import { Phone, Mail, MapPin, Loader2, User } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -110,11 +110,11 @@ export default function ContactPage() {
   return (
     <main key="contact" className="bg-white min-h-screen pt-24 md:pt-28 relative overflow-hidden">
       {/* Animated Background Shapes */}
-      <div className="absolute inset-0 hidden lg:block">
+      <div className="absolute inset-0 hidden 2xl:block">
         {/* Top Left Area */}
         <motion.div
-          className="absolute top-16 left-16 w-20 h-20 bg-primary/10 rounded-2xl rotate-12"
-          animate={{ 
+          className="absolute top-32 left-16 w-20 h-20 bg-primary/10 rounded-2xl rotate-12"
+          animate={{
             y: [0, -15, 0],
             rotate: [12, 24, 12]
           }}
@@ -199,28 +199,7 @@ export default function ContactPage() {
             <h2 className="text-xl font-semibold text-gray-900">Or fill out the form below</h2>
             <p className="mt-1 text-sm text-black/60">We typically respond within 6 hours.</p>
 
-            {/* Status Messages */}
-            {submitStatus === 'success' && (
-              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <div className="flex items-center gap-2 text-green-800">
-                  <CheckCircle className="w-5 h-5" />
-                  <span className="font-medium">Message sent successfully!</span>
-                </div>
-                <p className="text-sm text-green-700 mt-1">We&apos;ll get back to you within 6 hours.</p>
-              </div>
-            )}
-            
-            {submitStatus === 'error' && (
-              <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <div className="flex items-center gap-2 text-red-800">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="font-medium">Failed to send message</span>
-                </div>
-                <p className="text-sm text-red-700 mt-1">Please try again or contact us directly.</p>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Reason (Select) */}
                 <div>

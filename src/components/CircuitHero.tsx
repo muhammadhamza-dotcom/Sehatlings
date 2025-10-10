@@ -95,7 +95,7 @@ export default function CircuitHero() {
   return (
     <div className="w-full h-full overflow-hidden bg-white">
       <svg
-        className="w-full h-full min-h-[420px] sm:min-h-[560px] lg:min-h-[680px]"
+        className="w-full h-full min-h-[192px] sm:min-h-[280px] md:min-h-[320px] lg:min-h-[384px] xl:min-h-[480px]"
         viewBox="0 0 200 200"
         preserveAspectRatio="xMidYMid meet"
       >
@@ -140,7 +140,7 @@ export default function CircuitHero() {
           </filter>
         </defs>
 
-        <g transform="translate(0,0) translate(100,100) scale(1.15) translate(-100,-100)">
+        <g transform="translate(0,0) translate(100,100) scale(1.05) translate(-100,-100)">
         {/* Central CPU Chip will appear after pins */}
 
         {/* TOP PINS (animated natively) */}

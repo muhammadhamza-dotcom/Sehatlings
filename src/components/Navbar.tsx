@@ -61,7 +61,7 @@ export default function Navbar() {
           aria-label={isMobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileOpen}
           onClick={() => setIsMobileOpen((v) => !v)}
-          className="md:hidden -ml-2 inline-flex items-center justify-center w-10 h-10 rounded-lg text-primary hover:bg-primary/10 transition-colors"
+          className="xl:hidden -ml-2 inline-flex items-center justify-center w-10 h-10 rounded-lg text-primary hover:bg-primary/10 transition-colors"
         >
           <div className="relative w-6 h-6">
             <AnimatePresence initial={false} mode="wait">
@@ -92,7 +92,7 @@ export default function Navbar() {
           </div>
         </button>
 
-        <Link href="/" className="flex-shrink-0 h-20 w-36 sm:w-48 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+        <Link href="/" className="flex-shrink-0 h-20 w-36 sm:w-48 absolute left-1/2 -translate-x-1/2 xl:static xl:translate-x-0">
           <Image
             src="/logo1.webp"
             alt="Sehatlings"
@@ -103,7 +103,7 @@ export default function Navbar() {
         </Link>
 
         {/* Centered Navigation */}
-        <nav className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
+        <nav className="hidden xl:flex flex-1 items-center justify-center gap-5">
           {items.map((item) => {
             const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
@@ -123,7 +123,7 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop Action Button - Right */}
-        <div className="hidden md:block ml-4 lg:ml-8 xl:ml-12">
+        <div className="hidden xl:block ml-6">
           <Button asChild className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-2 flex-shrink-0">
             <Link href="/contact" className="inline-flex items-center gap-2">
               <span>Get Started</span>
@@ -133,14 +133,14 @@ export default function Navbar() {
         </div>
 
         {/* Spacer to balance layout on mobile */}
-        <div className="md:hidden w-10 h-10 ml-auto" />
+        <div className="xl:hidden w-10 h-10 ml-auto" />
 
         {/* Mobile Menu Panel */}
         <motion.div
           initial={false}
           animate={{ height: isMobileOpen ? "auto" : 0, opacity: isMobileOpen ? 1 : 0 }}
           transition={{ duration: 0.2 }}
-          className="md:hidden absolute left-0 right-0 top-full mt-0 overflow-hidden"
+          className="xl:hidden absolute left-0 right-0 top-full mt-0 overflow-hidden"
         >
           <div className="bg-white border-0 rounded-b-2xl p-2 flex flex-col w-full">
             {items.map((item) => {

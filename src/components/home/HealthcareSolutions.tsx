@@ -46,25 +46,25 @@ export default function HealthcareSolutions() {
   ];
 
   return (
-    <section id="healthcare-solutions" className="bg-white py-20 lg:py-32 relative">
+    <section id="healthcare-solutions" className="bg-white py-16 md:py-24 lg:py-32 relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         
         {/* Header */}
-        <div data-animate className="scroll-fade-up text-center mb-12 sm:mb-16 lg:mb-20">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
+        <div data-animate className="scroll-fade-up text-center mb-10 md:mb-14 lg:mb-20">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
             Comprehensive Healthcare Solutions
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
             End-to-end healthcare solutions designed to address specific industry challenges with innovation and expertise.
           </p>
         </div>
 
         {/* Solutions Grid */}
-        <div data-animate className="scroll-stagger grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div data-animate className="scroll-stagger grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {solutions.map((solution, index) => (
             <div
               key={index}
-              className="group bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all duration-300 hover:border-primary/20"
+              className="group bg-white border border-gray-200 rounded-2xl p-6 md:p-8 hover:shadow-lg transition-all duration-300 hover:border-primary/20"
             >
               {/* Icon */}
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-300 hover:scale-105">

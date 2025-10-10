@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Check, Brain, Route, TrendingUp, Zap, CheckCircle, Stethoscope, X, Mail, Phone, MapPin, Building, User } from "lucide-react";
+import { ArrowRight, Check, Brain, Route, TrendingUp, Zap, Stethoscope, X, Mail, Phone, MapPin, Building, User } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -169,27 +169,31 @@ export default function GendlrPage() {
 
   const onSubmit = async (data: LabRegistrationData) => {
     setSubmitStatus('loading');
-    
+
     try {
-      const subject = encodeURIComponent('Lab Registration - ' + data.labName);
-      const body = encodeURIComponent(
-        `Lab Registration Details:\n\n` +
-        `Lab Name: ${data.labName}\n` +
-        `Lab Director/Primary Contact: ${data.contactName}\n` +
-        `Email Address: ${data.email}\n` +
-        `Phone Number: ${data.phone}\n` +
-        `Lab Address: ${data.address}\n\n` +
-        `This registration was submitted through the GENDLR platform.`
-      );
-      
-      window.location.href = `mailto:sehatlings@gmail.com?subject=${subject}&body=${body}`;
-      setSubmitStatus('success');
-      reset();
-      
-      setTimeout(() => {
-        setIsModalOpen(false);
-        setSubmitStatus('idle');
-      }, 2000);
+      const response = await fetch('/api/lab-registration', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitStatus('success');
+        reset();
+
+        setTimeout(() => {
+          setIsModalOpen(false);
+          setSubmitStatus('idle');
+        }, 2000);
+      } else {
+        console.error('Lab registration error:', result);
+        setSubmitStatus('error');
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      }
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
@@ -199,26 +203,31 @@ export default function GendlrPage() {
 
   const onEarlyAccessSubmit = async (data: EarlyAccessData) => {
     setEarlyAccessSubmitStatus('loading');
-    
+
     try {
-      const subject = encodeURIComponent('Early Access Registration - ' + data.name);
-      const body = encodeURIComponent(
-        `Early Access Registration Details:\n\n` +
-        `Name: ${data.name}\n` +
-        `Email: ${data.email}\n` +
-        `Industry: ${data.industry}\n` +
-        `Phone: ${data.phone}\n\n` +
-        `This registration was submitted through the GENDLR Early Access form.`
-      );
-      
-      window.location.href = `mailto:sehatlings@gmail.com?subject=${subject}&body=${body}`;
-      setEarlyAccessSubmitStatus('success');
-      resetEA();
-      
-      setTimeout(() => {
-        setIsEarlyAccessModalOpen(false);
-        setEarlyAccessSubmitStatus('idle');
-      }, 2000);
+      const response = await fetch('/api/early-access', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setEarlyAccessSubmitStatus('success');
+        resetEA();
+
+        setTimeout(() => {
+          setIsEarlyAccessModalOpen(false);
+          setEarlyAccessSubmitStatus('idle');
+        }, 2000);
+      } else {
+        console.error('Early access registration error:', result);
+        setEarlyAccessSubmitStatus('error');
+        setTimeout(() => setEarlyAccessSubmitStatus('idle'), 5000);
+      }
     } catch (error) {
       console.error('Early access form submission error:', error);
       setEarlyAccessSubmitStatus('error');
@@ -480,29 +489,8 @@ export default function GendlrPage() {
               </div>
             </div>
 
-            {/* Status Messages */}
-            {submitStatus === 'success' && (
-              <div className="mx-6 mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <div className="flex items-center gap-2 text-green-800">
-                  <CheckCircle className="w-5 h-5" />
-                  <span className="font-medium">Registration successful!</span>
-                </div>
-                <p className="text-sm text-green-700 mt-1">We&apos;ll contact you within 24 hours to get started.</p>
-              </div>
-            )}
-            
-            {submitStatus === 'error' && (
-              <div className="mx-6 mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <div className="flex items-center gap-2 text-red-800">
-                  <X className="w-5 h-5" />
-                  <span className="font-medium">Registration failed</span>
-                </div>
-                <p className="text-sm text-red-700 mt-1">Please try again or contact us directly.</p>
-              </div>
-            )}
-
             {/* Modal Body */}
-            <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-8 space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-8 space-y-6">
               <div>
                 <Label htmlFor="labName" className="mb-2 block">Lab Name *</Label>
                 <div className="relative">
@@ -632,29 +620,8 @@ export default function GendlrPage() {
               </div>
             </div>
 
-            {/* Status Messages */}
-            {earlyAccessSubmitStatus === 'success' && (
-              <div className="mx-6 mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <div className="flex items-center gap-2 text-green-800">
-                  <CheckCircle className="w-5 h-5" />
-                  <span className="font-medium">Registration successful!</span>
-                </div>
-                <p className="text-sm text-green-700 mt-1">Thank you for your interest. We&apos;ll be in touch soon!</p>
-              </div>
-            )}
-            
-            {earlyAccessSubmitStatus === 'error' && (
-              <div className="mx-6 mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <div className="flex items-center gap-2 text-red-800">
-                  <X className="w-5 h-5" />
-                  <span className="font-medium">Registration failed</span>
-                </div>
-                <p className="text-sm text-red-700 mt-1">Please try again or contact us directly.</p>
-              </div>
-            )}
-
             {/* Modal Body */}
-            <form onSubmit={handleSubmitEA(onEarlyAccessSubmit)} className="px-6 py-8 space-y-4">
+            <form onSubmit={handleSubmitEA(onEarlyAccessSubmit)} className="px-6 py-8 space-y-6">
               <div>
                 <Label htmlFor="ea-name" className="mb-2 block">Full Name *</Label>
                 <div className="relative">
