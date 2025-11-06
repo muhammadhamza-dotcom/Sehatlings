@@ -11,19 +11,20 @@ import { motion } from "framer-motion";
 export default function ProgramsPage() {
   useScrollAnimation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBootcampModalOpen, setIsBootcampModalOpen] = useState(false);
 
   // Prevent background scroll when modal is open
   useEffect(() => {
-    if (isModalOpen) {
+    if (isModalOpen || isBootcampModalOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, isBootcampModalOpen]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -123,21 +124,25 @@ export default function ProgramsPage() {
               <span className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                 <Crown className="w-5 h-5" />
               </span>
-              <h3 className="text-lg font-semibold">Healthcare Leadership Program</h3>
+              <h3 className="text-lg font-semibold">Healthcare Leadership Bootcamp</h3>
             </div>
-            <p className="text-primary font-medium">Transform into a Healthcare Leader</p>
+            <p className="text-primary font-medium">The 48 Hour Leadership Sprint</p>
 
             <div className="mt-6 flex items-center justify-center gap-6 text-sm text-black/60">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-primary" />
-                <span>4 Weeks</span>
+                <span>2 Days</span>
               </div>
             </div>
 
             <div className="mt-8 text-center">
-              <span className="inline-flex items-center justify-center bg-gray-100 text-gray-600 font-semibold px-5 py-2 rounded-lg cursor-not-allowed">
-                Coming Soon
-              </span>
+              <button
+                onClick={() => setIsBootcampModalOpen(true)}
+                className="inline-flex items-center justify-center bg-primary text-white font-semibold px-5 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Registrations Open
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </button>
             </div>
           </div>
 
@@ -258,6 +263,101 @@ export default function ProgramsPage() {
           </div>
         </div>
       </section>
+
+      {/* Bootcamp Details Modal */}
+      {isBootcampModalOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+          >
+            {/* Modal Header */}
+            <div className="px-6 pt-10 pb-6 border-b border-gray-100 relative">
+              <button
+                onClick={() => setIsBootcampModalOpen(false)}
+                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+              <div className="text-center">
+                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                  THE 48-HOUR LEADERSHIP SPRINT
+                </h2>
+                <p className="text-base md:text-lg text-gray-700 font-semibold">
+                  Building a Framework to transform of Physician Burnout to Systemic Change
+                </p>
+              </div>
+            </div>
+
+            {/* Modal Body */}
+            <div className="px-6 py-8 space-y-8">
+              {/* Day 1 Section */}
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold text-gray-900">
+                  Day 1: The Applied Leadership Lab
+                </h3>
+                <div className="space-y-2">
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Theme:</span> Leadership Traits in Action & Foundational Resilience
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Goal:</span> Practice all identified traits through high-stakes, time-pressured activities.
+                  </p>
+                </div>
+              </div>
+
+              {/* Day 2 Section */}
+              <div className="space-y-3">
+                <h3 className="text-xl font-bold text-gray-900">
+                  Day 2: The Systemic Change Lab
+                </h3>
+                <div className="space-y-2">
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Theme:</span> Medical Training, Legacy, and Debatable Dialogue
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Goal:</span> Apply leadership skills to real medical scenarios with observation, critique, and high-stakes debate.
+                  </p>
+                </div>
+              </div>
+
+              {/* Event Details */}
+              <div className="bg-gray-50 rounded-xl p-6 space-y-3">
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Event Details</h3>
+                <div className="space-y-2">
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Venue:</span> Auditorium, National Incubation Center Karachi, NED University
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Time:</span> 10:30 am to 4:30 pm
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Date:</span> 27 & 28 November
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary">Includes:</span> Lunch, Certificate, Group Photography
+                  </p>
+                </div>
+              </div>
+
+              {/* Register Button */}
+              <div className="pt-4">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSeAx9hL2XcsOosc1yD0lfsTmW9Tg-EU1UXXwrf1xuBXnCpi-Q/viewform?usp=dialog"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors focus:ring-2 focus:ring-primary/20 focus:outline-none"
+                >
+                  Register Now
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       {/* Professional Development Program Modal */}
       {isModalOpen && (
