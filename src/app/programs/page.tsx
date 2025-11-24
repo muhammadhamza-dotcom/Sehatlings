@@ -137,11 +137,10 @@ export default function ProgramsPage() {
 
             <div className="mt-8 text-center">
               <button
-                onClick={() => setIsBootcampModalOpen(true)}
-                className="inline-flex items-center justify-center bg-primary text-white font-semibold px-5 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                disabled
+                className="inline-flex items-center justify-center bg-gray-400 text-white font-semibold px-5 py-2 rounded-lg cursor-not-allowed"
               >
-                Registrations Open
-                <ArrowRight className="ml-2 w-4 h-4" />
+                Registrations Closed
               </button>
             </div>
           </div>
