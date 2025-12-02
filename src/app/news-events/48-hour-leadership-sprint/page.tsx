@@ -124,16 +124,26 @@ export default function LeadershipSprintArticle() {
 
           {/* LinkedIn Embed Section */}
           <div className="mt-12 pt-8 border-t border-gray-200">
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center w-full mb-6">
               <iframe
-                src="https://www.linkedin.com/embed/feed/update/urn:li:share:7401547473225510914?collapsed=1"
+                src="https://www.linkedin.com/embed/feed/update/urn:li:share:7401547473225510914"
                 height="670"
                 width="504"
                 frameBorder="0"
                 allowFullScreen={true}
                 title="Embedded post"
-                style={{ display: 'block', margin: '0 auto' }}
+                className="border border-gray-200 rounded-lg"
               />
+            </div>
+            <div className="text-center">
+              <a
+                href="https://www.linkedin.com/feed/update/urn:li:share:7401547473225510914"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-all duration-300 shadow-sm hover:shadow-md"
+              >
+                View Post on LinkedIn →
+              </a>
             </div>
           </div>
         </div>
