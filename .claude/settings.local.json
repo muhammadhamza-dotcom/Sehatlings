@@ -4,7 +4,10 @@
       "Bash(tail:*)",
       "Read(//c/Users/Hamza/Downloads/**)",
       "WebSearch",
-      "mcp__sequential-thinking__sequentialthinking"
+      "mcp__sequential-thinking__sequentialthinking",
+      "WebFetch(domain:iobm.edu.pk)",
+      "Bash(Move-Item \"The 48 Hour LS.jpeg\" \"public/48-hour-leadership-sprint.jpeg\")",
+      "mcp__playwright__browser_navigate"
     ],
     "deny": [],
     "ask": []

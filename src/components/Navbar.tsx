@@ -43,6 +43,7 @@ export default function Navbar() {
     { label: "Tech House", href: "/tech-house" },
     { label: "Inspection Consultancy", href: "/inspection-consultancy" },
     { label: "Programs", href: "/programs" },
+    { label: "News & Events", href: "/news-events" },
     { label: "Contact", href: "/contact" },
   ];
 
