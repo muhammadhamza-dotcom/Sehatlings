@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, Users, Award, Download, MapPin, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export default function LeadershipSprintArticle() {
@@ -72,7 +72,7 @@ export default function LeadershipSprintArticle() {
           <article className="prose prose-lg max-w-none">
             <div data-animate className="scroll-fade-up">
               <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                Sehatlings, in collaboration with GVON, successfully hosted "The 48-Hour Leadership Sprint" at the National Incubation Center (NIC) Karachi. This intensive bootcamp brought together 22 passionate individuals from leading healthcare institutions including Aga Khan University Hospital (AKUH), Sindh Institute of Urology and Transplantation (SIUT), Karachi Medical & Dental College (KMDC), and various NIC-incubated startups.
+                Sehatlings, in collaboration with GVON, successfully hosted &quot;The 48-Hour Leadership Sprint&quot; at the National Incubation Center (NIC) Karachi. This intensive bootcamp brought together 22 passionate individuals from leading healthcare institutions including Aga Khan University Hospital (AKUH), Sindh Institute of Urology and Transplantation (SIUT), Karachi Medical & Dental College (KMDC), and various NIC-incubated startups.
               </p>
             </div>
 
@@ -101,7 +101,7 @@ export default function LeadershipSprintArticle() {
                 Combating the BAD Framework
               </h2>
               <p className="text-gray-700 leading-relaxed mb-6">
-                The bootcamp specifically addressed the <strong>"BAD Framework"</strong> - <em>Blame, Accuse, and Demand</em> - prevalent in traditional healthcare settings. Participants learned collaborative leadership approaches that foster trust, open communication, and shared problem-solving to create more effective and supportive healthcare environments.
+                The bootcamp specifically addressed the <strong>&quot;BAD Framework&quot;</strong> - <em>Blame, Accuse, and Demand</em> - prevalent in traditional healthcare settings. Participants learned collaborative leadership approaches that foster trust, open communication, and shared problem-solving to create more effective and supportive healthcare environments.
               </p>
               <p className="text-gray-700 leading-relaxed mb-4">
                 <strong>Blame</strong> was replaced with accountability and support, <strong>Accuse</strong> gave way to trust and understanding, while <strong>Demand</strong> was transformed into collaboration and dialogue.
@@ -117,7 +117,7 @@ export default function LeadershipSprintArticle() {
                 This successful collaboration between <strong>Sehatlings</strong> and <strong>GVON</strong>, hosted at <em>NIC Karachi</em>, demonstrates the power of bringing together healthcare professionals and innovators to develop the next generation of healthcare leaders. The bootcamp created a unique space for cross-institutional learning and networking, fostering relationships that will drive healthcare innovation forward.
               </p>
               <p className="text-gray-700 leading-relaxed italic text-lg border-l-4 border-primary pl-6 py-2">
-                "Together, we're building a future where healthcare leadership is defined by collaboration, innovation, and compassion."
+                &quot;Together, we&apos;re building a future where healthcare leadership is defined by collaboration, innovation, and compassion.&quot;
               </p>
             </div>
           </article>
