@@ -46,15 +46,15 @@ export default function HealthcareSolutions() {
   ];
 
   return (
-    <section id="healthcare-solutions" className="bg-white py-16 md:py-24 lg:py-32 relative">
+    <section id="healthcare-solutions" className="bg-warm-gradient py-16 md:py-24 lg:py-32 relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        
+
         {/* Header */}
         <div data-animate className="scroll-fade-up text-center mb-10 md:mb-14 lg:mb-20">
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 md:mb-6 leading-tight">
             Comprehensive Healthcare Solutions
           </h1>
-          <p className="text-base md:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed font-body">
             End-to-end healthcare solutions designed to address specific industry challenges with innovation and expertise.
           </p>
         </div>
@@ -64,18 +64,18 @@ export default function HealthcareSolutions() {
           {solutions.map((solution, index) => (
             <div
               key={index}
-              className="group bg-white border border-gray-200 rounded-2xl p-6 md:p-8 hover:shadow-lg transition-all duration-300 hover:border-primary/20"
+              className="group bg-white rounded-3xl p-6 md:p-8 shadow-soft shadow-soft-hover transition-all duration-500 hover:scale-[1.02]"
             >
-              {/* Icon */}
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-300 hover:scale-105">
-                <solution.icon className="w-8 h-8 text-primary" strokeWidth={2} />
+              {/* Icon Container with gradient background */}
+              <div className="w-20 h-20 bg-pale-gradient rounded-[2rem] flex items-center justify-center mb-6 group-hover:shadow-soft transition-all duration-500 group-hover:rotate-3">
+                <solution.icon className="w-9 h-9 text-primary" strokeWidth={2.5} />
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors duration-400">
                 {solution.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed font-body">
                 {solution.description}
               </p>
             </div>

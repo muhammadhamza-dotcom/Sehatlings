@@ -29,56 +29,75 @@ export default function NewsEventsPage() {
   useScrollAnimation();
 
   return (
-    <main key="news-events">
-      {/* Hero Banner */}
-      <section className="relative h-[50vh] min-h-[400px] w-full overflow-hidden pt-20 md:pt-24 bg-primary">
-        <div className="relative z-10 h-full flex items-center justify-center px-6">
-          <div data-animate className="scroll-fade-up max-w-4xl text-center text-white">
-            <span data-animate className="scroll-fade-up inline-block px-4 py-2 rounded-full text-sm font-bold tracking-wide mb-4 bg-white/90 text-primary border border-white/60 shadow-sm backdrop-blur-sm" style={{transitionDelay: '0.2s'}}>
-              Latest Updates
+    <main key="news-events" className="bg-cream min-h-screen">
+      {/* Hero Banner - Consistent with other pages */}
+      <section className="relative h-[60vh] min-h-[500px] w-full overflow-hidden flex items-center justify-center bg-maroon">
+        {/* Background Gradient & Grain */}
+        <div className="absolute inset-0 bg-gradient-to-br from-maroon-dark via-maroon to-maroon-light opacity-90" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
+            backgroundRepeat: 'repeat'
+          }}
+          aria-hidden
+        />
+
+        {/* Abstract Shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-maroon-light rounded-full blur-[100px] opacity-30" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-maroon-dark rounded-full blur-[100px] opacity-30" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-7xl px-6 text-center">
+          <div data-animate className="scroll-fade-up">
+            <span className="inline-block px-4 py-2 rounded-full text-sm font-medium uppercase tracking-widest mb-6 bg-white/10 text-white border border-white/20 backdrop-blur-sm">
+              Press & Media
             </span>
-            <h1 data-animate className="scroll-fade-up text-3xl md:text-4xl lg:text-5xl font-bold leading-tight" style={{transitionDelay: '0.4s'}}>
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light text-cream mb-6 leading-tight">
               News & Updates
             </h1>
-            <p data-animate className="scroll-fade-up mt-5 text-base md:text-lg text-white/90 leading-relaxed" style={{transitionDelay: '0.6s'}}>
-              Stay informed about our latest events, programs, and healthcare innovation initiatives
+            <p className="font-sans font-light text-lg md:text-xl text-cream/80 max-w-2xl mx-auto leading-relaxed">
+              Stay informed about our latest healthcare innovation initiatives, transformative programs, and upcoming events.
             </p>
           </div>
         </div>
       </section>
 
       {/* News Grid Section */}
-      <section className="py-16 px-6 bg-white">
+      <section className="py-20 md:py-32 px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Recent News & Updates Header */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
-              Recent News & Updates
-            </h2>
-            <div className="w-20 h-1 bg-primary"></div>
+          {/* Header */}
+          <div className="flex items-end justify-between mb-12 border-b border-gray-200 pb-6">
+            <div>
+              <h2 className="font-serif text-3xl md:text-4xl text-charcoal mb-3">
+                Latest Stories
+              </h2>
+              <p className="text-gray-600 font-light">Insight into our journey and community impact</p>
+            </div>
           </div>
 
           {/* News Grid */}
-          <div data-animate className="scroll-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div data-animate className="scroll-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {newsItems.map((item) => (
               <motion.div
                 key={item.id}
-                className="group"
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.2 }}
+                className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-soft hover:shadow-dramatic transition-all duration-300 hover:-translate-y-1"
               >
-                <Link href={`/news-events/${item.id}`} target="_blank" rel="noopener noreferrer" className="block">
-                  {/* Image */}
-                  <div className="relative h-56 rounded-lg overflow-hidden mb-4 bg-gray-100">
+                <Link href={`/news-events/${item.id}`} className="flex flex-col h-full">
+                  {/* Image Container */}
+                  <div className="relative h-64 overflow-hidden bg-gray-100">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300" />
+
                     {item.category && (
-                      <div className="absolute top-3 left-3">
-                        <span className="px-3 py-1 bg-primary text-white text-xs font-semibold rounded-full">
+                      <div className="absolute top-4 left-4">
+                        <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-maroon text-xs font-semibold uppercase tracking-wider rounded-full shadow-sm">
                           {item.category}
                         </span>
                       </div>
@@ -86,19 +105,19 @@ export default function NewsEventsPage() {
                   </div>
 
                   {/* Content */}
-                  <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                      {item.title}
-                    </h3>
-
-                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                      <Calendar className="w-4 h-4" />
+                  <div className="flex flex-col flex-grow p-8">
+                    <div className="flex items-center gap-2 text-sm text-gray-400 mb-4 font-medium uppercase tracking-wide">
+                      <Calendar className="w-4 h-4 text-maroon" />
                       <span>{item.date}</span>
                     </div>
 
-                    <div className="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
-                      Read More
-                      <ArrowRight className="w-4 h-4" />
+                    <h3 className="font-serif text-xl font-medium text-charcoal mb-4 group-hover:text-maroon transition-colors line-clamp-3 leading-snug">
+                      {item.title}
+                    </h3>
+
+                    <div className="mt-auto pt-6 flex items-center text-maroon font-semibold text-sm tracking-wide group/link">
+                      <span className="border-b border-transparent group-hover/link:border-maroon transition-all">Read Full Story</span>
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </Link>
@@ -107,7 +126,6 @@ export default function NewsEventsPage() {
           </div>
         </div>
       </section>
-
     </main>
   );
 }

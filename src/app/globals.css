@@ -4,11 +4,28 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Sehatlings maroon */
+  /* REDESIGN - Dramatic & Warm Color System */
+  --maroon-dark: #5b0203;
+  --maroon: #7d0305;
+  --maroon-light: #a84244;
+  --cream: #faf6f2;
+  --cream-dark: #f0ebe5;
+  --terracotta: #d4877a;
+  --sage: #b5c4b8;
+  --charcoal: #2d2d2d;
+  --white: #ffffff;
+
+  /* Legacy mappings for compatibility */
   --primary: #5b0203;
+  --primary-soft: #8b3234;
+  --primary-pale: #f7e8e9;
   --radius: 0.625rem;
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf6f2;
+  --warm-white: #fffcfa;
+  --warm-cream: #faf8f6;
+  --foreground: #2d2d2d;
+
+  /* Component Colors */
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0.028 261.692);
   --popover: oklch(1 0 0);
@@ -24,11 +41,15 @@
   --border: #e5e7eb;
   --input: #e5e7eb;
   --ring: #e5e7eb;
+
+  /* Chart Colors */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Sidebar */
   --sidebar: #ffffff;
   --sidebar-foreground: #171717;
   --sidebar-primary: #5b0203;
@@ -40,10 +61,30 @@
 }
 
 @theme inline {
+  /* REDESIGN - New color tokens */
+  --color-maroon-dark: var(--maroon-dark);
+  --color-maroon: var(--maroon);
+  --color-maroon-light: var(--maroon-light);
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-terracotta: var(--terracotta);
+  --color-sage: var(--sage);
+  --color-charcoal: var(--charcoal);
+  --color-white: var(--white);
+
+  /* Legacy */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --font-sans: var(--font-syne);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-pale: var(--primary-pale);
+  --color-warm-white: var(--warm-white);
+  --color-warm-cream: var(--warm-cream);
+
+  /* REDESIGN - New font system */
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-accent: var(--font-accent);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -112,8 +153,19 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply text-foreground;
-    background-color: #ffffff;
+    @apply text-charcoal;
+    background-color: #faf6f2; /* Warm cream background */
+  }
+
+  /* Editorial typography */
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
   }
 }
 
@@ -149,8 +201,9 @@
 
 .scroll-fade-up {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(32px);
+  transition: opacity 1s cubic-bezier(0.4, 0.0, 0.2, 1),
+              transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
   will-change: opacity, transform;
 }
 
@@ -251,4 +304,393 @@
 
 .animate-modalPop {
   animation: modalPop 0.2s ease-out forwards;
+}
+
+/* ========================================
+   ORGANIC WELLNESS ANIMATIONS
+   ======================================== */
+
+/* Breathing animation - gentle pulsing */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.95;
+  }
+}
+
+.animate-breathe {
+  animation: breathe 4s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
+/* Gentle float */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float-gentle {
+  animation: float-gentle 6s ease-in-out infinite;
+}
+
+/* Organic blob morph */
+@keyframes blob-morph {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+.animate-blob-morph {
+  animation: blob-morph 8s ease-in-out infinite;
+}
+
+/* Gradient shift for backgrounds */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Blur to focus scroll animation */
+.scroll-blur-focus {
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 1.2s cubic-bezier(0.4, 0.0, 0.2, 1),
+              filter 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  will-change: opacity, filter;
+}
+
+.scroll-blur-focus.animate {
+  opacity: 1;
+  filter: blur(0);
+  will-change: auto;
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Organic blob shape */
+.blob-shape {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+/* Soft shadows */
+.shadow-soft {
+  box-shadow: 0 8px 32px rgba(91, 2, 3, 0.08);
+}
+
+.shadow-soft-lg {
+  box-shadow: 0 16px 48px rgba(91, 2, 3, 0.12);
+}
+
+.shadow-soft-hover {
+  transition: box-shadow 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.shadow-soft-hover:hover {
+  box-shadow: 0 20px 60px rgba(91, 2, 3, 0.15);
+}
+
+/* Warm gradient backgrounds */
+.bg-warm-gradient {
+  background: linear-gradient(135deg, #faf8f6 0%, #fffcfa 100%);
+}
+
+.bg-maroon-gradient {
+  background: linear-gradient(135deg, #5b0203 0%, #8b3234 100%);
+}
+
+.bg-pale-gradient {
+  background: linear-gradient(135deg, #f7e8e9 0%, #faf8f6 100%);
+}
+
+/* Soft glow effect */
+.glow-soft {
+  box-shadow: 0 0 20px rgba(91, 2, 3, 0.15);
+}
+
+.glow-soft-primary {
+  box-shadow: 0 0 30px rgba(91, 2, 3, 0.2);
+}
+
+/* Respect reduced motion for new animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe,
+  .animate-float-gentle,
+  .animate-blob-morph,
+  .animate-gradient-shift,
+  .scroll-blur-focus {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}
+
+/* ========================================
+   COMPLETE REDESIGN - New Utilities
+   ======================================== */
+
+/* Dramatic gradients */
+.bg-hero-gradient {
+  background: radial-gradient(circle at top right, #7d0305, #5b0203);
+}
+
+.bg-warm-gradient {
+  background: linear-gradient(150deg, #faf6f2 0%, #f0ebe5 100%);
+}
+
+.bg-accent-gradient {
+  background: linear-gradient(135deg, #d4877a 0%, #a84244 100%);
+}
+
+/* Grain texture overlay */
+.grain-texture::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Editorial spacing */
+.editorial-spacing {
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Dramatic shadows */
+.shadow-dramatic {
+  box-shadow: 0 20px 60px rgba(91, 2, 3, 0.15), 0 8px 24px rgba(91, 2, 3, 0.1);
+}
+
+.shadow-dramatic-lg {
+  box-shadow: 0 32px 80px rgba(91, 2, 3, 0.2), 0 12px 32px rgba(91, 2, 3, 0.12);
+}
+
+/* Button squish effect */
+.btn-squish:active {
+  transform: scale(0.96);
+}
+
+/* Card lift hover */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 72px rgba(91, 2, 3, 0.18);
+}
+
+/* Diagonal split helper */
+.diagonal-split {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+}
+
+/* Smooth color transitions */
+.transition-colors-smooth {
+  transition: background-color 0.6s cubic-bezier(0.4, 0.0, 0.2, 1),
+              color 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Number counter animation */
+@keyframes count-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-count-up {
+  animation: count-up 0.8s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+/* Scroll snap for horizontal gallery */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 24px;
+}
+
+.scroll-snap-item {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Vertical text */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+/* Breathing glow */
+@keyframes glow-breathe {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(250, 246, 242, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(250, 246, 242, 0.6), 0 0 60px rgba(250, 246, 242, 0.3);
+  }
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 4s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
+/* ========================================
+   GENDLR LIQUID AESTHETIC - New Animations
+   ======================================== */
+
+/* UI font utility */
+.font-ui {
+  font-family: var(--font-ui), var(--font-sans);
+}
+
+/* Terracotta color */
+.text-terracotta { color: #e07856; }
+.bg-terracotta { background-color: #e07856; }
+.border-terracotta { border-color: #e07856; }
+
+/* Gradient mesh animation for orbs */
+@keyframes gradient-mesh {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-gradient-mesh {
+  animation: gradient-mesh 20s ease-in-out infinite;
+}
+
+/* Floating animation for gradient orbs */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse glow effect */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(125, 3, 5, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(125, 3, 5, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Radial gradient utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Scanning line effect */
+@keyframes scan-line {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-scan-line {
+  animation: scan-line 3s ease-in-out infinite;
+}
+
+/* Typing indicator dots */
+@keyframes typing-dot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-typing-dot {
+  animation: typing-dot 1.4s ease-in-out infinite;
+}
+
+/* Orbital rotation */
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(120px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(120px) rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+/* Waveform pulse */
+@keyframes waveform-pulse {
+  0%, 100% {
+    height: 30%;
+  }
+  50% {
+    height: 80%;
+  }
+}
+
+.animate-waveform {
+  animation: waveform-pulse 1s ease-in-out infinite;
 }

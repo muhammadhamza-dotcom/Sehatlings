@@ -1,9 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
- 
+
 import Link from "next/link";
 import CircuitHero from "./CircuitHero";
+import OrganicBlob from "./ui/OrganicBlob";
 
 export default function Hero() {
   useEffect(() => {
@@ -15,97 +16,104 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <section id="home" className="relative min-h-screen overflow-visible sm:overflow-hidden bg-white pt-24 pb-12 sm:pt-28 sm:pb-16 md:py-8 lg:py-12 xl:py-0 flex items-center">
-      {/* Animated Background Shapes */}
-      <div className="absolute inset-0 hidden 2xl:block">
-        {/* Top Left Area (pushed down) */}
-        <motion.div
-          className="absolute top-32 left-16 w-20 h-20 bg-primary/10 rounded-2xl rotate-12"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1,
-            scale: 1,
-            y: [0, -15, 0],
-            rotate: [12, 24, 12]
-          }}
-          transition={{ 
-            opacity: { duration: 0.8, delay: 0.5 },
-            scale: { duration: 0.8, delay: 0.5 },
-            y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
-            rotate: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1.3 }
-          }}
-        />
-        
-        {/* Top Right Area (pushed down) */}
-        <motion.div
-          className="absolute top-40 right-32 w-12 h-12 bg-primary/10 rounded-full"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1,
-            scale: [1, 1.1, 1],
-            y: [0, 20, 0]
-          }}
-          transition={{ 
-            opacity: { duration: 0.8, delay: 0.5 },
-            scale: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.3, times: [0, 0.5, 1] },
-            y: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.3 }
-          }}
-        />
-        
-        {/* Right Side (slightly lower) */}
-        <motion.div
-          className="absolute top-[60%] right-16 w-16 h-16 bg-primary/10 rounded-3xl rotate-45"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1,
-            scale: 1,
-            y: [0, -10, 0],
-            rotate: [45, 60, 45],
-            x: [0, 5, 0]
-          }}
-          transition={{ 
-            opacity: { duration: 0.8, delay: 0.5 },
-            scale: { duration: 0.8, delay: 0.5 },
-            y: { duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
-            rotate: { duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
-            x: { duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1.3 }
-          }}
-        />
-        
-        {/* Bottom Left */}
-        <motion.div
-          className="absolute bottom-32 left-24 w-14 h-14 bg-primary/10 rounded-xl"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1,
-            scale: 1,
-            x: [0, 15, 0],
-            y: [0, -12, 0]
-          }}
-          transition={{ 
-            opacity: { duration: 0.8, delay: 0.5 },
-            scale: { duration: 0.8, delay: 0.5 },
-            x: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.3 },
-            y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.3 }
-          }}
-        />
-        
-        {/* Bottom Right */}
-        <motion.div
-          className="absolute bottom-20 right-20 w-10 h-10 bg-primary/10 rounded-full"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1,
-            scale: [1, 1.15, 1],
-            y: [0, -18, 0]
-          }}
-          transition={{ 
-            opacity: { duration: 0.8, delay: 0.5 },
-            scale: { duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.3, times: [0, 0.5, 1] },
-            y: { duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.3 }
-          }}
-        />
-        
+    <section id="home" className="relative min-h-screen overflow-visible sm:overflow-hidden bg-warm-gradient pt-24 pb-12 sm:pt-28 sm:pb-16 md:py-8 lg:py-12 xl:py-0 flex items-center">
+      {/* Organic Floating Blobs - Soft & Wellness-inspired */}
+      <div className="absolute inset-0 hidden 2xl:block overflow-hidden">
+        {/* Top Left Blob */}
+        <div className="absolute top-32 left-16">
+          <motion.div
+            className="w-24 h-24 bg-primary/8 animate-blob-morph"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: [0, -20, 0],
+              x: [0, 10, 0],
+            }}
+            transition={{
+              opacity: { duration: 1.2, delay: 0.3 },
+              scale: { duration: 1.2, delay: 0.3, ease: "easeOut" },
+              y: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+              x: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+            }}
+          />
+        </div>
+
+        {/* Top Right Blob */}
+        <div className="absolute top-40 right-32">
+          <motion.div
+            className="w-20 h-20 bg-primary-pale/60 animate-blob-morph"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: 0.8,
+              scale: [1, 1.1, 1],
+              y: [0, 25, 0],
+            }}
+            transition={{
+              opacity: { duration: 1.2, delay: 0.5 },
+              scale: { duration: 14, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
+              y: { duration: 14, repeat: Infinity, ease: "easeInOut", delay: 0.7 },
+            }}
+          />
+        </div>
+
+        {/* Right Side Blob */}
+        <div className="absolute top-[60%] right-16">
+          <motion.div
+            className="w-28 h-28 bg-primary/6 animate-blob-morph"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: [0, -15, 0],
+              x: [0, -8, 0],
+            }}
+            transition={{
+              opacity: { duration: 1.2, delay: 0.4 },
+              scale: { duration: 1.2, delay: 0.4, ease: "easeOut" },
+              y: { duration: 15, repeat: Infinity, ease: "easeInOut", delay: 0.6 },
+              x: { duration: 15, repeat: Infinity, ease: "easeInOut", delay: 0.6 },
+            }}
+          />
+        </div>
+
+        {/* Bottom Left Blob */}
+        <div className="absolute bottom-32 left-24">
+          <motion.div
+            className="w-22 h-22 bg-primary-pale/50 animate-blob-morph"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: 0.9,
+              scale: 1,
+              x: [0, 18, 0],
+              y: [0, -15, 0],
+            }}
+            transition={{
+              opacity: { duration: 1.2, delay: 0.6 },
+              scale: { duration: 1.2, delay: 0.6, ease: "easeOut" },
+              x: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.8 },
+              y: { duration: 10, repeat: Infinity, ease: "easeInOut", delay: 0.8 },
+            }}
+          />
+        </div>
+
+        {/* Bottom Right Blob */}
+        <div className="absolute bottom-20 right-20">
+          <motion.div
+            className="w-16 h-16 bg-primary/7 animate-blob-morph"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{
+              opacity: 1,
+              scale: [1, 1.12, 1],
+              y: [0, -22, 0],
+            }}
+            transition={{
+              opacity: { duration: 1.2, delay: 0.7 },
+              scale: { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
+              y: { duration: 13, repeat: Infinity, ease: "easeInOut", delay: 0.9 },
+            }}
+          />
+        </div>
       </div>
 
       <div className="relative w-full mx-auto max-w-7xl grid lg:grid-cols-2 items-center gap-8 lg:gap-12 px-4 sm:px-6 lg:px-12 z-10">
@@ -114,35 +122,35 @@ export default function Hero() {
           <div className="max-w-2xl mx-auto lg:mx-0">
             {/* Healthcare Innovation Leader Badge */}
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.4, 0.0, 0.2, 1] }}
               className="inline-block"
               style={{ willChange: 'transform, opacity' }}
             >
-              <span className="px-3 py-1 text-sm sm:px-4 sm:py-2 sm:text-base bg-primary/10 text-primary font-medium rounded-full border border-primary/20">
+              <span className="px-4 py-2 text-sm sm:px-5 sm:py-2.5 sm:text-base bg-pale-gradient text-primary font-semibold rounded-full shadow-soft border border-primary/10">
                 Healthcare Innovation Leader
               </span>
             </motion.div>
 
             {/* Main Headline with Line Breaks */}
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
-              className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
+              initial={{ opacity: 0, y: 32, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
+              className="mt-8 text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
               style={{ willChange: 'transform, opacity' }}
             >
-              <span className="text-black">Shaping Tomorrow&apos;s </span>
+              <span className="text-gray-900">Shaping Tomorrow&apos;s </span>
               <span className="text-primary">Healthcare Today</span>
             </motion.h1>
 
             {/* Subtext */}
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-              className="mt-4 text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed"
+              transition={{ duration: 1, delay: 0.6, ease: [0.4, 0.0, 0.2, 1] }}
+              className="mt-6 text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed font-body"
               style={{ willChange: 'transform, opacity' }}
             >
               Empowering healthcare&apos;s future through integrated education and innovative technological products
@@ -150,30 +158,32 @@ export default function Hero() {
 
             {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.65, ease: "easeOut" }}
-              className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center sm:items-start"
+              transition={{ duration: 1, delay: 0.8, ease: [0.4, 0.0, 0.2, 1] }}
+              className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-4 items-center sm:items-start"
               style={{ willChange: 'transform, opacity' }}
             >
               <Link href="/tech-house">
                 <motion.button
-                  className="px-6 py-3 bg-primary text-white text-base sm:text-lg font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-300 flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-maroon-gradient text-white text-base sm:text-lg font-semibold rounded-full shadow-soft-hover flex items-center justify-center gap-2 min-w-[200px]"
+                  whileHover={{ scale: 1.02, boxShadow: "0 20px 60px rgba(91, 2, 3, 0.25)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
                 >
                   <span>Explore Solutions</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polyline points="9,18 15,12 9,6"></polyline>
                   </svg>
                 </motion.button>
               </Link>
-              
+
               <Link href="/contact">
                 <motion.button
-                  className="px-6 py-3 bg-transparent text-gray-700 text-base sm:text-lg font-semibold border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  className="px-8 py-4 bg-white text-gray-700 text-base sm:text-lg font-semibold border-2 border-gray-200 rounded-full hover:border-primary/30 hover:text-primary shadow-soft-hover transition-all duration-400 min-w-[200px]"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
                 >
                   Connect With Us
                 </motion.button>

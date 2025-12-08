@@ -7,7 +7,14 @@
       "mcp__sequential-thinking__sequentialthinking",
       "WebFetch(domain:iobm.edu.pk)",
       "Bash(Move-Item \"The 48 Hour LS.jpeg\" \"public/48-hour-leadership-sprint.jpeg\")",
-      "mcp__playwright__browser_navigate"
+      "mcp__playwright__browser_navigate",
+      "Skill(frontend-design)",
+      "Bash(npm install:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
 
     const result = await resend.emails.send({
       from: 'Lab Registration <noreply@sehatlings.com>',
-      to: [process.env.CONTACT_EMAIL || 'connect@sehatlings.com'],
+      to: ['engramhk@gmail.com'],
       subject: `Lab Registration: ${validatedData.labName}`,
       html: emailHtml,
       replyTo: validatedData.email,

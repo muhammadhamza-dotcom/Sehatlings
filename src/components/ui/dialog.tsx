@@ -39,15 +39,38 @@ const Dialog = ({ open, onOpenChange, children }: DialogProps) => {
     };
 
     if (open) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    }
+      // Store original values
+      const originalOverflow = document.body.style.overflow;
+      const originalPaddingRight = document.body.style.paddingRight;
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "unset";
-    };
-  }, [open, onOpenChange]);
+      // Calculate scrollbar width to prevent layout shift
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+      // Lock scroll and compensate for scrollbar
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+
+      // Stop Lenis smooth scroll
+      if (typeof window !== 'undefined' && (window as any).__lenis) {
+        (window as any).__lenis.stop();
+      }
+
+      document.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        // Restore original values
+        document.body.style.overflow = originalOverflow;
+        document.body.style.paddingRight = originalPaddingRight;
+
+        // Resume Lenis smooth scroll
+        if (typeof window !== 'undefined' && (window as any).__lenis) {
+          (window as any).__lenis.start();
+        }
+
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [open]);
 
   return (
     <AnimatePresence>

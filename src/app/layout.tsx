@@ -1,15 +1,37 @@
 import type { Metadata } from "next";
-import { Syne } from "next/font/google";
+import { DM_Serif_Display, Archivo, Sora, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ClientLayout from "@/components/ClientLayout";
 
-const syne = Syne({
-  variable: "--font-syne",
+const dmSerif = DM_Serif_Display({
+  variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const archivo = Archivo({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const sora = Sora({
+  variable: "--font-accent",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-ui",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -36,9 +58,9 @@ export default function RootLayout({
           gtag('config', 'G-L1XWN7MDEJ');
         `}
       </Script>
-      <body className={`${syne.variable} antialiased`}>
-        {/* Apply Syne globally */}
-        <div className="font-syne">
+      <body className={`${dmSerif.variable} ${archivo.variable} ${sora.variable} ${plusJakarta.variable} antialiased`}>
+        {/* Apply Archivo as base font, DM Serif for headings, Sora for accents */}
+        <div className="font-sans">
           <Navbar />
           <ClientLayout>
             {children}

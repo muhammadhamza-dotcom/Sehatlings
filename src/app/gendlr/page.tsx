@@ -1,18 +1,31 @@
 "use client";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Check, Brain, Route, TrendingUp, Zap, Stethoscope, X, Mail, Phone, MapPin, Building, User } from "lucide-react";
+import {
+  ArrowRight, Check, Brain, TrendingUp, X, Mail, Phone, MapPin, Building, User,
+  Activity, FileCheck, RefreshCw, MessageSquare, UserCheck, Mic, FileSearch, Users, Zap
+} from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import validator from "validator";
+import { motion } from "framer-motion";
 
-
+// Pre-generated random values for SSR consistency (avoid hydration mismatch)
+const DOCUMENT_LINE_WIDTHS = [89.27, 80.76, 86.15, 63.62, 83.66, 68.58, 78.05, 82.04];
+const WAVEFORM_ANIMATIONS = Array(30).fill(0).map(() => ({
+  heights: [
+    20 + Math.random() * 30,
+    40 + Math.random() * 60,
+    20 + Math.random() * 30
+  ],
+  duration: 1 + Math.random()
+}));
 
 // Zod validation schema for B2B registration form
 const labRegistrationSchema = z.object({
@@ -32,27 +45,24 @@ const labRegistrationSchema = z.object({
       const hasAt = typeof val === 'string' && val.includes('@');
       const domain = hasAt ? val.split('@')[1] : '';
       if (!domain) return false;
-      
-      // Only reject obviously fake domains
+
       const fakeDomains = ['test.com', 'fake.com', 'example.com', 'sadff.com', 'asdf.com', 'temp.com'];
       if (fakeDomains.includes(domain)) return false;
-      
-      // Allow all major email providers
+
       const trustedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com'];
       if (trustedDomains.includes(domain)) return true;
-      
-      // For other domains, just check basic structure
+
       const domainParts = domain.split('.');
       if (domainParts.length < 2) return false;
-      
+
       const tld = domainParts[domainParts.length - 1];
       if (tld.length < 2 || tld.length > 6) return false;
-      
+
       return domain.length >= 4;
     }, 'Please enter a valid email address'),
   phone: z.string()
     .min(1, 'Phone number is required')
-    .refine((val) => validator.isMobilePhone(val.replace(/\s/g, ''), 'any', { strictMode: false }), 
+    .refine((val) => validator.isMobilePhone(val.replace(/\s/g, ''), 'any', { strictMode: false }),
       'Please enter a valid phone number'),
   address: z.string()
     .min(5, 'Address must be at least 5 characters')
@@ -76,29 +86,26 @@ const earlyAccessSchema = z.object({
       const hasAt = typeof val === 'string' && val.includes('@');
       const domain = hasAt ? val.split('@')[1] : '';
       if (!domain) return false;
-      
-      // Only reject obviously fake domains
+
       const fakeDomains = ['test.com', 'fake.com', 'example.com', 'sadff.com', 'asdf.com', 'temp.com'];
       if (fakeDomains.includes(domain)) return false;
-      
-      // Allow all major email providers
+
       const trustedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com'];
       if (trustedDomains.includes(domain)) return true;
-      
-      // For other domains, just check basic structure
+
       const domainParts = domain.split('.');
       if (domainParts.length < 2) return false;
-      
+
       const tld = domainParts[domainParts.length - 1];
       if (tld.length < 2 || tld.length > 6) return false;
-      
+
       return domain.length >= 4;
     }, 'Please enter a valid email address'),
   industry: z.string()
     .min(1, 'Please select an industry'),
   phone: z.string()
     .min(1, 'Phone number is required')
-    .refine((val) => validator.isMobilePhone(val.replace(/\s/g, ''), 'any', { strictMode: false }), 
+    .refine((val) => validator.isMobilePhone(val.replace(/\s/g, ''), 'any', { strictMode: false }),
       'Please enter a valid phone number'),
 });
 
@@ -106,13 +113,12 @@ type EarlyAccessData = z.infer<typeof earlyAccessSchema>;
 
 export default function GendlrPage() {
   useScrollAnimation();
-  const [doctorSrc, setDoctorSrc] = useState("/doctorai.webp");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [isEarlyAccessModalOpen, setIsEarlyAccessModalOpen] = useState(false);
   const [earlyAccessSubmitStatus, setEarlyAccessSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  // React Hook Form with Zod validation
+  // React Hook Form with Zod validation - Lab Registration
   const {
     register,
     handleSubmit,
@@ -121,20 +127,10 @@ export default function GendlrPage() {
     reset,
   } = useForm<LabRegistrationData>({
     resolver: zodResolver(labRegistrationSchema),
-    mode: "onChange",
-    reValidateMode: "onChange",
-    criteriaMode: "all",
-    shouldFocusError: true,
+    mode: 'onChange',
   });
 
-  // Watch values for real-time visual feedback
-  const labNameValue = watch("labName");
-  const contactNameValue = watch("contactName");
-  const emailValue = watch("email");
-  const phoneValue = watch("phone");
-  const addressValue = watch("address");
-
-  // Early Access Form with Zod validation
+  // React Hook Form with Zod validation - Early Access
   const {
     register: registerEA,
     handleSubmit: handleSubmitEA,
@@ -143,19 +139,22 @@ export default function GendlrPage() {
     reset: resetEA,
   } = useForm<EarlyAccessData>({
     resolver: zodResolver(earlyAccessSchema),
-    mode: "onChange",
-    reValidateMode: "onChange",
-    criteriaMode: "all",
-    shouldFocusError: true,
+    mode: 'onChange',
   });
 
-  // Watch values for early access form
+  // Watch all fields for real-time validation feedback
+  const labNameValue = watch("labName");
+  const contactNameValue = watch("contactName");
+  const emailValue = watch("email");
+  const phoneValue = watch("phone");
+  const addressValue = watch("address");
+
   const nameValue = watchEA("name");
   const emailEAValue = watchEA("email");
   const industryValue = watchEA("industry");
   const phoneEAValue = watchEA("phone");
 
-  // Prevent background scroll when modal is open (helps mobile UX)
+  // Prevent background scroll when modal is open
   useEffect(() => {
     if (isModalOpen || isEarlyAccessModalOpen) {
       document.body.style.overflow = "hidden";
@@ -169,33 +168,25 @@ export default function GendlrPage() {
 
   const onSubmit = async (data: LabRegistrationData) => {
     setSubmitStatus('loading');
-
     try {
       const response = await fetch('/api/lab-registration', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (response.ok && result.success) {
+      if (response.ok) {
         setSubmitStatus('success');
         reset();
-
         setTimeout(() => {
           setIsModalOpen(false);
           setSubmitStatus('idle');
         }, 2000);
       } else {
-        console.error('Lab registration error:', result);
         setSubmitStatus('error');
         setTimeout(() => setSubmitStatus('idle'), 5000);
       }
     } catch (error) {
-      console.error('Form submission error:', error);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     }
@@ -203,266 +194,594 @@ export default function GendlrPage() {
 
   const onEarlyAccessSubmit = async (data: EarlyAccessData) => {
     setEarlyAccessSubmitStatus('loading');
-
     try {
       const response = await fetch('/api/early-access', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (response.ok && result.success) {
+      if (response.ok) {
         setEarlyAccessSubmitStatus('success');
         resetEA();
-
         setTimeout(() => {
           setIsEarlyAccessModalOpen(false);
           setEarlyAccessSubmitStatus('idle');
         }, 2000);
       } else {
-        console.error('Early access registration error:', result);
         setEarlyAccessSubmitStatus('error');
         setTimeout(() => setEarlyAccessSubmitStatus('idle'), 5000);
       }
     } catch (error) {
-      console.error('Early access form submission error:', error);
       setEarlyAccessSubmitStatus('error');
       setTimeout(() => setEarlyAccessSubmitStatus('idle'), 5000);
     }
   };
 
   return (
-    <main key="gendlr">
+    <main key="gendlr" className="relative">
       {/* Hero Section */}
-      <section className="bg-primary pt-28 md:pt-32 lg:pt-36 pb-20 lg:pb-32 relative overflow-hidden">
+      <section className="bg-cream min-h-[90vh] flex items-center relative overflow-hidden">
+        {/* Grain texture overlay */}
+        <div className="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
 
-        <div data-animate className="scroll-fade-up mx-auto max-w-4xl px-6 text-center relative z-10">
-          
-          {/* End-User Solution Badge */}
-          <span data-animate className="scroll-fade-up inline-flex items-center px-4 py-2 rounded-full bg-white/10 text-white text-sm font-medium uppercase tracking-wider mb-8" style={{transitionDelay: '0.2s'}}>
-            <Zap className="w-4 h-4 mr-2" />
-            End-User Solution
-          </span>
-
-          {/* Main Heading */}
-          <h1 data-animate className="scroll-fade-up text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 uppercase" style={{transitionDelay: '0.4s'}}>
-            GENDLR
-          </h1>
-
-          {/* Divider Line */}
-          <div data-animate className="scroll-fade-up w-20 h-1 bg-white/60 mx-auto mb-8" style={{transitionDelay: '0.6s'}}></div>
-
-          {/* Subheading */}
-          <h2 data-animate className="scroll-fade-up text-xl md:text-2xl text-white/90 font-medium mb-8" style={{transitionDelay: '0.8s'}}>
-            AI Powered Pathologist Assistant to Patient Journey Optimizer
-          </h2>
-
-          {/* Description */}
-          <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto mb-12 leading-relaxed" >
-            Get ready for a new era of patient care. GENDLR is an AI-powered platform designed to 
-            optimize every step of the patient journey, from initial diagnosis to post-treatment follow-up. 
-            It&apos;s not just a tool; it&apos;s the future of intelligent healthcare management.
-          </p>
-
-          {/* Action Button */}
-          <div className="flex justify-center" >
-            <Button 
-              onClick={() => setIsEarlyAccessModalOpen(true)}
-              className="bg-white/20 text-white border-white/30 hover:bg-white/30 px-8 py-4 text-base font-semibold rounded-xl transition-all duration-300 flex items-center gap-2 backdrop-blur-sm"
-              size="lg"
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-32 md:py-40 relative z-10">
+          <div className="text-center">
+            {/* Badge */}
+            <motion.div
+              data-animate
+              className="scroll-fade-up inline-flex items-center px-4 py-2 rounded-full bg-maroon/10 text-maroon text-sm font-medium uppercase tracking-wider mb-8"
+              style={{ animationDelay: '0ms' }}
             >
-              Register for Early Access
-              <ArrowRight className="w-4 h-4" />
-            </Button>
-          </div>
+              <Zap className="w-4 h-4 mr-2" />
+              END-USER SOLUTION
+            </motion.div>
 
+            {/* Title */}
+            <motion.h1
+              data-animate
+              className="scroll-fade-up font-serif text-7xl md:text-8xl lg:text-9xl text-charcoal mb-8"
+              style={{ letterSpacing: '-0.02em', animationDelay: '200ms' }}
+            >
+              GENDLR
+            </motion.h1>
+
+            {/* Divider */}
+            <motion.div
+              data-animate
+              className="scroll-fade-up w-32 h-1 bg-maroon mx-auto my-8 relative"
+              style={{ animationDelay: '400ms' }}
+            >
+              <div className="absolute inset-0 blur-md bg-maroon/20" />
+            </motion.div>
+
+            {/* Subtitle */}
+            <motion.h2
+              data-animate
+              className="scroll-fade-up font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal mb-8 leading-tight max-w-4xl mx-auto"
+              style={{ animationDelay: '600ms' }}
+            >
+              AI Powered Pathologist Assistant to Patient Journey Optimizer
+            </motion.h2>
+
+            {/* Description */}
+            <motion.p
+              data-animate
+              className="scroll-fade-up font-sans font-light text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-12"
+              style={{ animationDelay: '800ms' }}
+            >
+              Get ready for a new era of patient care. GENDLR is an AI-powered platform designed to optimize every step of the patient journey, from initial diagnosis to post-treatment follow-up. It&apos;s not just a tool; it&apos;s the future of intelligent healthcare management.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              data-animate
+              className="scroll-fade-up flex flex-col sm:flex-row gap-4 justify-center"
+              style={{ animationDelay: '1000ms' }}
+            >
+              <Button
+                onClick={() => setIsEarlyAccessModalOpen(true)}
+                className="bg-maroon hover:bg-maroon-dark text-cream px-6 py-3 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Get Early Access
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                variant="outline"
+                className="border-2 border-maroon text-maroon hover:bg-maroon hover:text-cream px-6 py-3 text-base font-semibold rounded-full transition-all duration-300"
+              >
+                Register Your Lab
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div data-animate className="scroll-fade-up text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Revolutionizing Patient Care Through AI
-          </h2>
-          <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Advanced AI technology transforming healthcare delivery and patient experiences
-          </p>
-        </div>
-        
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Content */}
-          <div data-animate className="scroll-fade-left">
-            
-            {/* Features List */}
-            <div data-animate className="scroll-stagger space-y-4">
-              {[
-                "Reduce patient wait times by up to 40%",
-                "Improve treatment outcomes through predictive analytics",
-                "Streamline healthcare provider workflows",
-                "Enhance patient satisfaction and engagement",
-                "Optimize resource allocation and reduce costs",
-                "Enable data-driven clinical decision making"
-              ].map((feature, index) => (
-                <div key={index} className="flex items-start gap-4" >
-                  {/* Checkmark */}
-                  <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center mt-1">
-                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
-                  </div>
-                  {/* Feature Content */}
-                  <div className="flex-1">
-                    <p className="text-black/70 leading-relaxed">
-                      {feature}
-                    </p>
-                  </div>
+      {/* Impact Stats Bar */}
+      <section className="bg-white border-t border-b border-gray-200 py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div data-animate className="scroll-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: TrendingUp, number: "40%", label: "Faster Diagnosis" },
+              { icon: Users, number: "10k+", label: "Patients Served" },
+              { icon: Brain, number: "24/7", label: "AI Support" },
+              { icon: Activity, number: "99.9%", label: "Uptime" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <stat.icon className="w-10 h-10 text-maroon mx-auto mb-4" />
+                <div className="font-serif text-5xl md:text-6xl text-charcoal mb-2">
+                  {stat.number}
                 </div>
-              ))}
-            </div>
+                <div className="font-sans text-sm text-gray-600 uppercase tracking-wide">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
           </div>
-          
-          {/* Right Column - Image */}
-          <div data-animate className="scroll-fade-right">
-            <div className="h-80 w-full rounded-xl overflow-hidden relative bg-muted/30">
-              <Image
-                src={doctorSrc}
-                alt="Doctor AI"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-                priority
-                onError={() => setDoctorSrc("/doctorai.webp")}
-              />
+        </div>
+      </section>
+
+      {/* Feature 1: ScanUp */}
+      <section className="bg-cream py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div data-animate className="scroll-fade-left">
+              <div className="w-16 h-16 bg-maroon/10 rounded-2xl flex items-center justify-center mb-6">
+                <FileSearch className="w-8 h-8 text-maroon" />
+              </div>
+              <p className="font-sans font-bold text-xs uppercase tracking-widest text-maroon mb-4">
+                SCANUP
+              </p>
+              <h3 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
+                Instant Report Analysis
+              </h3>
+              <p className="font-sans font-light text-lg text-gray-600 mb-8">
+                Instantly scan medical reports to get clear, concise summaries powered by advanced AI.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "Automated report parsing",
+                  "Key insights extraction",
+                  "Multi-format support"
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-maroon flex-shrink-0 mt-1" />
+                    <span className="font-sans text-gray-700">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right Visual - Animated Document Scan */}
+            <div data-animate className="scroll-fade-right">
+              <div className="relative aspect-square bg-gradient-to-br from-cream to-white rounded-3xl p-12 overflow-hidden">
+                {/* Floating document layers */}
+                <motion.div
+                  className="absolute inset-8 bg-white rounded-2xl shadow-xl z-10"
+                  animate={{ y: [0, -10, 0], rotate: [0, -2, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  {/* Document content lines */}
+                  <div className="p-8 space-y-3">
+                    {DOCUMENT_LINE_WIDTHS.map((width, i) => (
+                      <motion.div
+                        key={i}
+                        className="h-2 bg-gradient-to-r from-maroon/20 to-transparent rounded-full"
+                        style={{ width: `${width}%` }}
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Scanning gradient overlay */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-b from-transparent via-maroon/20 to-transparent z-20"
+                  style={{ height: '100%' }}
+                  animate={{ y: ['-100%', '100%'] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                />
+
+                {/* Corner accent blobs */}
+                <div className="absolute top-4 right-4 w-24 h-24 bg-maroon/10 rounded-full blur-2xl" />
+                <div className="absolute bottom-4 left-4 w-32 h-32 bg-terracotta/10 rounded-full blur-3xl" />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Powerful Features Section */}
-      <section data-animate className="scroll-fade-up bg-primary py-20 lg:py-32 relative overflow-hidden">
+      {/* Feature 2: Daktari */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Visual - Floating Chat Bubbles */}
+            <div data-animate className="scroll-fade-left order-2 lg:order-1">
+              <div className="relative aspect-square bg-gradient-to-br from-white to-cream rounded-3xl p-12 overflow-hidden">
+                {/* Background gradient mesh */}
+                <div className="absolute inset-0">
+                  <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-maroon/5 rounded-full blur-3xl" />
+                  <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-terracotta/5 rounded-full blur-3xl" />
+                </div>
 
-        <div className="mx-auto max-w-7xl px-6 relative z-10"   >
-          {/* Header */}
+                {/* Chat bubbles */}
+                <div className="relative z-10 space-y-6">
+                  <motion.div
+                    className="bg-gradient-to-br from-maroon to-maroon-dark rounded-3xl rounded-tr-sm p-6 max-w-[70%] ml-auto shadow-dramatic"
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                  >
+                    <p className="text-sm text-cream">What are my test results?</p>
+                  </motion.div>
+
+                  <motion.div
+                    className="bg-gradient-to-br from-white to-cream border border-gray-200 rounded-3xl rounded-tl-sm p-6 max-w-[80%] shadow-soft"
+                    initial={{ x: -50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                  >
+                    <p className="text-sm text-gray-600">Based on your recent lab work, your results show...</p>
+                  </motion.div>
+
+                  {/* Typing indicator */}
+                  <motion.div
+                    className="flex gap-2 max-w-[60%]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                  >
+                    {[0, 1, 2].map((i) => (
+                      <motion.div
+                        key={i}
+                        className="w-2 h-2 bg-maroon rounded-full"
+                        animate={{ y: [0, -8, 0] }}
+                        transition={{ duration: 0.6, delay: i * 0.1, repeat: Infinity }}
+                      />
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div data-animate className="scroll-fade-right order-1 lg:order-2">
+              <div className="w-16 h-16 bg-maroon/10 rounded-2xl flex items-center justify-center mb-6">
+                <MessageSquare className="w-8 h-8 text-maroon" />
+              </div>
+              <p className="font-sans font-bold text-xs uppercase tracking-widest text-maroon mb-4">
+                DAKTARI
+              </p>
+              <h3 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
+                AI Medical Assistant
+              </h3>
+              <p className="font-sans font-light text-lg text-gray-600 mb-8">
+                An intelligent chatbot that provides on-demand support and information 24/7.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "Natural language processing",
+                  "Evidence-based responses",
+                  "Multi-language support"
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-maroon flex-shrink-0 mt-1" />
+                    <span className="font-sans text-gray-700">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Feature 3: One-Tap-Go */}
+      <section className="bg-cream py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div data-animate className="scroll-fade-left">
+              <div className="w-16 h-16 bg-maroon/10 rounded-2xl flex items-center justify-center mb-6">
+                <UserCheck className="w-8 h-8 text-maroon" />
+              </div>
+              <p className="font-sans font-bold text-xs uppercase tracking-widest text-maroon mb-4">
+                ONE-TAP-GO
+              </p>
+              <h3 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
+                Smart Doctor Matching
+              </h3>
+              <p className="font-sans font-light text-lg text-gray-600 mb-8">
+                Receive personalized doctor recommendations based on your health reports.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "AI-powered matching",
+                  "Specialist recommendations",
+                  "Appointment scheduling"
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-maroon flex-shrink-0 mt-1" />
+                    <span className="font-sans text-gray-700">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right Visual - Connected Network */}
+            <div data-animate className="scroll-fade-right">
+              <div className="relative aspect-square bg-gradient-to-br from-cream via-white to-cream rounded-3xl p-6 sm:p-8 md:p-12 overflow-hidden">
+                {/* Central patient node */}
+                <motion.div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-br from-maroon to-maroon-dark rounded-full flex items-center justify-center z-10 shadow-dramatic"
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <UserCheck className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-cream" />
+                </motion.div>
+
+                {/* Pulsing connection rings */}
+                {[1, 2, 3].map((ring) => (
+                  <motion.div
+                    key={ring}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-maroon/20"
+                    style={{
+                      width: `${ring * 60}px`,
+                      height: `${ring * 60}px`
+                    }}
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      opacity: [0.3, 0.1, 0.3]
+                    }}
+                    transition={{
+                      duration: 3,
+                      delay: ring * 0.3,
+                      repeat: Infinity
+                    }}
+                  />
+                ))}
+
+                {/* Doctor nodes orbiting */}
+                {Array(5).fill(0).map((_, i) => {
+                  const angle = (i * 72) * (Math.PI / 180);
+                  const radius = 75;
+                  return (
+                    <motion.div
+                      key={i}
+                      className="absolute w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-white to-cream rounded-full shadow-soft border border-gray-200 flex items-center justify-center"
+                      style={{
+                        left: `calc(50% + ${Math.cos(angle) * radius}px)`,
+                        top: `calc(50% + ${Math.sin(angle) * radius}px)`,
+                        transform: 'translate(-50%, -50%)'
+                      }}
+                      animate={{
+                        y: [0, -8, 0],
+                        scale: [1, 1.05, 1]
+                      }}
+                      transition={{
+                        duration: 2,
+                        delay: i * 0.2,
+                        repeat: Infinity
+                      }}
+                    >
+                      <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-maroon/10 rounded-full" />
+                    </motion.div>
+                  );
+                })}
+
+                {/* Background gradient blob */}
+                <div className="absolute inset-0 bg-gradient-radial from-maroon/5 via-transparent to-transparent" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Feature 4: Asaan Health */}
+      <section className="bg-white py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Visual - Waveform Animation */}
+            <div data-animate className="scroll-fade-left order-2 lg:order-1">
+              <div className="relative aspect-square bg-gradient-to-br from-white to-cream rounded-3xl p-6 sm:p-12 flex items-center justify-center overflow-hidden">
+                {/* Background gradient orb */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <motion.div
+                    className="w-96 h-96 bg-gradient-radial from-maroon/20 via-maroon/5 to-transparent rounded-full blur-3xl"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                  />
+                </div>
+
+                {/* Central microphone icon with pulse */}
+                <motion.div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-gradient-to-br from-maroon to-maroon-dark rounded-full flex items-center justify-center z-10 shadow-dramatic"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <Mic className="w-10 h-10 text-cream" />
+                </motion.div>
+
+                {/* Waveform visualization */}
+                <div className="relative z-0 flex items-end justify-center gap-1 sm:gap-2 h-32 max-w-full mx-auto">
+                  {WAVEFORM_ANIMATIONS.map((anim, i) => (
+                    <motion.div
+                      key={i}
+                      className={`w-2 bg-gradient-to-t from-maroon to-terracotta rounded-full ${
+                        i >= 20 ? 'hidden sm:block' : ''
+                      }`}
+                      animate={{
+                        height: anim.heights.map(h => `${h}%`)
+                      }}
+                      transition={{
+                        duration: anim.duration,
+                        repeat: Infinity,
+                        delay: i * 0.05
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div data-animate className="scroll-fade-right order-1 lg:order-2">
+              <div className="w-16 h-16 bg-maroon/10 rounded-2xl flex items-center justify-center mb-6">
+                <Mic className="w-8 h-8 text-maroon" />
+              </div>
+              <p className="font-sans font-bold text-xs uppercase tracking-widest text-maroon mb-4">
+                ASAAN HEALTH
+              </p>
+              <h3 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
+                Voice-Enabled Care
+              </h3>
+              <p className="font-sans font-light text-lg text-gray-600 mb-8">
+                Voice-assisted feature helps users in rural areas connect to our call center for expert support.
+              </p>
+              <ul className="space-y-4">
+                {[
+                  "Voice recognition",
+                  "Multi-dialect support",
+                  "24/7 call center access"
+                ].map((feature, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-maroon flex-shrink-0 mt-1" />
+                    <span className="font-sans text-gray-700">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Capabilities Section */}
+      <section className="bg-gradient-to-br from-maroon-dark to-maroon py-32 md:py-40">
+        <div className="mx-auto max-w-4xl px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6" >
-              Powerful Features
+            <p className="font-sans font-bold text-xs uppercase tracking-widest text-cream/70 mb-6">
+              POWERED BY AI
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl text-cream mb-6 leading-tight">
+              Real-Time Analysis, Instant Clarity
             </h2>
-            <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto leading-relaxed" >
-              GENDLR is built with cutting-edge AI technology and designed specifically for the complex needs 
-              of modern healthcare organizations.
+            <p className="font-sans font-light text-lg text-cream/80 max-w-2xl mx-auto">
+              Our AI engine continuously learns and adapts, delivering insights that empower better healthcare decisions.
             </p>
           </div>
 
-          {/* Features Grid */}
-          <div data-animate className="scroll-stagger grid grid-cols-1 md:grid-cols-2 gap-8" >
-            {/* Feature 1 - AI-Powered Insights */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300 group hover:scale-[1.02]"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                  <Brain className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">AI-Powered Insights</h3>
-              </div>
-              <p className="text-white/70 leading-relaxed">
-                Advanced machine learning algorithms analyze patient data to provide real-time, 
-                actionable insights for healthcare providers.
-              </p>
-            </div>
-
-            {/* Feature 2 - Patient Journey Mapping */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300 group hover:scale-[1.02]"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                  <Route className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Patient Journey Mapping</h3>
-              </div>
-              <p className="text-white/70 leading-relaxed">
-                Comprehensive tracking and optimization of every touchpoint in the patient experience, 
-                from initial contact to post-treatment follow-up.
-              </p>
-            </div>
-
-            {/* Feature 3 - Predictive Analytics */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300 group hover:scale-[1.02]"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                  <TrendingUp className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Predictive Analytics</h3>
-              </div>
-              <p className="text-white/70 leading-relaxed">
-                Leverage historical data and current trends to predict patient outcomes 
-                and optimize treatment protocols.
-              </p>
-            </div>
-
-            {/* Feature 4 - Real-Time Optimization */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300 group hover:scale-[1.02]"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Real-Time Optimization</h3>
-              </div>
-              <p className="text-white/70 leading-relaxed">
-                Continuous monitoring and adjustment of care pathways to ensure optimal 
-                patient outcomes and resource utilization.
-              </p>
-            </div>
+          <div data-animate className="scroll-stagger grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { icon: Brain, title: "Pattern Recognition", description: "Analyze millions of data points instantly" },
+              { icon: TrendingUp, title: "Predictive Analytics", description: "Forecast patient outcomes with precision" },
+              { icon: FileCheck, title: "Evidence-Based Recommendations", description: "Treatment suggestions backed by research" },
+              { icon: RefreshCw, title: "Continuous Learning", description: "Improves with every case processed" }
+            ].map((capability, index) => (
+              <motion.div
+                key={index}
+                className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-6 transition-all duration-300"
+                whileHover={{
+                  backgroundColor: "rgba(255, 255, 255, 0.15)",
+                  y: -2
+                }}
+              >
+                <capability.icon className="w-10 h-10 text-cream mb-4" />
+                <h4 className="font-sans font-bold text-lg text-cream mb-2">
+                  {capability.title}
+                </h4>
+                <p className="font-sans text-sm text-cream/70">
+                  {capability.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-
-      {/* Join the Healthcare Revolution CTA */}
-      <section data-animate className="scroll-fade-up bg-white py-20 lg:py-32 relative overflow-hidden">
-
-        <div className="mx-auto max-w-4xl px-6 text-center relative z-10"   >
-          {/* Stethoscope Icon */}
-          <div className="flex justify-center mb-8" >
-            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center backdrop-blur-sm">
-              <Stethoscope className="w-10 h-10 text-primary" />
-            </div>
-          </div>
-
-          {/* Heading */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6" >
-            Join the Healthcare Revolution
-          </h2>
-
-          {/* Description */}
-          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed" >
-            Be among the first to experience the future of patient care. Early adopters will 
-            receive exclusive benefits and priority support.
-          </p>
-
-          {/* Action Button */}
-          <div className="flex justify-center" >
-            <Button 
-              asChild
-              className="bg-primary text-white hover:bg-primary/90 px-8 py-4 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-              size="lg"
+      {/* Dual CTA Section */}
+      <section className="bg-cream py-32 md:py-40">
+        <div className="mx-auto max-w-6xl px-6 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Lab Registration Card */}
+            <motion.div
+              data-animate
+              className="scroll-fade-left bg-white rounded-3xl p-10 md:p-12 shadow-dramatic transition-all duration-300"
+              whileHover={{
+                y: -4,
+                boxShadow: "0 30px 70px rgba(91, 2, 3, 0.2), 0 12px 28px rgba(91, 2, 3, 0.12)"
+              }}
             >
-              <button 
+              <Building className="w-12 h-12 text-maroon mb-6" />
+              <h3 className="font-serif text-3xl text-charcoal mb-4">
+                Register Your Laboratory
+              </h3>
+              <p className="font-sans text-gray-600 mb-8">
+                Enterprise AI integration for modern healthcare facilities
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Full platform access",
+                  "Dedicated support team",
+                  "Custom integration options"
+                ].map((benefit, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-maroon flex-shrink-0" />
+                    <span className="font-sans text-gray-700">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button
                 onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-2"
+                className="w-full bg-maroon hover:bg-maroon-dark text-cream py-4 text-lg font-semibold rounded-full"
               >
-                Register for B2B Solution
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </Button>
+                Register Lab
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </motion.div>
+
+            {/* Early Access Card */}
+            <motion.div
+              data-animate
+              className="scroll-fade-right bg-white rounded-3xl p-10 md:p-12 shadow-dramatic transition-all duration-300"
+              whileHover={{
+                y: -4,
+                boxShadow: "0 30px 70px rgba(91, 2, 3, 0.2), 0 12px 28px rgba(91, 2, 3, 0.12)"
+              }}
+            >
+              <Users className="w-12 h-12 text-maroon mb-6" />
+              <h3 className="font-serif text-3xl text-charcoal mb-4">
+                Get Early Access
+              </h3>
+              <p className="font-sans text-gray-600 mb-8">
+                Join thousands of early adopters transforming healthcare
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Beta feature access",
+                  "Priority support",
+                  "Community access"
+                ].map((benefit, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-maroon flex-shrink-0" />
+                    <span className="font-sans text-gray-700">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button
+                onClick={() => setIsEarlyAccessModalOpen(true)}
+                className="w-full bg-maroon hover:bg-maroon-dark text-cream py-4 text-lg font-semibold rounded-full"
+              >
+                Join Waitlist
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -470,10 +789,7 @@ export default function GendlrPage() {
       {/* Lab Registration Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4 animate-fadeIn">
-          <div
-            className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-modalPop"
-          >
-            {/* Modal Header */}
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-modalPop">
             <div className="px-6 py-8 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <div>
@@ -489,7 +805,6 @@ export default function GendlrPage() {
               </div>
             </div>
 
-            {/* Modal Body */}
             <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-8 space-y-6">
               <div>
                 <Label htmlFor="labName" className="mb-2 block">Lab Name *</Label>
@@ -601,10 +916,7 @@ export default function GendlrPage() {
       {/* Early Access Registration Modal */}
       {isEarlyAccessModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4 animate-fadeIn">
-          <div
-            className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-modalPop"
-          >
-            {/* Modal Header */}
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-modalPop">
             <div className="px-6 py-8 border-b border-gray-100">
               <div className="flex items-center justify-between">
                 <div>
@@ -620,7 +932,6 @@ export default function GendlrPage() {
               </div>
             </div>
 
-            {/* Modal Body */}
             <form onSubmit={handleSubmitEA(onEarlyAccessSubmit)} className="px-6 py-8 space-y-6">
               <div>
                 <Label htmlFor="ea-name" className="mb-2 block">Full Name *</Label>
@@ -719,5 +1030,3 @@ export default function GendlrPage() {
     </main>
   );
 }
-
-

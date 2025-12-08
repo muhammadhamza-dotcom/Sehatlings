@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Eye, Building2, Users, Code, Brain, Smartphone, BarChart3, Plus, Star, Quote, Layers, Triangle, FileCode, Zap, Palette, Server, Code2, Coffee, Network, Zap as ApiIcon, Boxes, Cpu, MessageSquare, Globe, X, Mail, Phone, User } from "lucide-react";
+import { ArrowRight, Eye, Building2, Users, Code, Brain, Smartphone, BarChart3, Plus, Star, Quote, Layers, Triangle, FileCode, Zap, Palette, Server, Code2, Coffee, Network, Zap as ApiIcon, Boxes, Cpu, MessageSquare, Globe, X, Mail, Phone, User, Check } from "lucide-react";
 import Link from "next/link";
 
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -75,7 +75,7 @@ function Counter({ target, suffix = "", duration = 2 }: CounterProps) {
   }, [isInView, target, duration]);
 
   return (
-    <div ref={counterRef} className="text-base lg:text-lg font-bold text-gray-900">
+    <div ref={counterRef} className="font-serif text-4xl md:text-5xl text-charcoal">
       {count}{suffix}
     </div>
   );
@@ -95,27 +95,27 @@ const projectInquirySchema = z.object({
       const hasAt = typeof val === 'string' && val.includes('@');
       const domain = hasAt ? val.split('@')[1] : '';
       if (!domain) return false;
-      
+
       // Only reject obviously fake domains
       const fakeDomains = ['test.com', 'fake.com', 'example.com', 'sadff.com', 'asdf.com', 'temp.com'];
       if (fakeDomains.includes(domain)) return false;
-      
+
       // Allow all major email providers
       const trustedDomains = ['gmail.com', 'outlook.com', 'hotmail.com', 'yahoo.com', 'icloud.com'];
       if (trustedDomains.includes(domain)) return true;
-      
+
       // For other domains, just check basic structure
       const domainParts = domain.split('.');
       if (domainParts.length < 2) return false;
-      
+
       const tld = domainParts[domainParts.length - 1];
       if (tld.length < 2 || tld.length > 6) return false;
-      
+
       return domain.length >= 4;
     }, 'Please enter a valid email address'),
   phone: z.string()
     .min(1, 'Phone number is required')
-    .refine((val) => validator.isMobilePhone(val.replace(/\s/g, ''), 'any', { strictMode: false }), 
+    .refine((val) => validator.isMobilePhone(val.replace(/\s/g, ''), 'any', { strictMode: false }),
       'Please enter a valid phone number'),
   projectDetails: z.string()
     .min(10, 'Project details must be at least 10 characters')
@@ -146,10 +146,10 @@ export default function TechHousePage() {
   useEffect(() => {
     const updateDuration = () => {
       if (typeof window === 'undefined') return;
-      
+
       const width = window.innerWidth;
       let newDuration;
-      
+
       if (width < 480) {
         newDuration = 48; // slowest on small phones
       } else if (width < 768) {
@@ -157,11 +157,11 @@ export default function TechHousePage() {
       } else {
         newDuration = 32; // desktop
       }
-      
+
       console.log('Updating marquee duration:', newDuration, 'for width:', width);
       setMarqueeDuration(newDuration);
     };
-    
+
     updateDuration();
     window.addEventListener('resize', updateDuration);
     return () => window.removeEventListener('resize', updateDuration);
@@ -237,19 +237,28 @@ export default function TechHousePage() {
   return (
     <main key="tech-house">
       {/* Hero Section */}
-      <section className="relative pt-28 md:pt-32 lg:pt-36 pb-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background image with subtle opacity - Matching Inspection Consultancy */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
           style={{ backgroundImage: "url('/healthcare-tech1.webp')" }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-white/70" aria-hidden />
+        {/* Grain texture overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
+            backgroundRepeat: 'repeat'
+          }}
+          aria-hidden
+        />
         <div data-animate className="scroll-fade-up relative z-10 mx-auto max-w-4xl px-6 text-center">
-          
+
           {/* Section Label */}
           <div className="inline-block mb-6">
             <span
-              className="px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-full border border-primary/20"
+              className="px-3 py-1.5 bg-maroon/10 text-maroon text-sm font-medium uppercase tracking-wider rounded-full border border-maroon/20"
             >
               Technology Solutions
             </span>
@@ -257,33 +266,32 @@ export default function TechHousePage() {
 
           {/* Main Heading */}
           <h1
-            className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight"
+            className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight"
           >
-            <span className="text-black/90">Digital Health Forward: </span>
-            <span className="text-primary">Innovate, Connect, and Lead.</span>
+            Digital Health Forward: Innovate, Connect, and Lead.
           </h1>
 
           {/* Description */}
           <p
-            className="text-base md:text-lg text-black/70 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="font-sans font-light text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed"
           >
             Your ideas deserve a platform. We partner with you to build more than just a website; we create a complete digital ecosystem.
           </p>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button 
+            <Button
               onClick={() => setIsProjectModalOpen(true)}
-              className="bg-primary text-white hover:bg-primary/90 px-8 py-4 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+              className="bg-maroon text-cream hover:bg-maroon-dark px-8 py-4 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
               size="lg"
             >
               Start Your Project
               <ArrowRight className="w-4 h-4" />
             </Button>
-            
+
             <Link href="/Sehatlings-Leaping-Healthcare-Advancement.pdf" target="_blank" rel="noopener noreferrer">
-              <Button 
-                className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-base font-semibold rounded-xl transition-all duration-300 flex items-center gap-2"
+              <Button
+                className="border-2 border-maroon text-maroon hover:bg-maroon hover:text-cream px-8 py-4 text-base font-semibold rounded-full transition-all duration-300 flex items-center gap-2"
                 variant="outline"
                 size="lg"
               >
@@ -296,9 +304,9 @@ export default function TechHousePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-primary/10 py-4 lg:py-5">
+      <section className="bg-white border-t border-b border-gray-200 py-8 md:py-12">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-2 gap-3 lg:gap-4 max-w-lg mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
               {
                 icon: Building2,
@@ -320,11 +328,9 @@ export default function TechHousePage() {
               >
                 {/* Icon */}
                 <div
-                  className="flex justify-center mb-2"
+                  className="flex justify-center mb-3"
                 >
-                  <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <stat.icon className="w-4 h-4 text-primary" strokeWidth={2} />
-                  </div>
+                  <stat.icon className="w-10 h-10 text-maroon" strokeWidth={2} />
                 </div>
 
                 {/* Number with Counter Animation */}
@@ -336,7 +342,7 @@ export default function TechHousePage() {
 
                 {/* Label */}
                 <p
-                  className="text-gray-600 font-medium text-xs"
+                  className="font-sans text-xs text-gray-600 uppercase tracking-wide"
                 >
                   {stat.label}
                 </p>
@@ -347,33 +353,18 @@ export default function TechHousePage() {
       </section>
 
       {/* Our Technology Services */}
-      <section data-animate className="scroll-fade-up bg-primary py-20 lg:py-32 relative overflow-hidden">
-        {/* Floating Medical Particles */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-bounce opacity-20"
-              style={{
-                left: `${10 + i * 12}%`,
-                top: `${15 + (i % 4) * 20}%`,
-                animationDuration: `${8 + i * 1}s`,
-                animationDelay: `${i * 1}s`,
-              }}
-            >
-              <Plus className="w-5 h-5 text-white/10" />
-            </div>
-          ))}
-        </div>
-
-        <div className="mx-auto max-w-7xl px-6 relative z-10">
+      <section className="bg-cream py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <div data-animate className="scroll-fade-up text-center mb-16">
+            <p className="font-sans font-bold text-xs uppercase tracking-widest text-maroon mb-4">
+              OUR SERVICES
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
               Our Technology Services
             </h2>
-            <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive technology solutions designed specifically for healthcare organizations, 
+            <p className="font-sans font-light text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Comprehensive technology solutions designed specifically for healthcare organizations,
               ensuring compliance, security, and optimal performance.
             </p>
           </div>
@@ -381,208 +372,207 @@ export default function TechHousePage() {
           {/* Services Grid */}
           <div data-animate className="scroll-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Custom Software Development */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300"
+            <div
+              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Code className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Custom Software Development</h3>
+              <div className="w-14 h-14 bg-maroon/10 rounded-xl flex items-center justify-center mb-6">
+                <Code className="w-7 h-7 text-maroon" />
               </div>
-              <p className="text-white/70 mb-4 leading-relaxed">
+              <h3 className="font-serif text-2xl text-charcoal mb-3">
+                Custom Software Development
+              </h3>
+              <p className="font-sans font-light text-gray-600 mb-4 leading-relaxed">
                 Building bespoke applications tailored to your unique healthcare challenges.
               </p>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Healthcare-specific web and mobile applications
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Healthcare-specific web and mobile applications</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Electronic Health Record (EHR) systems
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Electronic Health Record (EHR) systems</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Patient management platforms
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Patient management platforms</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Telemedicine solutions
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Telemedicine solutions</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  API development and integration
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">API development and integration</span>
                 </li>
               </ul>
             </div>
 
             {/* Health AI & ML Integration */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300"
+            <div
+              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Brain className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Health AI & ML Integration</h3>
+              <div className="w-14 h-14 bg-maroon/10 rounded-xl flex items-center justify-center mb-6">
+                <Brain className="w-7 h-7 text-maroon" />
               </div>
-              <p className="text-white/70 mb-4 leading-relaxed">
+              <h3 className="font-serif text-2xl text-charcoal mb-3">
+                Health AI & ML Integration
+              </h3>
+              <p className="font-sans font-light text-gray-600 mb-4 leading-relaxed">
                 Implementing intelligent systems for predictive analytics, personalized medicine, and operational optimization.
               </p>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Diagnostic AI and medical imaging analysis
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Diagnostic AI and medical imaging analysis</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Predictive health analytics
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Predictive health analytics</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Natural language processing for medical records
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Natural language processing for medical records</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Drug discovery and research assistance
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Drug discovery and research assistance</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Clinical decision support systems
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Clinical decision support systems</span>
                 </li>
               </ul>
             </div>
 
             {/* Social Marketing & Design */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300"
-              data-animate
+            <div
+              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Palette className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Social Marketing & Design</h3>
+              <div className="w-14 h-14 bg-maroon/10 rounded-xl flex items-center justify-center mb-6">
+                <Palette className="w-7 h-7 text-maroon" />
               </div>
-              <p className="text-white/70 mb-4 leading-relaxed">
+              <h3 className="font-serif text-2xl text-charcoal mb-3">
+                Social Marketing & Design
+              </h3>
+              <p className="font-sans font-light text-gray-600 mb-4 leading-relaxed">
                 Project Description, 4 posts a week, Managing of Socials Posting and Scheduling, and Creative Designs.
               </p>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Social media strategy and planning
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Social media strategy and planning</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  4 posts per week content creation
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">4 posts per week content creation</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Social media management and scheduling
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Social media management and scheduling</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Creative design and branding
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Creative design and branding</span>
                 </li>
               </ul>
             </div>
 
             {/* Website Designing */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300"
+            <div
+              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Globe className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Website Designing</h3>
+              <div className="w-14 h-14 bg-maroon/10 rounded-xl flex items-center justify-center mb-6">
+                <Globe className="w-7 h-7 text-maroon" />
               </div>
-              <p className="text-white/70 mb-4 leading-relaxed">
+              <h3 className="font-serif text-2xl text-charcoal mb-3">
+                Website Designing
+              </h3>
+              <p className="font-sans font-light text-gray-600 mb-4 leading-relaxed">
                 Health Stakeholder Focused Website, upto 20+ Pages Dynamic Website, Basic SEO, Wireframe to High Fidelity Process.
               </p>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Healthcare stakeholder-focused design
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Healthcare stakeholder-focused design</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Up to 20+ dynamic pages
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Up to 20+ dynamic pages</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Basic SEO optimization
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Basic SEO optimization</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Wireframe to high fidelity design process
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Wireframe to high fidelity design process</span>
                 </li>
               </ul>
             </div>
 
             {/* Mobile Health Solutions */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300"
+            <div
+              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <Smartphone className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Mobile Health Solutions</h3>
+              <div className="w-14 h-14 bg-maroon/10 rounded-xl flex items-center justify-center mb-6">
+                <Smartphone className="w-7 h-7 text-maroon" />
               </div>
-              <p className="text-white/70 mb-4 leading-relaxed">
+              <h3 className="font-serif text-2xl text-charcoal mb-3">
+                Mobile Health Solutions
+              </h3>
+              <p className="font-sans font-light text-gray-600 mb-4 leading-relaxed">
                 Patient-centric mobile applications that improve engagement and health outcomes.
               </p>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Patient portal mobile apps
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Patient portal mobile apps</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Telemedicine mobile platforms
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Telemedicine mobile platforms</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Health monitoring and wearables integration
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Health monitoring and wearables integration</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Provider mobile solutions
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Provider mobile solutions</span>
                 </li>
               </ul>
             </div>
 
             {/* Data Analytics & BI */}
-            <div 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-300"
+            <div
+              className="bg-white rounded-2xl border border-gray-200 p-8 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300"
             >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-                  <BarChart3 className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold text-white">Data Analytics & BI</h3>
+              <div className="w-14 h-14 bg-maroon/10 rounded-xl flex items-center justify-center mb-6">
+                <BarChart3 className="w-7 h-7 text-maroon" />
               </div>
-              <p className="text-white/70 mb-4 leading-relaxed">
+              <h3 className="font-serif text-2xl text-charcoal mb-3">
+                Data Analytics & BI
+              </h3>
+              <p className="font-sans font-light text-gray-600 mb-4 leading-relaxed">
                 Transform healthcare data into actionable insights for better decision-making.
               </p>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Clinical analytics dashboards
+              <ul className="space-y-2">
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Clinical analytics dashboards</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Population health analytics
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Population health analytics</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Operational efficiency metrics
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Operational efficiency metrics</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full mt-2 flex-shrink-0"></div>
-                  Predictive modeling and forecasting
+                <li className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-maroon flex-shrink-0 mt-1" />
+                  <span className="font-sans text-sm text-gray-700">Predictive modeling and forecasting</span>
                 </li>
               </ul>
             </div>
@@ -599,14 +589,14 @@ export default function TechHousePage() {
               Trusted by Healthcare Leaders
             </h2>
             <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We&apos;ve partnered with innovative healthcare organizations to deliver transformative 
+              We&apos;ve partnered with innovative healthcare organizations to deliver transformative
               technology solutions that improve patient outcomes and operational efficiency.
             </p>
           </div>
         </div>
 
         {/* Moving Testimonials */}
-        <div data-animate 
+        <div data-animate
           className="scroll-fade-up relative overflow-hidden group py-12"
         >
           {(() => {
@@ -690,127 +680,101 @@ export default function TechHousePage() {
       </section>
 
       {/* Our Technology Stack */}
-      <section data-animate className="scroll-fade-up bg-primary py-20 lg:py-32 relative overflow-hidden">
-        {/* Floating Medical Particles */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-bounce opacity-20"
-              style={{
-                left: `${10 + i * 12}%`,
-                top: `${15 + (i % 4) * 20}%`,
-                animationDuration: `${8 + i * 1}s`,
-                animationDelay: `${i * 1}s`,
-              }}
-            >
-              <Plus className="w-5 h-5 text-white/10" />
-            </div>
-          ))}
-        </div>
-
-        <div className="mx-auto max-w-7xl px-6 relative z-10">
+      <section className="bg-white py-20 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <div data-animate className="scroll-fade-up text-center mb-16">
+            <p className="font-sans font-bold text-xs uppercase tracking-widest text-maroon mb-4">
+              TECHNOLOGY STACK
+            </p>
+            <h2 className="font-serif text-4xl md:text-5xl text-charcoal mb-6 leading-tight">
               Our Technology Stack
             </h2>
-            <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">
-              We leverage cutting-edge technologies and industry best practices to deliver 
-              robust, scalable, and secure healthcare solutions.
+            <p className="font-sans font-light text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Cutting-edge tools for modern healthcare solutions
             </p>
           </div>
 
-          {/* Technology Categories */}
-          <div className="space-y-12">
+          {/* Technology Categories Grid */}
+          <div data-animate className="scroll-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Frontend Technologies */}
-            <div
-              data-animate
-            >
-              <h3 className="text-xl font-semibold text-white mb-6">Frontend Technologies</h3>
-              <div className="flex flex-wrap gap-4">
+            <div className="bg-cream rounded-2xl border border-gray-200 p-8 shadow-soft">
+              <Code className="w-10 h-10 text-maroon mb-4" />
+              <h3 className="font-serif text-2xl text-charcoal mb-6">Frontend</h3>
+              <div className="flex flex-wrap gap-3">
                 {[
-                  { name: "React", icon: Code },
-                  { name: "Vue.js", icon: Layers },
-                  { name: "Angular", icon: Triangle },
-                  { name: "TypeScript", icon: FileCode },
-                  { name: "Next.js", icon: Zap },
-                  { name: "Tailwind CSS", icon: Palette }
+                  "React",
+                  "Vue.js",
+                  "Angular",
+                  "TypeScript",
+                  "Next.js",
+                  "Tailwind CSS"
                 ].map((tech) => (
                   <div
-                    key={tech.name}
-                    className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3 hover:bg-white/15 hover:scale-105 transition-all duration-300"
-                    data-animate
+                    key={tech}
+                    className="bg-white border border-gray-200 rounded-lg px-4 py-2 font-sans text-sm text-charcoal hover:scale-105 hover:shadow-md hover:border-maroon transition-all duration-300"
                   >
-                    <tech.icon className="w-5 h-5 text-white" />
-                    <span className="text-white font-medium">{tech.name}</span>
+                    {tech}
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Backend & APIs */}
-            <div
-              data-animate
-            >
-              <h3 className="text-xl font-semibold text-white mb-6">Backend & APIs</h3>
-              <div className="flex flex-wrap gap-4">
+            <div className="bg-cream rounded-2xl border border-gray-200 p-8 shadow-soft">
+              <Server className="w-10 h-10 text-maroon mb-4" />
+              <h3 className="font-serif text-2xl text-charcoal mb-6">Backend & APIs</h3>
+              <div className="flex flex-wrap gap-3">
                 {[
-                  { name: "Node.js", icon: Server },
-                  { name: "Python", icon: Code2 },
-                  { name: "Java", icon: Coffee },
-                  { name: "GraphQL", icon: Network },
-                  { name: "REST APIs", icon: ApiIcon },
-                  { name: "Microservices", icon: Boxes }
+                  "Node.js",
+                  "Python",
+                  "Java",
+                  "GraphQL",
+                  "REST APIs",
+                  "Microservices"
                 ].map((tech) => (
                   <div
-                    key={tech.name}
-                    className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3 hover:bg-white/15 hover:scale-105 transition-all duration-300"
-                    data-animate
+                    key={tech}
+                    className="bg-white border border-gray-200 rounded-lg px-4 py-2 font-sans text-sm text-charcoal hover:scale-105 hover:shadow-md hover:border-maroon transition-all duration-300"
                   >
-                    <tech.icon className="w-5 h-5 text-white" />
-                    <span className="text-white font-medium">{tech.name}</span>
+                    {tech}
                   </div>
                 ))}
               </div>
             </div>
 
             {/* AI & Machine Learning */}
-            <div
-              data-animate
-            >
-              <h3 className="text-xl font-semibold text-white mb-6">AI & Machine Learning</h3>
-              <div className="flex flex-wrap gap-4">
+            <div className="bg-cream rounded-2xl border border-gray-200 p-8 shadow-soft">
+              <Brain className="w-10 h-10 text-maroon mb-4" />
+              <h3 className="font-serif text-2xl text-charcoal mb-6">AI & Machine Learning</h3>
+              <div className="flex flex-wrap gap-3">
                 {[
-                  { name: "TensorFlow", icon: Brain },
-                  { name: "PyTorch", icon: Cpu },
-                  { name: "scikit-learn", icon: BarChart3 },
-                  { name: "OpenCV", icon: Eye },
-                  { name: "Natural Language Processing", icon: MessageSquare }
+                  "TensorFlow",
+                  "PyTorch",
+                  "scikit-learn",
+                  "OpenCV",
+                  "NLP"
                 ].map((tech) => (
                   <div
-                    key={tech.name}
-                    className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-4 py-3 hover:bg-white/15 hover:scale-105 transition-all duration-300"
-                    data-animate
+                    key={tech}
+                    className="bg-white border border-gray-200 rounded-lg px-4 py-2 font-sans text-sm text-charcoal hover:scale-105 hover:shadow-md hover:border-maroon transition-all duration-300"
                   >
-                    <tech.icon className="w-5 h-5 text-white" />
-                    <span className="text-white font-medium">{tech.name}</span>
+                    {tech}
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gray-50 py-16 lg:py-24">
+      <section className="bg-gradient-to-br from-maroon-dark to-maroon py-32 md:py-40">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          
+
           {/* Main Heading */}
           <h2
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight"
+            className="font-serif text-4xl md:text-5xl text-cream mb-6 leading-tight"
             data-animate
           >
             Ready to Transform Your Healthcare Technology?
@@ -818,10 +782,10 @@ export default function TechHousePage() {
 
           {/* Subtext */}
           <p
-            className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="font-sans font-light text-xl text-cream/80 max-w-3xl mx-auto mb-10 leading-relaxed"
             data-animate
           >
-            Let&apos;s discuss how our technology solutions can help your organization achieve 
+            Let&apos;s discuss how our technology solutions can help your organization achieve
             better patient outcomes and operational excellence.
           </p>
 
@@ -832,9 +796,8 @@ export default function TechHousePage() {
           >
             {/* Schedule Consultation Button */}
             <Link href="/contact">
-              <Button 
-                className="bg-primary text-white hover:bg-primary/90 px-8 py-4 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-                size="lg"
+              <Button
+                className="bg-cream text-maroon hover:bg-cream/90 px-6 py-3 text-base font-semibold rounded-full shadow-dramatic transition-all duration-300 flex items-center gap-2"
               >
                 Schedule Consultation
                 <ArrowRight className="w-4 h-4" />
@@ -849,14 +812,14 @@ export default function TechHousePage() {
       {isProjectModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4 animate-fadeIn">
           <div
-            className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto animate-modalPop"
+            className="bg-cream rounded-2xl shadow-dramatic max-w-md w-full max-h-[90vh] overflow-y-auto animate-modalPop"
           >
             {/* Modal Header */}
-            <div className="px-6 py-8 border-b border-gray-100">
+            <div className="px-6 py-8 border-b border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Start Your Project</h2>
-                  <p className="text-gray-600 mt-1">Tell us about your project and we&apos;ll get back to you within 24 hours.</p>
+                  <h2 className="font-serif text-3xl text-charcoal">Start Your Project</h2>
+                  <p className="font-sans text-gray-600 mt-1">Tell us about your project and we&apos;ll get back to you within 24 hours.</p>
                 </div>
                 <button
                   onClick={() => setIsProjectModalOpen(false)}
@@ -870,14 +833,14 @@ export default function TechHousePage() {
             {/* Modal Body */}
             <form onSubmit={handleSubmitPI(onProjectSubmit)} className="px-6 py-8 space-y-6">
               <div>
-                <Label htmlFor="pi-name" className="mb-2 block">Full Name *</Label>
+                <Label htmlFor="pi-name" className="mb-2 block text-maroon">Full Name *</Label>
                 <div className="relative">
                   <User className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                   <Input
                     id="pi-name"
                     {...registerPI("name")}
                     placeholder="Enter your full name"
-                    className={`${errorsPI.name ? "border-red-500" : nameValue ? "border-green-500 focus-visible:ring-green-500/30" : ""} pl-10`}
+                    className={`${errorsPI.name ? "border-red-500" : nameValue ? "border-maroon focus-visible:ring-maroon/30" : ""} pl-10`}
                   />
                 </div>
                 {errorsPI.name && (
@@ -886,7 +849,7 @@ export default function TechHousePage() {
               </div>
 
               <div>
-                <Label htmlFor="pi-email" className="mb-2 block">Email Address *</Label>
+                <Label htmlFor="pi-email" className="mb-2 block text-maroon">Email Address *</Label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                   <Input
@@ -896,7 +859,7 @@ export default function TechHousePage() {
                     aria-invalid={!!errorsPI.email}
                     {...registerPI("email")}
                     placeholder="Enter your email address"
-                    className={`${errorsPI.email ? "border-red-500" : emailPIValue ? "border-green-500 focus-visible:ring-green-500/30" : ""} pl-10`}
+                    className={`${errorsPI.email ? "border-red-500" : emailPIValue ? "border-maroon focus-visible:ring-maroon/30" : ""} pl-10`}
                   />
                 </div>
                 {errorsPI.email && (
@@ -905,7 +868,7 @@ export default function TechHousePage() {
               </div>
 
               <div>
-                <Label htmlFor="pi-phone" className="mb-2 block">Phone Number *</Label>
+                <Label htmlFor="pi-phone" className="mb-2 block text-maroon">Phone Number *</Label>
                 <div className="relative">
                   <Phone className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
                   <Input
@@ -916,7 +879,7 @@ export default function TechHousePage() {
                     aria-invalid={!!errorsPI.phone}
                     {...registerPI("phone")}
                     placeholder="Enter your phone number"
-                    className={`${errorsPI.phone ? "border-red-500" : phonePIValue ? "border-green-500 focus-visible:ring-green-500/30" : ""} pl-10`}
+                    className={`${errorsPI.phone ? "border-red-500" : phonePIValue ? "border-maroon focus-visible:ring-maroon/30" : ""} pl-10`}
                   />
                 </div>
                 {errorsPI.phone && (
@@ -925,7 +888,7 @@ export default function TechHousePage() {
               </div>
 
               <div>
-                <Label htmlFor="pi-project-details" className="mb-2 block">Project Details *</Label>
+                <Label htmlFor="pi-project-details" className="mb-2 block text-maroon">Project Details *</Label>
                 <div className="relative">
                   <FileCode className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
                   <Textarea
@@ -933,7 +896,7 @@ export default function TechHousePage() {
                     {...registerPI("projectDetails")}
                     placeholder="Tell us about your project, requirements, timeline, and any specific needs..."
                     rows={4}
-                    className={`${errorsPI.projectDetails ? "border-red-500" : projectDetailsValue ? "border-green-500 focus-visible:ring-green-500/30" : ""} pl-10 resize-none`}
+                    className={`${errorsPI.projectDetails ? "border-red-500" : projectDetailsValue ? "border-maroon focus-visible:ring-maroon/30" : ""} pl-10 resize-none`}
                   />
                 </div>
                 {errorsPI.projectDetails && (
@@ -944,11 +907,11 @@ export default function TechHousePage() {
               <Button
                 type="submit"
                 disabled={projectSubmitStatus === 'loading' || !isValidPI}
-                className="w-full bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold"
+                className="w-full bg-maroon hover:bg-maroon-dark disabled:opacity-50 text-cream font-semibold rounded-full"
               >
                 {projectSubmitStatus === 'loading' ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                    <div className="w-4 h-4 border-2 border-cream/30 border-t-cream rounded-full animate-spin mr-2"></div>
                     Sending Inquiry...
                   </>
                 ) : (

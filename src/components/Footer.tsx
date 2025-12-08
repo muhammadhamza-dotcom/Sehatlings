@@ -2,9 +2,37 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Phone, Mail, MapPin, ArrowUpRight, Loader2, CheckCircle } from "lucide-react";
+import { Loader2, CheckCircle, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
+// Navigation data
+const productLinks = [
+  { label: 'GENDLR', href: '/gendlr' },
+  { label: 'Tech House', href: '/tech-house' },
+  { label: 'Inspection Consultancy', href: '/inspection-consultancy' },
+  { label: 'Programs', href: '/programs' },
+  { label: 'News & Events', href: '/news-events' },
+];
+
+const companyLinks = [
+  { label: 'Team', href: '/team' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const socialLinks = [
+  { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/sehatlings' },
+  { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/sehatlings' },
+  { name: 'Facebook', icon: Facebook, href: 'https://facebook.com/sehatlings' },
+  { name: 'Instagram', icon: Instagram, href: 'https://instagram.com/sehatlings' },
+];
+
+const legalLinks = [
+  { label: 'Privacy', href: '/privacy' },
+  { label: 'Terms', href: '/terms' },
+  { label: 'Accessibility', href: '/accessibility' },
+];
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -12,11 +40,11 @@ export default function Footer() {
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email) return;
-    
+
     setSubscribeStatus('loading');
-    
+
     try {
       const response = await fetch('/api/newsletter', {
         method: 'POST',
@@ -46,49 +74,126 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-neutral-900 border-t border-white/10 overflow-hidden">
-
+    <footer className="bg-white border-t border-gray-200 overflow-hidden">
       {/* Main Footer Content */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-start lg:items-start lg:content-start">
-          {/* Left: Brand, description, CTA */}
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-16 md:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-12">
+
+          {/* About Column */}
           <motion.div
+            className="lg:col-span-1"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
+            {/* Logo */}
             <div className="mb-4">
-              <div className="inline-flex items-center justify-center bg-white rounded-2xl px-3 py-2 shadow-lg">
-                <Image
-                  src="/logo-jpeg.webp"
-                  alt="Sehatlings"
-                  width={56}
-                  height={56}
-                  className="w-14 h-14 object-contain"
-                />
-              </div>
+              <Image
+                src="/logo-jpeg.webp"
+                alt="Sehatlings"
+                width={64}
+                height={64}
+                className="w-16 h-16 object-contain"
+              />
             </div>
 
-            <p className="text-white/70 leading-relaxed max-w-xl mb-6">
-              Pioneering a new era of health through innovation, compassion, and data-driven
-              solutions. Transforming healthcare delivery with cutting-edge technology.
+            {/* Tagline */}
+            <p className="text-gray-700 text-base leading-relaxed mb-6 max-w-xs">
+              Transforming healthcare through AI-powered innovation
             </p>
 
+            {/* Social Icons */}
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <Link
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-maroon transition-all duration-300 hover:scale-110"
+                >
+                  <social.icon className="w-5 h-5" />
+                </Link>
+              ))}
+            </div>
+          </motion.div>
 
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full max-w-xl">
+          {/* Product Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <h3 className="text-maroon font-sans font-bold text-xs uppercase tracking-wide mb-4">
+              Product
+            </h3>
+            <ul className="space-y-3">
+              {productLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-charcoal text-sm hover:text-maroon transition-all duration-300 hover:translate-x-0.5 inline-block"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Company Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h3 className="text-maroon font-sans font-bold text-xs uppercase tracking-wide mb-4">
+              Company
+            </h3>
+            <ul className="space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-charcoal text-sm hover:text-maroon transition-all duration-300 hover:translate-x-0.5 inline-block"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Newsletter Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h3 className="text-maroon font-sans font-bold text-xs uppercase tracking-wide mb-4">
+              Stay Updated
+            </h3>
+            <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+              Get the latest in healthcare innovation delivered to your inbox
+            </p>
+
+            <form onSubmit={handleSubscribe} className="space-y-3">
               <Input
                 type="email"
-                placeholder="Email address"
+                placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-white text-gray-900 placeholder:text-gray-500 border-0 rounded-xl h-10 w-full sm:w-56"
+                className="bg-white border-gray-300 text-charcoal placeholder:text-gray-400 focus:border-maroon focus:ring-maroon rounded-lg h-10"
                 required
               />
               <Button
                 type="submit"
                 disabled={subscribeStatus === 'loading' || !email}
-                className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-2 flex-shrink-0 disabled:opacity-50 w-full sm:w-auto"
+                className="bg-maroon hover:bg-maroon-dark text-cream font-medium w-full disabled:opacity-50 transition-all duration-300 hover:shadow-lg"
               >
                 {subscribeStatus === 'loading' ? (
                   <>
@@ -101,59 +206,47 @@ export default function Footer() {
                     <span>Subscribed!</span>
                   </>
                 ) : (
-                  <div className="inline-flex items-center gap-2">
-                    <span>Subscribe</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
+                  <span>Subscribe</span>
                 )}
               </Button>
-            </form>
-          </motion.div>
 
-          {/* Right: Contact */}
-          <motion.div
-            className="self-start lg:justify-self-end"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h3 className="text-white text-lg font-semibold mb-6">Contact</h3>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 text-white/80">
-                <Phone className="w-4 h-4" />
-                <span>+92 3362844276</span>
-              </div>
-              <div className="flex items-center gap-3 text-white/80">
-                <Mail className="w-4 h-4" />
-                <span>connect@sehatlings.com</span>
-              </div>
-              <div className="flex items-center gap-3 text-white/80">
-                <MapPin className="w-4 h-4" />
-                <span>Karachi</span>
-              </div>
-            </div>
+              {subscribeStatus === 'error' && (
+                <p className="text-red-600 text-xs">Please try again</p>
+              )}
+            </form>
           </motion.div>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom Bar */}
         <motion.div
-          className="border-t border-white/10 mt-10 pt-6 overflow-hidden"
+          className="border-t border-gray-200 pt-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <p className="text-white/60 text-sm">© 2025 Sehatlings. All rights reserved.</p>
-            <div className="flex items-center gap-6 text-sm">
-              <span className="text-white/60 hover:text-white transition-colors cursor-pointer">Privacy</span>
-              <span className="text-white/60 hover:text-white transition-colors cursor-pointer">Terms</span>
-              <span className="text-white/60 hover:text-white transition-colors cursor-pointer">Accessibility</span>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            {/* Left: Copyright */}
+            <p className="text-gray-600 text-sm">© 2025 Sehatlings. All rights reserved.</p>
+
+            {/* Right: Legal Links */}
+            <div className="flex items-center gap-2 text-sm">
+              {legalLinks.map((link, index) => (
+                <span key={link.href} className="flex items-center gap-2">
+                  <Link
+                    href={link.href}
+                    className="text-gray-600 hover:text-maroon transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                  {index < legalLinks.length - 1 && (
+                    <span className="text-gray-400">•</span>
+                  )}
+                </span>
+              ))}
             </div>
           </div>
         </motion.div>
-
       </div>
     </footer>
   );

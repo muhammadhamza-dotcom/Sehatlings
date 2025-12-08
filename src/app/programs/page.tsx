@@ -1,12 +1,14 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Brain, Crown, Rocket, Clock, X, User, Mail, Phone, Building, Lightbulb, Star } from "lucide-react";
+import { ArrowRight, Brain, Crown, Rocket, Clock, X, User, Mail, Phone, Building, Lightbulb, Star, Check } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
-
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function ProgramsPage() {
   useScrollAnimation();
@@ -67,203 +69,208 @@ export default function ProgramsPage() {
 
   return (
     <main key="programs">
-      {/* Hero section with background image + white overlay */}
-      <section className="relative h-[70vh] min-h-[560px] w-full overflow-hidden pt-16 md:pt-20">
+      {/* Hero section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream">
+        {/* Background image with subtle opacity */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
           style={{ backgroundImage: "url('/bootcamp2.webp')" }}
           aria-hidden
         />
-        <div className="absolute inset-0 bg-white/70" aria-hidden />
-        <div className="relative z-10 h-full flex items-start justify-center px-6 pt-14 md:pt-32">
-          <div data-animate className="scroll-fade-up max-w-4xl text-center">
-            <span data-animate className="scroll-fade-up inline-block px-4 py-2 rounded-full text-sm font-bold tracking-wide mb-4 bg-primary/10 text-primary border border-primary/20 shadow-sm" style={{transitionDelay: '0.2s'}}>
+        {/* Grain texture overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 400 400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
+            backgroundRepeat: 'repeat'
+          }}
+          aria-hidden
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+          <div data-animate className="scroll-fade-up">
+            <span className="inline-block px-4 py-2 rounded-full text-sm font-medium uppercase tracking-widest mb-8 bg-maroon/10 text-maroon border border-maroon/20">
               Professional Development
             </span>
-            <h1 data-animate className="scroll-fade-up text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-gray-900" style={{transitionDelay: '0.4s'}}>
-              <span className="text-primary">Transformational </span>
-              <span>Programs</span>
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight">
+              Transformational <br /> Programs
             </h1>
-            <p data-animate className="scroll-fade-up mt-5 text-base md:text-lg text-black/70 leading-relaxed" style={{transitionDelay: '0.6s'}}>
+            <p className="font-sans font-light text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
               Accelerate your career with intensive, hands-on training programs designed for healthcare
               professionals. From leadership excellence to AI mastery and startup success.
             </p>
-            <div data-animate className="scroll-fade-up mt-8 flex flex-col sm:flex-row gap-4 justify-center" style={{transitionDelay: '0.8s'}}>
-              <Link
-                href="#programs"
-                className="inline-flex items-center justify-center bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary/90 transition-colors"
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <Button
+                asChild
+                className="bg-maroon hover:bg-maroon-dark text-cream px-8 py-4 text-base font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
               >
-                Explore Programs
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-              <button
+                <Link href="#programs">
+                  Explore Programs
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+
+              <Button
                 onClick={() => setIsModalOpen(true)}
-                className="inline-flex items-center justify-center bg-white text-primary border border-primary/20 font-semibold px-6 py-3 rounded-xl hover:bg-primary/10 hover:border-primary/30 transition-colors"
+                variant="outline"
+                className="border-2 border-maroon text-maroon hover:bg-maroon hover:text-cream px-8 py-4 text-base font-semibold rounded-full transition-all duration-300"
               >
                 Let&apos;s Design a Program
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Programs */}
-      <section key="programs-section" id="programs" data-animate className="scroll-stagger mx-auto max-w-7xl px-6 py-16">
-        <div className="text-center max-w-4xl mx-auto">
-          <h2 data-animate className="scroll-fade-up text-3xl md:text-4xl font-bold">Three Transformative Programs</h2>
-          <p data-animate className="scroll-fade-up mt-3 text-black/60" style={{transitionDelay: '0.2s'}}>
-            Choose the program that aligns with your career goals and transform your healthcare
-            expertise.
-          </p>
-        </div>
+      <section key="programs-section" id="programs" className="bg-white py-20 md:py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <p data-animate className="scroll-fade-up text-xs font-medium uppercase tracking-widest text-maroon mb-4">
+              OUR CURRICULUM
+            </p>
+            <h2 data-animate className="scroll-fade-up font-serif text-4xl md:text-5xl text-charcoal mb-6">
+              Three Transformative Programs
+            </h2>
+            <p data-animate className="scroll-fade-up font-sans font-light text-lg text-gray-600 leading-relaxed">
+              Choose the program that aligns with your career goals and transform your healthcare expertise.
+            </p>
+          </div>
 
-        <div data-animate className="scroll-stagger mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Leadership Program */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-primary/40 transition-colors text-center" >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <Crown className="w-5 h-5" />
-              </span>
-              <h3 className="text-lg font-semibold">Healthcare Leadership Bootcamp</h3>
-            </div>
-            <p className="text-primary font-medium">The 48 Hour Leadership Sprint</p>
+          <div data-animate className="scroll-stagger grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Leadership Program */}
+            <div className="bg-cream rounded-2xl border border-gray-200 p-10 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300 text-center flex flex-col items-center">
+              <div className="w-16 h-16 bg-maroon/10 rounded-full flex items-center justify-center mb-6">
+                <Crown className="w-8 h-8 text-maroon" />
+              </div>
+              <h3 className="font-serif text-2xl text-charcoal mb-2">Healthcare Leadership Bootcamp</h3>
+              <p className="font-sans font-medium text-maroon mb-6">The 48 Hour Leadership Sprint</p>
 
-            <div className="mt-6 flex items-center justify-center gap-6 text-sm text-black/60">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
+              <div className="flex items-center justify-center gap-3 text-sm text-gray-600 mb-8">
+                <Clock className="w-4 h-4 text-maroon" />
                 <span>2 Days</span>
               </div>
+
+              <div className="mt-auto">
+                <Button
+                  disabled
+                  className="bg-gray-200 text-gray-500 hover:bg-gray-200 cursor-not-allowed rounded-full px-6"
+                >
+                  Registrations Closed
+                </Button>
+              </div>
             </div>
 
-            <div className="mt-8 text-center">
-              <button
-                disabled
-                className="inline-flex items-center justify-center bg-gray-400 text-white font-semibold px-5 py-2 rounded-lg cursor-not-allowed"
-              >
-                Registrations Closed
-              </button>
-            </div>
-          </div>
+            {/* Healthcare AI Leadership Fellowship */}
+            <div className="bg-cream rounded-2xl border border-gray-200 p-10 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300 text-center flex flex-col items-center">
+              <div className="w-16 h-16 bg-maroon/10 rounded-full flex items-center justify-center mb-6">
+                <Brain className="w-8 h-8 text-maroon" />
+              </div>
+              <h3 className="font-serif text-2xl text-charcoal mb-2">Healthcare AI Leadership Fellowship</h3>
+              <p className="font-sans font-medium text-maroon mb-6">Lead AI Innovation in Healthcare</p>
 
-          {/* Healthcare AI Leadership Fellowship */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-primary/40 transition-colors text-center" >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <Brain className="w-5 h-5" />
-              </span>
-              <h3 className="text-lg font-semibold">Healthcare AI Leadership Fellowship</h3>
-            </div>
-            <p className="text-primary font-medium">Lead AI Innovation in Healthcare</p>
-
-            <div className="mt-6 flex items-center justify-center gap-6 text-sm text-black/60">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
+              <div className="flex items-center justify-center gap-3 text-sm text-gray-600 mb-8">
+                <Clock className="w-4 h-4 text-maroon" />
                 <span>8 Weeks</span>
               </div>
-            </div>
 
-            <div className="mt-8 text-center">
-              <span className="inline-flex items-center justify-center bg-gray-100 text-gray-600 font-semibold px-5 py-2 rounded-lg cursor-not-allowed">
-                Coming Soon
-              </span>
-            </div>
-          </div>
-
-          {/* Idea to MVP Program */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm hover:border-primary/40 transition-colors text-center" >
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <span className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                <Rocket className="w-5 h-5" />
-              </span>
-              <h3 className="text-lg font-semibold">Idea to MVP Program</h3>
-            </div>
-            <p className="text-primary font-medium">Build Your Startup</p>
-
-            <div className="mt-6 flex items-center justify-center gap-6 text-sm text-black/60">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
-                <span>5 Days</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">Hybrid</span>
+              <div className="mt-auto">
+                <span className="inline-block bg-white text-gray-600 font-medium px-6 py-2 rounded-full border border-gray-200 text-sm">
+                  Coming Soon
+                </span>
               </div>
             </div>
 
-            <div className="mt-8 text-center">
-              <span className="inline-flex items-center justify-center bg-gray-100 text-gray-600 font-semibold px-5 py-2 rounded-lg cursor-not-allowed">
-                Coming Soon
-              </span>
+            {/* Idea to MVP Program */}
+            <div className="bg-cream rounded-2xl border border-gray-200 p-10 shadow-soft hover:shadow-dramatic hover:-translate-y-1 transition-all duration-300 text-center flex flex-col items-center">
+              <div className="w-16 h-16 bg-maroon/10 rounded-full flex items-center justify-center mb-6">
+                <Rocket className="w-8 h-8 text-maroon" />
+              </div>
+              <h3 className="font-serif text-2xl text-charcoal mb-2">Idea to MVP Program</h3>
+              <p className="font-sans font-medium text-maroon mb-6">Build Your Startup</p>
+
+              <div className="flex items-center justify-center gap-6 text-sm text-gray-600 mb-8">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-maroon" />
+                  <span>5 Days</span>
+                </div>
+                <span className="px-3 py-1 bg-maroon/10 text-maroon text-xs rounded-full font-medium">Hybrid</span>
+              </div>
+
+              <div className="mt-auto">
+                <span className="inline-block bg-white text-gray-600 font-medium px-6 py-2 rounded-full border border-gray-200 text-sm">
+                  Coming Soon
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Success Story */}
-      <section className="bg-gray-50 py-16">
-        <div key="success-story" data-animate className="scroll-fade-up mx-auto max-w-7xl px-6">
-          <div className="text-center max-w-4xl mx-auto mb-12">
-            <h2 data-animate className="scroll-fade-up text-3xl md:text-4xl font-bold text-gray-900">Success Story</h2>
-            <p data-animate className="scroll-fade-up mt-3 text-black/60" style={{transitionDelay: '0.2s'}}>
+      <section className="bg-cream py-20 md:py-32">
+        <div key="success-story" className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <h2 data-animate className="scroll-fade-up font-serif text-3xl md:text-4xl text-charcoal mb-6">Success Story</h2>
+            <p data-animate className="scroll-fade-up text-lg text-gray-600 font-light leading-relaxed">
               Real impact from our transformational programs
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),0_-10px_25px_-5px_rgba(0,0,0,0.1)] p-8 md:p-12" >
-            {/* Stars and Logo and Collaboration */}
-            <div className="text-center mb-8">
-              {/* 5 Stars */}
-              <div className="flex items-center justify-center mb-4">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
-                ))}
-              </div>
-              
-              <div className="flex items-center justify-center mb-4">
-                <Image 
-                  src="/gvon1.webp" 
-                  alt="GVON" 
-                  className="h-18 w-auto"
-                  width={120}
-                  height={64}
-                />
-              </div>
-              <p className="text-sm text-gray-600 font-medium">
-                In collaboration with Global Village Oncology Network
-              </p>
+          <div data-animate className="scroll-fade-up max-w-4xl mx-auto bg-white rounded-3xl border border-gray-100 shadow-dramatic p-10 md:p-14 text-center">
+            {/* 5 Stars */}
+            <div className="flex items-center justify-center mb-8 space-x-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-6 h-6 text-yellow-400 fill-current" />
+              ))}
             </div>
 
-            {/* Description */}
-            <div className="text-center">
-              <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
-                Sehatlings successfully facilitated <span className="font-semibold text-primary">7 workshops</span> on the essential skills that a doctor possesses to develop leadership skills, hosted at the Aga Khan University Hospital.
-              </p>
+            <div className="flex items-center justify-center mb-6">
+              <Image
+                src="/gvon1.webp"
+                alt="GVON"
+                className="h-20 w-auto object-contain"
+                width={140}
+                height={80}
+              />
             </div>
+            <p className="text-sm font-medium text-maroon uppercase tracking-widest mb-8">
+              In collaboration with Global Village Oncology Network
+            </p>
+
+            {/* Description */}
+            <p className="font-serif text-xl md:text-2xl text-charcoal leading-relaxed italic">
+              &quot;Sehatlings successfully facilitated <span className="text-maroon not-italic font-semibold">7 workshops</span> on the essential skills that a doctor possesses to develop leadership skills, hosted at the Aga Khan University Hospital.&quot;
+            </p>
           </div>
         </div>
       </section>
 
       {/* Call to Action */}
-      <section className="bg-primary py-16">
+      <section className="bg-gradient-to-br from-maroon-dark to-maroon py-32 md:py-40">
         <div key="call-to-action" data-animate className="scroll-fade-up mx-auto max-w-4xl px-6 text-center">
-          <h2 data-animate className="scroll-fade-up text-3xl md:text-4xl font-bold text-white">
+          <h2 className="font-serif text-4xl md:text-5xl text-cream mb-6">
             Ready to Transform Your Career?
           </h2>
-          <p data-animate className="scroll-fade-up mt-4 text-lg text-white/80 leading-relaxed" style={{transitionDelay: '0.2s'}}>
+          <p className="font-sans font-light text-xl text-cream/80 max-w-3xl mx-auto mb-10 leading-relaxed">
             Join hundreds of healthcare professionals who have accelerated their careers through our intensive programs.
           </p>
 
-          <div className="mt-8 flex justify-center" >
-            <a
-              href="tel:+923362844276"
-              className="inline-flex items-center justify-center bg-white/10 text-white border border-white/30 font-semibold px-6 py-3 rounded-xl hover:bg-white/15 transition-colors"
+          <div className="flex justify-center">
+            <Button
+              asChild
+              className="bg-cream text-maroon hover:bg-cream/90 px-6 py-3 text-sm font-semibold rounded-full shadow-dramatic transition-all duration-300"
             >
-              Schedule a Call
-            </a>
+              <a href="tel:+923362844276">
+                Schedule a Call
+              </a>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Bootcamp Details Modal */}
+      {/* Bootcamp Details Modal - Keeping content but restyling */}
       {isBootcampModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4">
           <motion.div
@@ -273,85 +280,87 @@ export default function ProgramsPage() {
             className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
           >
             {/* Modal Header */}
-            <div className="px-6 pt-10 pb-6 border-b border-gray-100 relative">
+            <div className="px-8 pt-10 pb-6 border-b border-gray-100 relative text-center">
               <button
                 onClick={() => setIsBootcampModalOpen(false)}
-                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-6 right-6 p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-charcoal"
               >
-                <X className="w-5 h-5 text-gray-400" />
+                <X className="w-6 h-6" />
               </button>
-              <div className="text-center">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2">
-                  THE 48-HOUR LEADERSHIP SPRINT
-                </h2>
-                <p className="text-base md:text-lg text-gray-700 font-semibold">
-                  Building a Framework to transform of Physician Burnout to Systemic Change
-                </p>
-              </div>
+              <h2 className="font-serif text-3xl font-bold text-maroon mb-2">
+                THE 48-HOUR LEADERSHIP SPRINT
+              </h2>
+              <p className="text-lg text-charcoal/80 font-medium">
+                Building a Framework to transform of Physician Burnout to Systemic Change
+              </p>
             </div>
 
             {/* Modal Body */}
-            <div className="px-6 py-8 space-y-8">
+            <div className="px-8 py-8 space-y-8">
               {/* Day 1 Section */}
               <div className="space-y-3">
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="font-serif text-2xl text-charcoal">
                   Day 1: The Applied Leadership Lab
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-2 bg-cream p-6 rounded-xl border border-gray-100">
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Theme:</span> Leadership Traits in Action & Foundational Resilience
+                    <span className="font-semibold text-maroon">Theme:</span> Leadership Traits in Action & Foundational Resilience
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Goal:</span> Practice all identified traits through high-stakes, time-pressured activities.
+                    <span className="font-semibold text-maroon">Goal:</span> Practice all identified traits through high-stakes, time-pressured activities.
                   </p>
                 </div>
               </div>
 
               {/* Day 2 Section */}
               <div className="space-y-3">
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="font-serif text-2xl text-charcoal">
                   Day 2: The Systemic Change Lab
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-2 bg-cream p-6 rounded-xl border border-gray-100">
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Theme:</span> Medical Training, Legacy, and Debatable Dialogue
+                    <span className="font-semibold text-maroon">Theme:</span> Medical Training, Legacy, and Debatable Dialogue
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Goal:</span> Apply leadership skills to real medical scenarios with observation, critique, and high-stakes debate.
+                    <span className="font-semibold text-maroon">Goal:</span> Apply leadership skills to real medical scenarios with observation, critique, and high-stakes debate.
                   </p>
                 </div>
               </div>
 
               {/* Event Details */}
-              <div className="bg-gray-50 rounded-xl p-6 space-y-3">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Event Details</h3>
-                <div className="space-y-2">
+              <div className="bg-gray-50 rounded-xl p-6 space-y-4">
+                <h3 className="font-serif text-xl font-bold text-charcoal mb-2">Event Details</h3>
+                <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Venue:</span> Auditorium, National Incubation Center Karachi, NED University
+                    <span className="font-semibold text-maroon block mb-1">Venue:</span> Auditorium, National Incubation Center Karachi, NED University
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Time:</span> 10:30 am to 4:30 pm
+                    <span className="font-semibold text-maroon block mb-1">Time:</span> 10:30 am to 4:30 pm
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Date:</span> 27 & 28 November
+                    <span className="font-semibold text-maroon block mb-1">Date:</span> 27 & 28 November
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-primary">Includes:</span> Lunch, Certificate, Group Photography
+                    <span className="font-semibold text-maroon block mb-1">Includes:</span> Lunch, Certificate, Group Photography
                   </p>
                 </div>
               </div>
 
               {/* Register Button */}
-              <div className="pt-4">
-                <a
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSeAx9hL2XcsOosc1yD0lfsTmW9Tg-EU1UXXwrf1xuBXnCpi-Q/viewform?usp=dialog"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors focus:ring-2 focus:ring-primary/20 focus:outline-none"
+              <div className="pt-4 text-center">
+                <Button
+                  asChild
+                  className="bg-maroon hover:bg-maroon-dark text-cream w-full md:w-auto px-12 py-6 text-lg rounded-full"
                 >
-                  Register Now
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </a>
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSeAx9hL2XcsOosc1yD0lfsTmW9Tg-EU1UXXwrf1xuBXnCpi-Q/viewform?usp=dialog"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Register Now
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </a>
+                </Button>
               </div>
             </div>
           </motion.div>
@@ -368,73 +377,65 @@ export default function ProgramsPage() {
             className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           >
             {/* Modal Header */}
-            <div className="px-6 pt-10 pb-6 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Professional Development Program</h2>
-                  <p className="text-gray-600 mt-1">Register to enhance your skills and advance your career accordingly today&apos;s demand.</p>
-                </div>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                >
-                  <X className="w-5 h-5 text-gray-400" />
-                </button>
+            <div className="px-8 pt-10 pb-6 border-b border-gray-100 flex items-start justify-between">
+              <div>
+                <h2 className="font-serif text-2xl font-bold text-charcoal">Professional Development Program</h2>
+                <p className="text-gray-600 mt-1">Register to enhance your skills and advance your career.</p>
               </div>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-charcoal"
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
 
-            {/* Modal Body */}
-            <form onSubmit={handleSubmit} className="px-6 py-8 space-y-6">
+            {/* Modal Body - Using raw HTML form for simplicity with existing logic */}
+            <form onSubmit={handleSubmit} className="px-8 py-8 space-y-6">
               {/* Personal Information Section */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
+                <h3 className="font-serif text-lg font-semibold text-maroon mb-4">Personal Information</h3>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
-                      Full Name
-                    </label>
-                    <div className="relative">
+                    <Label htmlFor="fullName" className="text-gray-700">Full Name</Label>
+                    <div className="relative mt-1">
                       <User className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                      <input
+                      <Input
                         type="text"
                         id="fullName"
                         name="fullName"
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
+                        className="pl-10 border-gray-200 focus:border-maroon focus:ring-maroon/20"
                         placeholder="Enter your full name"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address
-                    </label>
-                    <div className="relative">
+                    <Label htmlFor="email" className="text-gray-700">Email Address</Label>
+                    <div className="relative mt-1">
                       <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                      <input
+                      <Input
                         type="email"
                         id="email"
                         name="email"
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
+                        className="pl-10 border-gray-200 focus:border-maroon focus:ring-maroon/20"
                         placeholder="Enter your email address"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                      Contact Number
-                    </label>
-                    <div className="relative">
+                    <Label htmlFor="contactNumber" className="text-gray-700">Contact Number</Label>
+                    <div className="relative mt-1">
                       <Phone className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                      <input
+                      <Input
                         type="tel"
                         id="contactNumber"
                         name="contactNumber"
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
+                        className="pl-10 border-gray-200 focus:border-maroon focus:ring-maroon/20"
                         placeholder="Enter your contact number"
                       />
                     </div>
@@ -444,83 +445,75 @@ export default function ProgramsPage() {
 
               {/* Professional Information Section */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Professional Information</h3>
+                <h3 className="font-serif text-lg font-semibold text-maroon mb-4">Professional Information</h3>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="currentRole" className="block text-sm font-medium text-gray-700 mb-2">
-                      Current Role/Title
-                    </label>
-                    <div className="relative">
+                    <Label htmlFor="currentRole" className="text-gray-700">Current Role/Title</Label>
+                    <div className="relative mt-1">
                       <User className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                      <input
+                      <Input
                         type="text"
                         id="currentRole"
                         name="currentRole"
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
-                        placeholder="e.g., Healthcare Manager, Doctor, etc."
+                        className="pl-10 border-gray-200 focus:border-maroon focus:ring-maroon/20"
+                        placeholder="e.g., Healthcare Manager, Doctor"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="currentOrganization" className="block text-sm font-medium text-gray-700 mb-2">
-                      Current Organization/Institution
-                    </label>
-                    <div className="relative">
+                    <Label htmlFor="currentOrganization" className="text-gray-700">Current Organization</Label>
+                    <div className="relative mt-1">
                       <Building className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                      <input
+                      <Input
                         type="text"
                         id="currentOrganization"
                         name="currentOrganization"
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
+                        className="pl-10 border-gray-200 focus:border-maroon focus:ring-maroon/20"
                         placeholder="Enter your organization name"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="programInterest" className="block text-sm font-medium text-gray-700 mb-2">
-                      Which program are you interested in?
-                    </label>
-                    <div className="relative">
+                    <Label htmlFor="programInterest" className="text-gray-700">Program Interest</Label>
+                    <div className="relative mt-1">
                       <Lightbulb className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
-                      <input
+                      <Input
                         type="text"
                         id="programInterest"
                         name="programInterest"
                         required
-                        className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
-                        placeholder="e.g., Startup Ideation, Student Development, Programs"
+                        className="pl-10 border-gray-200 focus:border-maroon focus:ring-maroon/20"
+                        placeholder="e.g., Startup Ideation"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="plannedKPIs" className="block text-sm font-medium text-gray-700 mb-2">
-                      What are the planned KPIs for making this program? (Please be specific)
-                    </label>
-                    <textarea
+                    <Label htmlFor="plannedKPIs" className="text-gray-700">Planned KPIs</Label>
+                    <Textarea
                       id="plannedKPIs"
                       name="plannedKPIs"
                       required
                       rows={4}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors resize-none"
-                      placeholder="Please describe your specific KPIs and goals for this program..."
+                      className="mt-1 border-gray-200 focus:border-maroon focus:ring-maroon/20 resize-none"
+                      placeholder="Describe your specific KPIs and goals..."
                     />
                   </div>
                 </div>
               </div>
 
               {/* Submit Button */}
-              <div className="pt-6 pb-2">
-                <button
+              <div className="pt-2">
+                <Button
                   type="submit"
-                  className="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors focus:ring-2 focus:ring-primary/20 focus:outline-none"
+                  className="w-full bg-maroon hover:bg-maroon-dark text-cream py-6 text-lg rounded-full font-semibold"
                 >
                   Submit Application
-                </button>
+                </Button>
               </div>
             </form>
           </motion.div>
@@ -529,12 +522,3 @@ export default function ProgramsPage() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
-

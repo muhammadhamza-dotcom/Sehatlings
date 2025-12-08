@@ -54,7 +54,7 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className={`${isScrolled ? "bg-white border-b border-gray-200 shadow-md" : "bg-transparent border-transparent shadow-none"} transition-colors transition-shadow duration-300`}>
+      <div className={`${isScrolled ? "bg-white/95 backdrop-blur-xl border-b border-gray-100 shadow-soft" : "bg-transparent border-transparent shadow-none"} transition-all duration-500`}>
         <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-12 h-20 overflow-visible flex items-center gap-4 sm:gap-8 pointer-events-auto transition-all duration-300 ease-out relative">
         {/* Logo - Left */}
         {/* Mobile Hamburger (left) */}
@@ -111,10 +111,10 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-all duration-300 drop-shadow-lg whitespace-nowrap px-3 py-2 rounded-lg ${
+                className={`text-sm font-semibold transition-all duration-400 whitespace-nowrap px-4 py-2.5 rounded-full ${
                   isActive
-                    ? "text-primary bg-primary/15"
-                    : "text-primary/80 hover:text-primary hover:bg-primary/10"
+                    ? "text-primary bg-pale-gradient shadow-soft"
+                    : "text-gray-700 hover:text-primary hover:bg-primary-pale/30"
                 } ${item.className ?? ""}`}
               >
                 {item.label}
@@ -125,7 +125,7 @@ export default function Navbar() {
 
         {/* Desktop Action Button - Right */}
         <div className="hidden xl:block ml-6">
-          <Button asChild className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-2 flex-shrink-0">
+          <Button asChild className="bg-maroon-gradient hover:shadow-soft-lg text-white font-semibold px-6 py-2.5 flex-shrink-0 rounded-full transition-all duration-300">
             <Link href="/contact" className="inline-flex items-center gap-2">
               <span>Get Started</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -140,18 +140,18 @@ export default function Navbar() {
         <motion.div
           initial={false}
           animate={{ height: isMobileOpen ? "auto" : 0, opacity: isMobileOpen ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
           className="xl:hidden absolute left-0 right-0 top-full mt-0 overflow-hidden"
         >
-          <div className="bg-white border-0 rounded-b-2xl p-2 flex flex-col w-full">
+          <div className="bg-white/98 backdrop-blur-xl border-0 rounded-b-3xl p-3 flex flex-col w-full shadow-soft-lg">
             {items.map((item) => {
               const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm font-medium transition-colors rounded-lg px-3 py-2 ${
-                    isActive ? "text-primary bg-primary/10" : "text-primary/80 hover:bg-primary/5 hover:text-primary"
+                  className={`text-sm font-semibold transition-all duration-300 rounded-full px-4 py-3 ${
+                    isActive ? "text-primary bg-pale-gradient shadow-soft" : "text-gray-700 hover:bg-primary-pale/30 hover:text-primary"
                   } ${item.className ?? ""}`}
                   onClick={() => setIsMobileOpen(false)}
                 >
@@ -159,8 +159,8 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            <div className="p-2">
-              <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white">
+            <div className="p-2 mt-2">
+              <Button asChild className="w-full bg-maroon-gradient hover:shadow-soft-lg text-white rounded-full font-semibold py-3">
                 <Link href="/contact" className="inline-flex items-center justify-center gap-2">
                   <span>Get Started</span>
                   <ArrowUpRight className="w-4 h-4" />

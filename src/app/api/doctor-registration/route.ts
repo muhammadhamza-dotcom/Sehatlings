@@ -292,7 +292,7 @@ export async function POST(request: NextRequest) {
     try {
       const result = await resend.emails.send({
         from: 'Doctor Registration <noreply@sehatlings.com>',
-        to: ['sehatlings@gmail.com'],
+        to: ['engramhk@gmail.com'],
         subject: `New Doctor Registration: Dr. ${validatedData.fullName} - ${validatedData.specialization}`,
         html: emailHtml,
         replyTo: validatedData.emailAddress,

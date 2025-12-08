@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { 
+import WaveDivider from "@/components/ui/WaveDivider";
+import {
   Check,
   ArrowRight,
   Zap,
@@ -18,7 +19,6 @@ import {
 
 export default function GendlrSpotlight() {
   useScrollAnimation();
-  // Removed unused hover state for now
   
   const features = [
     {
@@ -44,31 +44,35 @@ export default function GendlrSpotlight() {
   ];
 
   return (
-    <section id="gendlr" className="bg-primary py-16 md:py-24 lg:py-32 relative overflow-hidden">
+    <section id="gendlr" className="bg-maroon-gradient py-20 md:py-28 lg:py-36 relative overflow-hidden">
+      {/* Wave dividers for organic transitions */}
+      <div className="absolute top-0 left-0 w-full h-24 -mt-1">
+        <WaveDivider position="top" color="cream" />
+      </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left Column - Content */}
           <div data-animate className="scroll-fade-left">
             {/* Badge */}
-            <span data-animate className="scroll-fade-up inline-flex items-center px-4 py-2 rounded-full bg-white text-primary text-sm font-medium uppercase tracking-wider mb-6" style={{transitionDelay: '0.2s'}}>
+            <span data-animate className="scroll-fade-up inline-flex items-center px-5 py-2.5 rounded-full bg-white/95 text-primary text-sm font-bold uppercase tracking-wider mb-6 shadow-soft" style={{transitionDelay: '0.2s'}}>
               Flagship Product
             </span>
 
             {/* Main Heading */}
             <div data-animate className="scroll-fade-up" style={{transitionDelay: '0.3s'}}>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-6">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
                 Introducing GENDLR
               </h1>
             </div>
 
             {/* Subtitle */}
-            <p data-animate className="scroll-fade-up text-base md:text-lg lg:text-xl text-white/80 mb-4 md:mb-6 font-medium" style={{transitionDelay: '0.4s'}}>
+            <p data-animate className="scroll-fade-up text-lg md:text-xl lg:text-2xl text-white/90 mb-6 md:mb-8 font-semibold" style={{transitionDelay: '0.4s'}}>
               AI Powered Pathologist Assistant to Patient Journey Optimizer
             </p>
 
             {/* Description */}
-            <p data-animate className="scroll-fade-up text-sm md:text-base text-white/70 mb-4 md:mb-6 leading-relaxed" style={{transitionDelay: '0.5s'}}>
+            <p data-animate className="scroll-fade-up text-base md:text-lg text-white/75 mb-6 md:mb-8 leading-relaxed font-body" style={{transitionDelay: '0.5s'}}>
               GENDLR is a solution specializing in patient management and engagement. We have developed MVP of a robust AI-powered platform tailored for B2B clients like labs and hospitals, and we&apos;re excited to soon release a user-facing application for everyone.
             </p>
             
@@ -101,13 +105,13 @@ export default function GendlrSpotlight() {
 
             {/* CTA Button */}
             <div data-animate className="scroll-fade-up flex justify-center sm:justify-start" style={{transitionDelay: '1s'}}>
-              <Button 
-                asChild 
-                className="bg-white text-primary hover:bg-white/90 px-6 py-3 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+              <Button
+                asChild
+                className="bg-white text-primary hover:shadow-soft-lg px-8 py-4 text-base font-bold rounded-full transition-all duration-400 group min-w-[240px]"
               >
-                <a href="/gendlr" className="inline-flex items-center gap-3">
+                <a href="/gendlr" className="inline-flex items-center justify-center gap-3">
                   Learn More About GENDLR
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-400" />
                 </a>
               </Button>
             </div>
@@ -115,8 +119,8 @@ export default function GendlrSpotlight() {
 
           {/* Right Column - Interactive Visual */}
           <div data-animate className="scroll-fade-right relative">
-            {/* Glassmorphism Container */}
-            <div className="relative bg-white/5 backdrop-blur-lg rounded-3xl border border-white/20 p-6 md:p-8 lg:p-10 overflow-hidden">
+            {/* Soft Glassmorphism Container */}
+            <div className="relative bg-white/10 backdrop-blur-xl rounded-[2.5rem] border border-white/30 p-8 md:p-10 lg:p-12 overflow-hidden shadow-soft-lg">
               {/* Background Gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5"></div>
               
@@ -129,7 +133,7 @@ export default function GendlrSpotlight() {
                 </div>
 
                 {/* Split Comparison */}
-                <div className="grid grid-cols-2 rounded-2xl overflow-hidden">
+                <div className="grid grid-cols-2 rounded-3xl overflow-hidden shadow-soft">
                   {/* Traditional Healthcare */}
                   <div className="bg-white/5 p-4 md:p-6">
                     <div className="text-center mb-4 md:mb-6">
