@@ -34,12 +34,12 @@ export default function ImmersiveCTA() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group relative inline-flex items-center gap-4 px-12 py-6 bg-cream text-maroon-dark font-sans font-bold text-xl rounded-full shadow-dramatic-lg hover:shadow-dramatic transition-all duration-400 btn-squish animate-glow-breathe"
+              className="group relative inline-flex items-center gap-4 px-12 py-6 bg-cream text-maroon-dark font-sans font-bold text-xl rounded-full shadow-dramatic-lg hover:shadow-dramatic transition-all duration-400 btn-squish"
             >
               Get Started Today
               <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-400" />
 
-              {/* Glow effect */}
+              {/* Simple glow effect */}
               <div className="absolute inset-0 rounded-full bg-white/20 blur-xl -z-10" />
             </motion.button>
           </Link>
