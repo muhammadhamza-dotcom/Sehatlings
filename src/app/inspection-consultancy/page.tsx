@@ -139,12 +139,12 @@ export default function InspectionConsultancyPage() {
           aria-hidden
         />
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-32 sm:py-24 md:py-16 text-center">
           <div data-animate className="scroll-fade-up">
             <span className="inline-block px-4 py-2 rounded-full text-sm font-medium uppercase tracking-widest mb-8 bg-maroon/10 text-maroon border border-maroon/20">
               INSPECTION CONSULTANCY
             </span>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight">
               Achieve Excellence. <br />
               Secure Accreditation. <br />
               We Guide the Way.

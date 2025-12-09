@@ -253,7 +253,7 @@ export default function TechHousePage() {
           }}
           aria-hidden
         />
-        <div data-animate className="scroll-fade-up relative z-10 mx-auto max-w-4xl px-6 text-center">
+        <div data-animate className="scroll-fade-up relative z-10 mx-auto max-w-4xl px-6 py-32 sm:py-24 md:py-16 text-center">
 
           {/* Section Label */}
           <div className="inline-block mb-6">
@@ -266,7 +266,7 @@ export default function TechHousePage() {
 
           {/* Main Heading */}
           <h1
-            className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight"
+            className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight"
           >
             Digital Health Forward: Innovate, Connect, and Lead.
           </h1>

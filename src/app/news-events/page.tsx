@@ -49,12 +49,12 @@ export default function NewsEventsPage() {
           <div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-maroon-dark rounded-full blur-[100px] opacity-30" />
         </div>
 
-        <div className="relative z-10 w-full max-w-7xl px-6 text-center">
+        <div className="relative z-10 w-full max-w-7xl px-6 py-16 sm:py-12 md:py-8 text-center">
           <div data-animate className="scroll-fade-up">
             <span className="inline-block px-4 py-2 rounded-full text-sm font-medium uppercase tracking-widest mb-6 bg-white/10 text-white border border-white/20 backdrop-blur-sm">
               Press & Media
             </span>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light text-cream mb-6 leading-tight">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-cream mb-6 leading-tight">
               News & Updates
             </h1>
             <p className="font-sans font-light text-lg md:text-xl text-cream/80 max-w-2xl mx-auto leading-relaxed">
