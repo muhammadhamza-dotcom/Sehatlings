@@ -103,7 +103,7 @@ export default function LeadershipSprintArticle() {
 
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-bold text-charcoal mb-3">Day 1: Strategic Thinking</h3>
+                  <h3 className="text-xl font-bold text-charcoal mb-3">Day 1: The Applied Leadership Lab</h3>
                   <p className="text-gray-600">
                     Led by <strong>Dr. Azeem Qureshi</strong> from <em>Institute of Business Management (IoBM)</em>, participants engaged in intensive strategic thinking sessions. The day culminated in an engaging LEGO Activity that demonstrated collaborative problem-solving and innovative thinking in action.
                   </p>
@@ -112,7 +112,7 @@ export default function LeadershipSprintArticle() {
                 <div className="w-full h-px bg-gray-100" />
 
                 <div>
-                  <h3 className="text-xl font-bold text-charcoal mb-3">Day 2: Healthcare Excellence Panel</h3>
+                  <h3 className="text-xl font-bold text-charcoal mb-3">Day 2: The Systematic Change Lab</h3>
                   <p className="text-gray-600">
                     Featured an expert panel from <em>Aga Khan University Hospital</em> including <strong>Prof. Dr. Ahmed Nadeem Abbasi</strong> and <strong>Dr. Maria Tariq</strong>, who shared invaluable insights on healthcare leadership, clinical excellence, and building collaborative healthcare environments.
                   </p>

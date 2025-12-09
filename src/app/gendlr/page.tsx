@@ -314,7 +314,7 @@ export default function GendlrPage() {
           <div data-animate className="scroll-stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { icon: TrendingUp, number: "40%", label: "Faster Diagnosis" },
-              { icon: Users, number: "10k+", label: "Patients Served" },
+              { icon: Users, number: "100k+", label: "Target to Serve" },
               { icon: Brain, number: "24/7", label: "AI Support" },
               { icon: Activity, number: "99.9%", label: "Uptime" }
             ].map((stat, index) => (
