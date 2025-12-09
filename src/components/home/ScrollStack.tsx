@@ -165,18 +165,21 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       const lastTransform = lastTransformsRef.current.get(i);
       const hasChanged =
         !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.5 ||
+        Math.abs(lastTransform.scale - newTransform.scale) > 0.005 ||
+        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.5 ||
+        Math.abs(lastTransform.blur - newTransform.blur) > 0.5;
 
       if (hasChanged) {
-        const transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
-        const filter = newTransform.blur > 0 ? `blur(${newTransform.blur}px)` : '';
+        const transform = `translate3d(0, ${newTransform.translateY.toFixed(1)}px, 0) scale(${newTransform.scale.toFixed(3)}) rotate(${newTransform.rotation.toFixed(1)}deg)`;
+
+        if (newTransform.blur > 0) {
+          card.style.filter = `blur(${newTransform.blur.toFixed(1)}px)`;
+        } else if (card.style.filter) {
+          card.style.filter = '';
+        }
 
         card.style.transform = transform;
-        card.style.filter = filter;
-
         lastTransformsRef.current.set(i, newTransform);
       }
 

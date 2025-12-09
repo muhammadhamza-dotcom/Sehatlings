@@ -92,7 +92,7 @@ export default function ProgramsPage() {
             <span className="inline-block px-4 py-2 rounded-full text-sm font-medium uppercase tracking-widest mb-8 bg-maroon/10 text-maroon border border-maroon/20">
               Professional Development
             </span>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight">
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl text-charcoal mb-8 leading-tight">
               Transformational <br /> Programs
             </h1>
             <p className="font-sans font-light text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">

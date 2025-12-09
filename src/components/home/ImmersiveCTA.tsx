@@ -4,74 +4,14 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useMemo } from "react";
 
-export default function ImmersiveCTA() {
-  // Generate stable particle positions using useMemo to avoid hydration mismatch
-  const particles = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      left: (i * 13.7 + 23.5) % 100, // Pseudo-random but deterministic
-      bottom: (i * 17.3 + 11.2) % 50,
-      duration: 3 + ((i * 7.1) % 2),
-      delay: (i * 11.3) % 5,
-    }));
-  }, []);
 
+export default function ImmersiveCTA() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden grain-texture">
       {/* Full maroon gradient background */}
       <div className="absolute inset-0 bg-hero-gradient" />
 
-      {/* Floating organic shapes */}
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 10, 0],
-          x: [0, 50, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-20 left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-      />
 
-      <motion.div
-        animate={{
-          scale: [1, 1.3, 1],
-          rotate: [0, -15, 0],
-          x: [0, -30, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-        className="absolute bottom-20 right-20 w-[500px] h-[500px] bg-terracotta/10 rounded-full blur-3xl"
-      />
-
-      {/* Floating particles with stable positions */}
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: particle.duration,
-            repeat: Infinity,
-            delay: particle.delay,
-            ease: "easeInOut",
-          }}
-          className="absolute w-1 h-1 bg-white/40 rounded-full"
-          style={{
-            left: `${particle.left}%`,
-            bottom: `${particle.bottom}%`,
-          }}
-        />
-      ))}
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 text-center">

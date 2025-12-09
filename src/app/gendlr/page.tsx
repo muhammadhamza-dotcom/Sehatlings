@@ -27,6 +27,16 @@ const WAVEFORM_ANIMATIONS = Array(30).fill(0).map(() => ({
   duration: 1 + Math.random()
 }));
 
+// Pre-calculated doctor node positions for SSR consistency
+const DOCTOR_NODE_POSITIONS = Array(5).fill(0).map((_, i) => {
+  const angle = (i * 72) * (Math.PI / 180);
+  const radius = 75;
+  return {
+    left: Math.cos(angle) * radius,
+    top: Math.sin(angle) * radius
+  };
+});
+
 // Zod validation schema for B2B registration form
 const labRegistrationSchema = z.object({
   labName: z.string()
@@ -549,32 +559,28 @@ export default function GendlrPage() {
                 ))}
 
                 {/* Doctor nodes orbiting */}
-                {Array(5).fill(0).map((_, i) => {
-                  const angle = (i * 72) * (Math.PI / 180);
-                  const radius = 75;
-                  return (
-                    <motion.div
-                      key={i}
-                      className="absolute w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-white to-cream rounded-full shadow-soft border border-gray-200 flex items-center justify-center"
-                      style={{
-                        left: `calc(50% + ${Math.cos(angle) * radius}px)`,
-                        top: `calc(50% + ${Math.sin(angle) * radius}px)`,
-                        transform: 'translate(-50%, -50%)'
-                      }}
-                      animate={{
-                        y: [0, -8, 0],
-                        scale: [1, 1.05, 1]
-                      }}
-                      transition={{
-                        duration: 2,
-                        delay: i * 0.2,
-                        repeat: Infinity
-                      }}
-                    >
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-maroon/10 rounded-full" />
-                    </motion.div>
-                  );
-                })}
+                {DOCTOR_NODE_POSITIONS.map((pos, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-white to-cream rounded-full shadow-soft border border-gray-200 flex items-center justify-center"
+                    style={{
+                      left: `calc(50% + ${pos.left}px)`,
+                      top: `calc(50% + ${pos.top}px)`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                    animate={{
+                      y: [0, -8, 0],
+                      scale: [1, 1.05, 1]
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: i * 0.2,
+                      repeat: Infinity
+                    }}
+                  >
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-maroon/10 rounded-full" />
+                  </motion.div>
+                ))}
 
                 {/* Background gradient blob */}
                 <div className="absolute inset-0 bg-gradient-radial from-maroon/5 via-transparent to-transparent" />
@@ -614,9 +620,8 @@ export default function GendlrPage() {
                   {WAVEFORM_ANIMATIONS.map((anim, i) => (
                     <motion.div
                       key={i}
-                      className={`w-2 bg-gradient-to-t from-maroon to-terracotta rounded-full ${
-                        i >= 20 ? 'hidden sm:block' : ''
-                      }`}
+                      className={`w-2 bg-gradient-to-t from-maroon to-terracotta rounded-full ${i >= 20 ? 'hidden sm:block' : ''
+                        }`}
                       animate={{
                         height: anim.heights.map(h => `${h}%`)
                       }}

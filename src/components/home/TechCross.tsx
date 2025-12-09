@@ -1,59 +1,70 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState, useMemo } from "react";
 
 export default function TechCross() {
     const [isMounted, setIsMounted] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    // Passive rotation for the cross itself
-    const rotateX = 0;
-    const rotateY = 0;
 
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
+    // Reduced ring configs for better performance
+    const ringConfigs = useMemo(() => [
+        { size: 320, color: "border-terracotta/60", duration: 25, rotateX: 70, rotateY: 20 },
+        { size: 380, color: "border-sage/60", duration: 30, rotateX: -50, rotateY: 40 },
+    ], []);
+
+    // Reduced particle count for better performance
+    const particles = useMemo(() => {
+        return Array.from({ length: 4 }).map((_, i) => ({
+            tx: (Math.random() - 0.5) * 400,
+            ty: (Math.random() - 0.5) * 400,
+            duration: 5 + Math.random() * 4,
+            delay: i * 0.4
+        }));
+    }, []);
+
     if (!isMounted) return null;
 
     return (
-        <div
-            ref={containerRef}
-            className="relative w-full h-full flex items-center justify-center"
-        >
-            <div className="relative w-[400px] h-[400px] flex items-center justify-center">
+        <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative w-[400px] h-[400px] flex items-center justify-center preserve-3d">
 
-                {/* Ambient Glow */}
-                <motion.div
-                    animate={{ opacity: [0.3, 0.5, 0.3], scale: [0.9, 1.1, 0.9] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-gradient-radial from-maroon/30 to-transparent blur-3xl"
+                {/* Subtle glow - reduced blur */}
+                <div
+                    className="absolute inset-0 bg-gradient-radial from-maroon/20 to-transparent blur-xl"
+                    style={{
+                        animation: 'ambient-pulse 5s ease-in-out infinite',
+                    }}
                 />
 
-                {/* Orbiting Rings - Enhanced Visibility */}
-                <Ring size={320} color="border-terracotta/60" duration={25} delay={0} rotateX={70} rotateY={20} />
-                <Ring size={380} color="border-sage/60" duration={30} delay={0} rotateX={-50} rotateY={40} />
-                <Ring size={260} color="border-white/30" duration={20} delay={0} rotateX={30} rotateY={-60} />
-                <Ring size={440} color="border-white/20" duration={40} delay={0} rotateX={10} rotateY={10} dashed />
+                {/* Orbiting Rings - Reduced count */}
+                {ringConfigs.map((config, i) => (
+                    <Ring key={i} {...config} />
+                ))}
 
-                {/* The Interactive Solid Cross */}
-                <motion.div
-                    className="relative z-10"
-                >
+                {/* The Solid Cross */}
+                <div className="relative z-10">
                     {/* Vertical Bar */}
-                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-56 bg-[#F2F0E9] rounded-2xl shadow-dramatic flex items-center justify-center overflow-hidden group">
-                    </div>
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-56 bg-[#F2F0E9] rounded-2xl shadow-dramatic" />
 
                     {/* Horizontal Bar */}
-                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-20 bg-[#F2F0E9] rounded-2xl shadow-dramatic flex items-center justify-center overflow-hidden">
-                    </div>
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-20 bg-[#F2F0E9] rounded-2xl shadow-dramatic" />
+                </div>
 
-                </motion.div>
-
-                {/* Floating Particles */}
-                {Array.from({ length: 12 }).map((_, i) => (
-                    <Particle key={i} index={i} />
+                {/* Floating Particles - Reduced count */}
+                {particles.map((p, i) => (
+                    <div
+                        key={i}
+                        className="absolute w-1 h-1 bg-maroon/60 rounded-full blur-[0.5px] animate-particle-float"
+                        style={{
+                            '--tx': `${p.tx}px`,
+                            '--ty': `${p.ty}px`,
+                            animationDuration: `${p.duration}s`,
+                            animationDelay: `${p.delay}s`,
+                        } as React.CSSProperties}
+                    />
                 ))}
 
             </div>
@@ -61,56 +72,31 @@ export default function TechCross() {
     );
 }
 
-function Ring({ size, color, duration, delay, rotateX, rotateY, dashed = false }: {
+function Ring({ size, color, duration, rotateX, rotateY }: {
     size: number;
     color: string;
     duration: number;
-    delay: number;
     rotateX: number;
     rotateY: number;
-    dashed?: boolean;
 }) {
     return (
-        <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration, repeat: Infinity, ease: "linear", delay }}
-            className={`absolute rounded-full border-[1px] ${color} ${dashed ? 'border-dashed opacity-30' : ''}`}
+        <div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 preserve-3d"
             style={{
                 width: size,
                 height: size,
-                rotateX: rotateX,
-                rotateY: rotateY
+                transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
             }}
         >
-            {/* Node on ring */}
-            {!dashed && (
+            <div
+                className={`w-full h-full rounded-full border-[1px] ${color}`}
+                style={{
+                    animation: `ring-rotate ${duration}s linear infinite`,
+                }}
+            >
+                {/* Node on ring */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white/80 rounded-full shadow-glow" />
-            )}
-        </motion.div>
-    );
-}
-
-function Particle({ index }: { index: number }) {
-    const randomX = (Math.random() - 0.5) * 500;
-    const randomY = (Math.random() - 0.5) * 500;
-    const duration = 4 + Math.random() * 5;
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
-            animate={{
-                opacity: [0, 0.8, 0],
-                x: [0, randomX],
-                y: [0, randomY],
-                scale: [0, 1, 0]
-            }}
-            transition={{
-                duration: duration,
-                repeat: Infinity,
-                ease: "easeOut",
-                delay: index * 0.3
-            }}
-            className="absolute w-1 h-1 bg-maroon/60 rounded-full blur-[0.5px]"
-        />
+            </div>
+        </div>
     );
 }

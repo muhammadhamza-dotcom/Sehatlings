@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import Image from "next/image";
+import { useScrollManager } from "@/lib/useScrollManager";
 
 type NavItem = { label: string; href: string; className?: string };
 
@@ -20,16 +21,20 @@ export default function Navbar() {
     if (!isHome) {
       // On non-home pages, keep solid navbar with shadow
       setIsScrolled(true);
-      return;
     }
-    const handleScroll = () => {
-      if (typeof window === "undefined") return;
-      setIsScrolled(window.scrollY > 8);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
   }, [isHome]);
+
+  // Use consolidated scroll manager for performance
+  useScrollManager(
+    ({ scrollY }) => {
+      if (!isHome) {
+        setIsScrolled(true);
+        return;
+      }
+      setIsScrolled(scrollY > 8);
+    },
+    'navbar-scroll'
+  );
 
   // Close mobile menu on route change
   useEffect(() => {
