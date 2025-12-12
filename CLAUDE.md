@@ -24,7 +24,7 @@ This is a Next.js 15 application using the App Router with TypeScript. The proje
 
 ### Project Structure
 - `src/app/` - App Router pages following Next.js 13+ conventions
-  - Route-based pages: `/team`, `/gendlr`, `/tech-house`, `/inspection-consultancy`, `/programs`, `/contact`
+  - Route-based pages: `/team`, `/muaina`, `/tech-house`, `/inspection-consultancy`, `/programs`, `/contact`
   - Uses dynamic imports for performance optimization
 - `src/components/` - Reusable React components
   - `ui/` - shadcn/ui component library 

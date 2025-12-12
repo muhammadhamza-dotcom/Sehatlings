@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         </div>
 
         <div style="background: #e2e8f0; padding: 15px; text-align: center; color: #718096; font-size: 12px;">
-          This registration was submitted from the GENDLR Early Access form on ${new Date().toLocaleString()}
+          This registration was submitted from the Muaina Early Access form on ${new Date().toLocaleString()}
         </div>
       </div>
     `;

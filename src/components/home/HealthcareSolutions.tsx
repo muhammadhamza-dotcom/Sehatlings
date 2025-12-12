@@ -15,7 +15,7 @@ export default function HealthcareSolutions() {
   const solutions = [
     {
       icon: Stethoscope,
-      title: "GENDLR Platform",
+      title: "Muaina Platform",
       description: "Be on board with us by joining the community and give back to the society"
     },
     {

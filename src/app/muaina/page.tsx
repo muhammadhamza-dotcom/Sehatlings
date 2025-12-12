@@ -32,8 +32,8 @@ const DOCTOR_NODE_POSITIONS = Array(5).fill(0).map((_, i) => {
   const angle = (i * 72) * (Math.PI / 180);
   const radius = 75;
   return {
-    left: Math.cos(angle) * radius,
-    top: Math.sin(angle) * radius
+    left: Math.round(Math.cos(angle) * radius * 100) / 100,
+    top: Math.round(Math.sin(angle) * radius * 100) / 100
   };
 });
 
@@ -121,7 +121,7 @@ const earlyAccessSchema = z.object({
 
 type EarlyAccessData = z.infer<typeof earlyAccessSchema>;
 
-export default function GendlrPage() {
+export default function MuainaPage() {
   useScrollAnimation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -229,13 +229,13 @@ export default function GendlrPage() {
   };
 
   return (
-    <main key="gendlr" className="relative">
+    <main key="muaina" className="relative">
       {/* Hero Section */}
-      <section className="bg-cream min-h-[90vh] flex items-center relative overflow-hidden">
+      <section className="bg-cream min-h-screen flex items-center relative overflow-hidden">
         {/* Grain texture overlay */}
         <div className="absolute inset-0 opacity-[0.02] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNhKSIvPjwvc3ZnPg==')]" />
 
-        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-32 md:py-40 relative z-10">
+        <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 py-20 md:py-24 relative z-10">
           <div className="text-center">
             {/* Badge */}
             <motion.div
@@ -250,16 +250,16 @@ export default function GendlrPage() {
             {/* Title */}
             <motion.h1
               data-animate
-              className="scroll-fade-up font-serif text-7xl md:text-8xl lg:text-9xl text-charcoal mb-8"
+              className="scroll-fade-up font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-6"
               style={{ letterSpacing: '-0.02em', animationDelay: '200ms' }}
             >
-              GENDLR
+              Muaina
             </motion.h1>
 
             {/* Divider */}
             <motion.div
               data-animate
-              className="scroll-fade-up w-32 h-1 bg-maroon mx-auto my-8 relative"
+              className="scroll-fade-up w-32 h-1 bg-maroon mx-auto my-6 relative"
               style={{ animationDelay: '400ms' }}
             >
               <div className="absolute inset-0 blur-md bg-maroon/20" />
@@ -268,7 +268,7 @@ export default function GendlrPage() {
             {/* Subtitle */}
             <motion.h2
               data-animate
-              className="scroll-fade-up font-serif text-3xl md:text-4xl lg:text-5xl text-charcoal mb-8 leading-tight max-w-4xl mx-auto"
+              className="scroll-fade-up font-serif text-2xl md:text-3xl lg:text-4xl text-charcoal mb-6 leading-tight max-w-4xl mx-auto"
               style={{ animationDelay: '600ms' }}
             >
               AI Powered Pathologist Assistant to Patient Journey Optimizer
@@ -277,10 +277,10 @@ export default function GendlrPage() {
             {/* Description */}
             <motion.p
               data-animate
-              className="scroll-fade-up font-sans font-light text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-12"
+              className="scroll-fade-up font-sans font-light text-base md:text-lg text-gray-600 max-w-2xl mx-auto mb-8"
               style={{ animationDelay: '800ms' }}
             >
-              Get ready for a new era of patient care. GENDLR is an AI-powered platform designed to optimize every step of the patient journey, from initial diagnosis to post-treatment follow-up. It&apos;s not just a tool; it&apos;s the future of intelligent healthcare management.
+              Get ready for a new era of patient care. Muaina is an AI-powered platform designed to optimize every step of the patient journey, from initial diagnosis to post-treatment follow-up. It&apos;s not just a tool; it&apos;s the future of intelligent healthcare management.
             </motion.p>
 
             {/* CTA Buttons */}

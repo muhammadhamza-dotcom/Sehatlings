@@ -28,7 +28,7 @@ export default function DiagonalFeature() {
             className="scroll-fade-right text-white"
           >
             <span className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm text-white text-sm font-accent font-semibold rounded-full mb-6">
-              Why GENDLR
+              Why Muaina
             </span>
 
             <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-white mb-8 editorial-spacing">

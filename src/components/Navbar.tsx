@@ -44,7 +44,7 @@ export default function Navbar() {
   const items: NavItem[] = [
     { label: "Home", href: "/" },
     { label: "Team", href: "/team" },
-    { label: "GENDLR", href: "/gendlr", className: "uppercase" },
+    { label: "Muaina", href: "/muaina" },
     { label: "Tech House", href: "/tech-house" },
     { label: "Inspection Consultancy", href: "/inspection-consultancy" },
     { label: "Programs", href: "/programs" },

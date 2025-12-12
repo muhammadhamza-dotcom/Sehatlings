@@ -9,7 +9,7 @@ import Link from "next/link";
 
 // Navigation data
 const productLinks = [
-  { label: 'GENDLR', href: '/gendlr' },
+  { label: 'Muaina', href: '/muaina' },
   { label: 'Tech House', href: '/tech-house' },
   { label: 'Inspection Consultancy', href: '/inspection-consultancy' },
   { label: 'Programs', href: '/programs' },

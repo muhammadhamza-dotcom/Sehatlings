@@ -101,7 +101,7 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0], index: n
   );
 };
 
-export default function GendlrVital() {
+export default function MuainaVital() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -127,7 +127,7 @@ export default function GendlrVital() {
               variants={itemVariants}
               className="font-serif text-5xl md:text-6xl lg:text-7xl text-charcoal mb-4 md:mb-6 leading-tight tracking-tight"
             >
-              GENDLR
+              Muaina
             </motion.h2>
             <motion.p
               variants={itemVariants}
@@ -152,13 +152,13 @@ export default function GendlrVital() {
             variants={itemVariants}
             className="flex justify-center"
           >
-            <Link href="/gendlr">
+            <Link href="/muaina">
               <motion.button
                 className="group px-8 py-4 bg-maroon hover:bg-maroon-dark text-cream font-sans font-semibold text-lg rounded-full transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-2xl"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Learn more about GENDLR
+                Learn more about Muaina
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </motion.button>
             </Link>

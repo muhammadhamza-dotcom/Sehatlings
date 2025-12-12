@@ -5,7 +5,7 @@ import { Stethoscope, Truck, FlaskConical, GraduationCap, Brain, Users } from "l
 
 const solutions = [
   {
-    title: "GENDLR Platform",
+    title: "Muaina Platform",
     description: "AI-powered patient management transforming healthcare delivery",
     icon: Stethoscope,
     bg: "bg-maroon-dark",

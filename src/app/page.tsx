@@ -5,7 +5,7 @@ const HeroSplit = dynamic(() => import("@/components/home/HeroSplit"), { ssr: tr
 const StatsCounter = dynamic(() => import("@/components/home/StatsCounter"), { ssr: true });
 const SolutionsStack = dynamic(() => import("@/components/home/SolutionsStack"), { ssr: true });
 const TelehealthFeature = dynamic(() => import("@/components/home/TelehealthFeature"), { ssr: true });
-const GendlrVital = dynamic(() => import("@/components/home/GendlrVital"), { ssr: true });
+const MuainaVital = dynamic(() => import("@/components/home/MuainaVital"), { ssr: true });
 const ImmersiveCTA = dynamic(() => import("@/components/home/ImmersiveCTA"), { ssr: true });
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <StatsCounter />
       <SolutionsStack />
       <TelehealthFeature />
-      <GendlrVital />
+      <MuainaVital />
       <ImmersiveCTA />
     </main>
   );

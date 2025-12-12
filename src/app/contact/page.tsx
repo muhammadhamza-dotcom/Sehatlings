@@ -232,7 +232,7 @@ export default function ContactPage() {
                       className={`flex h-12 w-full items-center justify-between rounded-xl border border-transparent bg-gray-50 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:bg-white focus:border-maroon focus:outline-none focus:ring-2 focus:ring-maroon/20 disabled:cursor-not-allowed disabled:opacity-50 ${errors.reason ? "border-red-500 bg-red-50" : ""}`}
                     >
                       <option value="">Select a topic...</option>
-                      <option value="GENDLR">GENDLR</option>
+                      <option value="Muaina">Muaina</option>
                       <option value="Tech House">Tech House</option>
                       <option value="Lab Inspection">Lab Inspection</option>
                       <option value="Bootcamps">Bootcamps</option>

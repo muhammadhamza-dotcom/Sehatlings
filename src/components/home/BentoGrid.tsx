@@ -9,7 +9,7 @@ export default function BentoGrid() {
   const solutions = [
     {
       id: 1,
-      title: "GENDLR Platform",
+      title: "Muaina Platform",
       description: "AI-powered patient management transforming healthcare delivery",
       icon: Stethoscope,
       bg: "bg-maroon-dark",
